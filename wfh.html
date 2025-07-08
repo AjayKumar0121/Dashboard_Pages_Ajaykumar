@@ -1050,8 +1050,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-fill employee details from localStorage if available
         if (empDetails) {
             document.getElementById('employeeName').value = empDetails.name || '';
-            document.getElementById('employeeID').value = empDetails.empid || '';
-            document.getElementById('employeeEmail').value = empDetails.mail || '';
+            document.getElementById('employeeID').value = empDetails.emp_id || '';
+            document.getElementById('employeeEmail').value = empDetails.email || '';
             
             // Make these fields readonly
             document.getElementById('employeeName').readOnly = true;
