@@ -1,0 +1,477 @@
+2025-07-07 11:24:40 [info] Environment Configuration:
+2025-07-07 11:24:41 [info] Server running on port 3000
+2025-07-07 11:24:41 [info] Allowed CORS origins: http://localhost:8005, http://localhost:8006, http://localhost:8007, http://localhost:8008, http://localhost:3000, http://127.0.0.1:5500, http://127.0.0.1:5501, http://127.0.0.1:5502, http://44.223.23.145:8005, http://44.223.23.145:8006, http://44.223.23.145:8007, http://44.223.23.145:8008, http://44.223.23.145:8012, http://localhost:5500
+2025-07-07 11:24:41 [info] Environment: development
+2025-07-07 11:24:41 [info] Successfully connected to PostgreSQL
+2025-07-07 11:24:41 [info] Database schema initialized successfully
+2025-07-07 11:26:04 [warn] Login attempt for non-existent email: sample@gmail.com
+2025-07-07 11:26:04 [info] POST /api/login 401 1626ms - 127.0.0.1
+2025-07-07 11:26:31 [warn] Login attempt for non-existent email: sample@gmail.com
+2025-07-07 11:26:31 [info] POST /api/login 401 16ms - 127.0.0.1
+2025-07-07 11:32:07 [info] POST /api/login 200 1277ms - 127.0.0.1
+2025-07-07 11:32:07 [info] GET /api/profile 200 43ms - 127.0.0.1
+2025-07-07 11:37:09 [info] GET /api/profile 304 187ms - 127.0.0.1
+2025-07-07 11:42:09 [info] GET /api/profile 304 194ms - 127.0.0.1
+2025-07-07 11:42:09 [info] GET /api/profile 304 12ms - 127.0.0.1
+2025-07-07 11:42:52 [info] GET /api/profile 304 131ms - 127.0.0.1
+2025-07-07 11:47:53 [error] Token verification failed:
+2025-07-07 11:47:53 [info] GET /api/profile 401 9ms - 127.0.0.1
+2025-07-07 11:47:53 [error] Token verification failed:
+2025-07-07 11:47:53 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 11:47:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 11:47:53 [info] POST /api/refresh 404 3ms - 127.0.0.1
+2025-07-07 11:47:53 [error] Token verification failed:
+2025-07-07 11:47:53 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 11:47:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 12:08:06 [warn] Login attempt for non-existent email: sample@gmail.com
+2025-07-07 12:08:06 [info] POST /api/login 401 263ms - 127.0.0.1
+2025-07-07 12:08:19 [info] POST /api/login 200 1131ms - 127.0.0.1
+2025-07-07 12:08:19 [info] GET /api/profile 304 20ms - 127.0.0.1
+2025-07-07 12:12:51 [info] GET /api/profile 304 187ms - 127.0.0.1
+2025-07-07 12:17:53 [info] GET /api/profile 304 205ms - 127.0.0.1
+2025-07-07 12:22:45 [info] GET /api/profile 304 169ms - 127.0.0.1
+2025-07-07 12:22:53 [info] GET /api/profile 304 17ms - 127.0.0.1
+2025-07-07 12:27:53 [error] Token verification failed:
+2025-07-07 12:27:53 [info] GET /api/profile 401 11ms - 127.0.0.1
+2025-07-07 12:27:53 [error] Token verification failed:
+2025-07-07 12:27:53 [info] GET /api/profile 401 6ms - 127.0.0.1
+2025-07-07 12:27:53 [info] POST /api/refresh 404 11ms - 127.0.0.1
+2025-07-07 12:27:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 12:27:53 [error] Token verification failed:
+2025-07-07 12:27:53 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 12:27:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 12:28:52 [info] POST /api/login 200 602ms - 127.0.0.1
+2025-07-07 12:28:52 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 12:33:53 [info] GET /api/profile 304 103ms - 127.0.0.1
+2025-07-07 12:38:53 [info] GET /api/profile 304 96ms - 127.0.0.1
+2025-07-07 12:38:53 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 12:42:52 [info] GET /api/profile 304 104ms - 127.0.0.1
+2025-07-07 12:47:54 [error] Token verification failed:
+2025-07-07 12:47:54 [info] GET /api/profile 401 9ms - 127.0.0.1
+2025-07-07 12:47:54 [error] Token verification failed:
+2025-07-07 12:47:54 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 12:47:54 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 12:47:54 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 12:47:54 [error] Token verification failed:
+2025-07-07 12:47:54 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 12:47:54 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 12:50:57 [info] POST /api/login 200 557ms - 127.0.0.1
+2025-07-07 12:50:57 [info] GET /api/profile 200 5ms - 127.0.0.1
+2025-07-07 12:53:53 [info] GET /api/profile 304 396ms - 127.0.0.1
+2025-07-07 12:53:54 [info] GET /api/profile 304 10ms - 127.0.0.1
+2025-07-07 12:55:15 [info] GET /api/profile 304 132ms - 127.0.0.1
+2025-07-07 12:58:56 [info] GET /api/profile 304 111ms - 127.0.0.1
+2025-07-07 13:00:16 [info] GET /api/profile 304 114ms - 127.0.0.1
+2025-07-07 13:03:56 [info] GET /api/profile 304 111ms - 127.0.0.1
+2025-07-07 13:03:56 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 13:05:16 [info] GET /api/profile 304 129ms - 127.0.0.1
+2025-07-07 13:05:16 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 13:08:56 [error] Token verification failed:
+2025-07-07 13:08:56 [info] GET /api/profile 401 6ms - 127.0.0.1
+2025-07-07 13:08:56 [error] Token verification failed:
+2025-07-07 13:08:56 [info] GET /api/profile 401 6ms - 127.0.0.1
+2025-07-07 13:08:56 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 13:08:56 [info] POST /api/refresh 404 2ms - 127.0.0.1
+2025-07-07 13:08:56 [error] Token verification failed:
+2025-07-07 13:08:56 [info] GET /api/profile 401 8ms - 127.0.0.1
+2025-07-07 13:08:56 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 13:10:16 [error] Token verification failed:
+2025-07-07 13:10:16 [info] GET /api/profile 401 2ms - 127.0.0.1
+2025-07-07 13:10:16 [error] Token verification failed:
+2025-07-07 13:10:16 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 13:30:28 [info] POST /api/login 200 1132ms - 127.0.0.1
+2025-07-07 13:30:28 [info] GET /api/profile 200 21ms - 127.0.0.1
+2025-07-07 13:35:29 [info] GET /api/profile 304 235ms - 127.0.0.1
+2025-07-07 13:40:00 [info] GET /api/profile 304 220ms - 127.0.0.1
+2025-07-07 13:40:01 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 13:40:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 13:40:22 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 13:45:23 [info] GET /api/profile 304 113ms - 127.0.0.1
+2025-07-07 13:45:23 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 13:50:23 [error] Token verification failed:
+2025-07-07 13:50:23 [info] GET /api/profile 401 14ms - 127.0.0.1
+2025-07-07 13:50:23 [error] Token verification failed:
+2025-07-07 13:50:23 [info] GET /api/profile 401 13ms - 127.0.0.1
+2025-07-07 13:50:23 [error] Token verification failed:
+2025-07-07 13:50:23 [info] GET /api/profile 401 8ms - 127.0.0.1
+2025-07-07 13:50:23 [info] POST /api/refresh 404 20ms - 127.0.0.1
+2025-07-07 13:50:23 [info] POST /api/refresh 404 2ms - 127.0.0.1
+2025-07-07 13:50:23 [error] Token verification failed:
+2025-07-07 13:50:23 [info] GET /api/profile 401 12ms - 127.0.0.1
+2025-07-07 13:50:23 [info] POST /api/refresh 404 3ms - 127.0.0.1
+2025-07-07 13:50:23 [error] Token verification failed:
+2025-07-07 13:50:23 [info] GET /api/profile 401 6ms - 127.0.0.1
+2025-07-07 13:50:23 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 13:50:23 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 13:53:33 [info] POST /api/login 200 1307ms - 127.0.0.1
+2025-07-07 13:53:33 [info] GET /api/profile 304 23ms - 127.0.0.1
+2025-07-07 13:53:49 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 13:57:52 [info] GET /api/profile 304 163ms - 127.0.0.1
+2025-07-07 13:57:52 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 14:00:09 [info] GET /api/profile 304 160ms - 127.0.0.1
+2025-07-07 14:00:09 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 14:05:11 [info] GET /api/profile 304 112ms - 127.0.0.1
+2025-07-07 14:05:11 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 14:06:44 [info] GET /api/profile 304 403ms - 127.0.0.1
+2025-07-07 14:06:44 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 14:07:02 [info] GET /api/profile 304 58ms - 127.0.0.1
+2025-07-07 14:07:02 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 14:07:57 [info] GET /api/profile 304 194ms - 127.0.0.1
+2025-07-07 14:07:57 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 14:12:52 [error] Token verification failed:
+2025-07-07 14:12:52 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 14:12:52 [error] Token verification failed:
+2025-07-07 14:12:52 [info] GET /api/profile 401 3ms - 127.0.0.1
+2025-07-07 14:12:52 [error] Token verification failed:
+2025-07-07 14:12:52 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 14:12:52 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 14:12:52 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 14:12:52 [error] Token verification failed:
+2025-07-07 14:12:52 [info] GET /api/profile 401 6ms - 127.0.0.1
+2025-07-07 14:12:52 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 14:12:53 [error] Token verification failed:
+2025-07-07 14:12:53 [info] GET /api/profile 401 4ms - 127.0.0.1
+2025-07-07 14:12:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 14:12:53 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 15:21:17 [info] POST /api/login 200 1331ms - 127.0.0.1
+2025-07-07 15:21:17 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 15:26:18 [info] GET /api/profile 304 96ms - 127.0.0.1
+2025-07-07 15:31:18 [info] GET /api/profile 304 157ms - 127.0.0.1
+2025-07-07 15:31:18 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 15:36:18 [error] Token verification failed:
+2025-07-07 15:36:18 [info] GET /api/profile 401 38ms - 127.0.0.1
+2025-07-07 15:36:19 [error] Token verification failed:
+2025-07-07 15:36:19 [info] GET /api/profile 401 2ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 136ms - 127.0.0.1
+2025-07-07 15:36:19 [error] Token verification failed:
+2025-07-07 15:36:19 [info] GET /api/profile 401 24ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 27ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 15:36:19 [error] Token verification failed:
+2025-07-07 15:36:19 [info] GET /api/profile 401 11ms - 127.0.0.1
+2025-07-07 15:36:19 [error] Token verification failed:
+2025-07-07 15:36:19 [info] GET /api/profile 401 22ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 15:36:19 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 16:04:12 [info] POST /api/login 200 1245ms - 127.0.0.1
+2025-07-07 16:04:12 [info] GET /api/profile 304 12ms - 127.0.0.1
+2025-07-07 16:06:18 [info] GET /api/profile 304 86ms - 127.0.0.1
+2025-07-07 16:06:18 [info] GET /api/profile 304 10ms - 127.0.0.1
+2025-07-07 16:06:18 [info] GET /api/profile 304 19ms - 127.0.0.1
+2025-07-07 16:07:01 [info] GET /api/profile 304 158ms - 127.0.0.1
+2025-07-07 16:09:14 [info] GET /api/profile 304 201ms - 127.0.0.1
+2025-07-07 16:11:18 [info] GET /api/profile 304 277ms - 127.0.0.1
+2025-07-07 16:11:18 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:11:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:11:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:11:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:11:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:12:03 [info] GET /api/profile 304 139ms - 127.0.0.1
+2025-07-07 16:12:18 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:14:14 [info] GET /api/profile 304 96ms - 127.0.0.1
+2025-07-07 16:14:14 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:16:18 [info] GET /api/profile 304 96ms - 127.0.0.1
+2025-07-07 16:16:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:16:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:16:18 [info] GET /api/profile 304 23ms - 127.0.0.1
+2025-07-07 16:16:18 [info] GET /api/profile 304 13ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 15ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:16:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:16:39 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:17:03 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:17:03 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:17:19 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 16:19:14 [error] Token verification failed:
+2025-07-07 16:19:14 [info] GET /api/profile 401 42ms - 127.0.0.1
+2025-07-07 16:19:14 [info] POST /api/refresh 404 2ms - 127.0.0.1
+2025-07-07 16:19:14 [error] Token verification failed:
+2025-07-07 16:19:14 [info] GET /api/profile 401 2ms - 127.0.0.1
+2025-07-07 16:19:14 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 16:19:14 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 16:19:14 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 16:40:20 [info] POST /api/login 200 607ms - 127.0.0.1
+2025-07-07 16:40:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:41:17 [info] GET /api/profile 304 120ms - 127.0.0.1
+2025-07-07 16:41:18 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:41:18 [info] GET /api/profile 304 24ms - 127.0.0.1
+2025-07-07 16:41:18 [info] GET /api/profile 304 19ms - 127.0.0.1
+2025-07-07 16:41:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:41:18 [info] GET /api/profile 304 13ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:41:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:41:20 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:41:41 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:42:04 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:42:04 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:42:04 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:42:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:42:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:42:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:44:14 [info] GET /api/profile 304 355ms - 127.0.0.1
+2025-07-07 16:44:14 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:44:15 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:44:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:45:21 [info] GET /api/profile 304 114ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 112ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 20ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:46:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 17ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 12ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:46:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:46:41 [info] GET /api/profile 304 21ms - 127.0.0.1
+2025-07-07 16:46:41 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:05 [info] GET /api/profile 304 27ms - 127.0.0.1
+2025-07-07 16:47:05 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:47:05 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:05 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 16:47:05 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:47:19 [info] GET /api/profile 304 33ms - 127.0.0.1
+2025-07-07 16:47:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:47:20 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:47:21 [info] GET /api/profile 304 13ms - 127.0.0.1
+2025-07-07 16:48:19 [info] GET /api/profile 304 113ms - 127.0.0.1
+2025-07-07 16:49:15 [info] GET /api/profile 304 194ms - 127.0.0.1
+2025-07-07 16:49:15 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:49:16 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:49:18 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 16:49:18 [info] GET /api/profile 304 29ms - 127.0.0.1
+2025-07-07 16:49:18 [info] GET /api/profile 304 11ms - 127.0.0.1
+2025-07-07 16:49:18 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:49:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:50:21 [info] GET /api/profile 304 106ms - 127.0.0.1
+2025-07-07 16:50:21 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:17 [info] GET /api/profile 304 96ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 10ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 16ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 12ms - 127.0.0.1
+2025-07-07 16:51:18 [info] GET /api/profile 304 15ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 30ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 13ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 95ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:19 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:20 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 13ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:21 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:22 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:42 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:42 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:42 [info] GET /api/profile 304 2ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 5ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:56 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:57 [info] GET /api/profile 304 7ms - 127.0.0.1
+2025-07-07 16:51:57 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:57 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:51:57 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:57 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 16:51:58 [info] GET /api/profile 304 3ms - 127.0.0.1
+2025-07-07 16:52:08 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 16:57:06 [error] Token verification failed:
+2025-07-07 16:57:06 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 16:57:06 [error] Token verification failed:
+2025-07-07 16:57:06 [info] GET /api/profile 401 2ms - 127.0.0.1
+2025-07-07 16:57:06 [info] POST /api/refresh 404 56ms - 127.0.0.1
+2025-07-07 16:57:06 [info] POST /api/refresh 404 4ms - 127.0.0.1
+2025-07-07 16:57:06 [error] Token verification failed:
+2025-07-07 16:57:06 [info] GET /api/profile 401 41ms - 127.0.0.1
+2025-07-07 16:57:06 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 16:57:25 [info] POST /api/login 200 508ms - 127.0.0.1
+2025-07-07 16:57:25 [info] GET /api/profile 304 9ms - 127.0.0.1
+2025-07-07 17:02:26 [info] GET /api/profile 304 98ms - 127.0.0.1
+2025-07-07 17:03:06 [info] GET /api/profile 304 135ms - 127.0.0.1
+2025-07-07 17:04:50 [info] GET /api/profile 304 102ms - 127.0.0.1
+2025-07-07 17:09:51 [info] GET /api/profile 304 106ms - 127.0.0.1
+2025-07-07 17:11:26 [info] GET /api/profile 304 141ms - 127.0.0.1
+2025-07-07 17:16:27 [error] Token verification failed:
+2025-07-07 17:16:27 [info] GET /api/profile 401 3ms - 127.0.0.1
+2025-07-07 17:16:27 [error] Token verification failed:
+2025-07-07 17:16:27 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 17:16:27 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 17:16:27 [info] POST /api/refresh 404 0ms - 127.0.0.1
+2025-07-07 17:16:27 [error] Token verification failed:
+2025-07-07 17:16:27 [info] GET /api/profile 401 3ms - 127.0.0.1
+2025-07-07 17:16:27 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 17:27:02 [info] POST /api/login 200 571ms - 127.0.0.1
+2025-07-07 17:27:02 [info] GET /api/profile 304 6ms - 127.0.0.1
+2025-07-07 17:32:04 [info] GET /api/profile 304 88ms - 127.0.0.1
+2025-07-07 17:33:06 [info] GET /api/profile 304 200ms - 127.0.0.1
+2025-07-07 17:38:08 [info] GET /api/profile 304 79ms - 127.0.0.1
+2025-07-07 17:40:11 [info] GET /api/profile 304 336ms - 127.0.0.1
+2025-07-07 17:45:09 [error] Token verification failed:
+2025-07-07 17:45:09 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 17:45:09 [error] Token verification failed:
+2025-07-07 17:45:09 [info] GET /api/profile 401 2ms - 127.0.0.1
+2025-07-07 17:45:09 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 17:45:09 [info] POST /api/refresh 404 2ms - 127.0.0.1
+2025-07-07 17:45:09 [error] Token verification failed:
+2025-07-07 17:45:09 [info] GET /api/profile 401 5ms - 127.0.0.1
+2025-07-07 17:45:09 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 17:53:56 [info] POST /api/login 200 1061ms - 127.0.0.1
+2025-07-07 17:53:57 [info] GET /api/profile 304 12ms - 127.0.0.1
+2025-07-07 17:54:33 [info] GET /api/profile 304 86ms - 127.0.0.1
+2025-07-07 17:54:45 [info] GET /api/profile 304 4ms - 127.0.0.1
+2025-07-07 17:59:46 [info] GET /api/profile 304 198ms - 127.0.0.1
+2025-07-07 18:04:46 [info] GET /api/profile 304 161ms - 127.0.0.1
+2025-07-07 18:04:46 [info] GET /api/profile 304 8ms - 127.0.0.1
+2025-07-07 18:09:46 [error] Token verification failed:
+2025-07-07 18:09:46 [info] GET /api/profile 401 9ms - 127.0.0.1
+2025-07-07 18:09:46 [error] Token verification failed:
+2025-07-07 18:09:46 [info] GET /api/profile 401 12ms - 127.0.0.1
+2025-07-07 18:09:46 [info] POST /api/refresh 404 4ms - 127.0.0.1
+2025-07-07 18:09:46 [info] POST /api/refresh 404 2ms - 127.0.0.1
+2025-07-07 18:09:46 [error] Token verification failed:
+2025-07-07 18:09:46 [info] GET /api/profile 401 7ms - 127.0.0.1
+2025-07-07 18:09:46 [info] POST /api/refresh 404 1ms - 127.0.0.1
+2025-07-07 21:13:50 [info] POST /api/login 200 1373ms - 127.0.0.1
+2025-07-07 21:13:50 [info] GET /api/profile 304 17ms - 127.0.0.1
+2025-07-07 21:34:53 [info] POST /api/login 200 1231ms - 127.0.0.1
+2025-07-07 21:34:53 [info] GET /api/profile 200 13ms - 127.0.0.1
+2025-07-08 11:47:07 [info] Environment Configuration:
+2025-07-08 11:47:08 [info] Server running on port 3406
+2025-07-08 11:47:08 [info] Allowed CORS origins: http://localhost:8005, http://localhost:8006, http://localhost:8007, http://localhost:8008, http://localhost:3000, http://127.0.0.1:5500, http://127.0.0.1:5501, http://127.0.0.1:5502, http://44.223.23.145:8005, http://44.223.23.145:8006, http://44.223.23.145:8007, http://44.223.23.145:8008, http://44.223.23.145:8012, http://localhost:8025
+2025-07-08 11:47:08 [info] Environment: development
+2025-07-08 11:47:10 [info] Successfully connected to PostgreSQL
+2025-07-08 11:47:11 [info] Database schema initialized successfully
+2025-07-08 11:48:32 [info] GET /api/requests?employeeId=ATS0121 404 8ms - 127.0.0.1
+2025-07-08 11:49:12 [info] GET /api/requests?employeeId=ATS0121 404 4ms - 127.0.0.1

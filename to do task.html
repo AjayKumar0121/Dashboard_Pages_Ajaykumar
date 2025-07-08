@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Allocation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            color: #000000;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            height: 120px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            width: 98%;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+        header p {
+            font-weight: 100;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        @keyframes moveCircles {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-50%); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 10s infinite linear;
+        }
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+        .circle:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 12s;
+        }
+        .circle:nth-child(3) {
+            top: 80%;
+            left: 40%;
+            animation-duration: 15s;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            height: 100%;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .panel-title {
+            display: flex;
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3a0098;
+        }
+        .work-items {
+            display: grid;
+            grid-template-columns: 1fr;
+            height: 600px;
+            overflow: auto;
+            gap: 1rem;
+        }
+        .work-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #6b19f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .work-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .work-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+        .work-project {
+            font-size: 0.9rem;
+            color: #6e48aa;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .work-data {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #000000;
+        }
+        .work-data div {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .work-data i {
+            font-size: 1rem;
+            font-style: normal;
+            color: #000d9b;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        .status-pending {
+            background: #fff4e5;
+            color: #ff9500;
+        }
+        .status-inprocess {
+            background: #e5f6ff;
+            color: #0077ff;
+        }
+        .status-completed {
+            background: #e5ffe7;
+            color: #00aa33;
+        }
+        .status-assigned {
+            background: #e0e7ff;
+            color: #4361ee;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #000000;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #150389;
+        }
+        .form-control[readonly] {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .form-select {
+            appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #2724d8 0%, #509ebb 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        .history-container {
+            height: 260px;
+            overflow: auto;
+            margin-top: 2rem;
+        }
+        .history-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-info h4 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        .history-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        .history-date {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem 0;
+            color: #777;
+        }
+        .empty-state img {
+            width: 120px;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+        .alert-message {
+            background: #ffe5e5;
+            color: #d32f2f;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            .panel {
+                padding: 1rem;
+            }
+            .panel-title {
+                font-size: 1.3rem;
+            }
+            .work-card {
+                padding: 1rem;
+            }
+            .work-title {
+                font-size: 1.1rem;
+            }
+            .work-data {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode header {
+            background: linear-gradient(135deg, #3a0098 0%, #150389 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .dark-mode header h1 {
+            color: white;
+        }
+        .dark-mode header p {
+            color: #dddddd;
+        }
+        .dark-mode .panel {
+            background: #1e1e1e;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+        .dark-mode .panel-title {
+            color: #6400fa;
+        }
+        .dark-mode .work-card {
+            background: #252525;
+            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #4100a2;
+        }
+        .dark-mode .work-title {
+            color: #ffffff;
+        }
+        .dark-mode .work-project {
+            color: #ffffff;
+        }
+        .dark-mode .work-data i {
+            color: #ffffff;
+        }
+        .dark-mode .work-data {
+            color: white;
+        }
+        .dark-mode .form-control {
+            background: #252525;
+            color: #ffffff;
+            border: 1px solid #555;
+        }
+        .dark-mode .form-control[readonly] {
+            background: #333333;
+            color: #ffffff;
+        }
+        .dark-mode label {
+            color: white;
+        }
+        .dark-mode .form-control:focus {
+            border-color: #a970ff;
+        }
+        .dark-mode .btn {
+            background: linear-gradient(135deg, #5724d8 0%, #509ebb 100%);
+            color: white;
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+        }
+        .dark-mode .history-item {
+            background: #252525;
+            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+        }
+        .dark-mode .history-info h4 {
+            color: #ffffff;
+        }
+        .dark-mode .history-info p {
+            color: #ffffff;
+        }
+        .dark-mode .history-date {
+            color: #ffffff;
+        }
+        .dark-mode .empty-state {
+            color: #ffffff;
+        }
+        .dark-mode .error-message {
+            color: #ff8080;
+        }
+        .dark-mode .alert-message {
+            background: #4a2a2a;
+            color: #ff8080;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner-background">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <h1>Work Allocation</h1>
+        <p>Track, manage and update your assigned work</p>
+    </header>
+    <div class="alert-message" id="global-error">Failed to load employee details. Please log in again.</div>
+    <div class="dashboard">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Allocated Work</h2>
+            </div>
+            <div class="work-items" id="workItemsContainer">
+                <!-- Work items will be inserted here -->
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Submit Your Work</h2>
+            </div>
+            <form id="workUpdateForm" novalidate>
+                <div class="form-group">
+                    <label for="task-name" class="form-label">Work Item Name</label>
+                    <input type="text" id="task-name" class="form-control" name="taskName" required minlength="5" maxlength="50" placeholder="Enter Work Item name">
+                    <div class="error-message" id="task-name-error">Invalid Work Item name: No leading/trailing spaces, no consecutive spaces, must start with a letter, only letters, numbers, spaces, hyphens, underscores, min 5 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label for="employee-name" class="form-label">Employee Name</label>
+                    <input type="text" id="employee-name" class="form-control" name="employeeName" required minlength="3" maxlength="50" placeholder="Enter your Name">
+                    <div class="error-message" id="employee-name-error">Invalid employee name: No leading/trailing spaces, no consecutive spaces, only letters and allowed dots (e.g., John.M.Doe Smith.Jr).</div>
+                </div>
+                <div class="form-group">
+                    <label for="employee-id" class="form-label">Employee ID</label>
+                    <input type="text" id="employee-id" class="form-control" name="employeeId" pattern="^[ATS]{3}0(?!000)[0-9]{3}$" required minlength="7" maxlength="7" placeholder="Enter Your ID (e.g., ATS0xxx)">
+                    <div class="error-message" id="employee-id-error">Employee ID must be in the format ATS0xxx.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" name="email" required placeholder="Enter your Email (e.g., name@gmail.com)">
+                    <div class="error-message" id="email-error">Email must be 3-50 characters before @gmail.com, no special characters except dots/underscores.</div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" class="form-control" name="description" rows="3" placeholder="Describe the work" maxlength="200" required></textarea>
+                    <div class="error-message" id="description-error">Invalid description: No leading/trailing spaces, no consecutive spaces, must start with a letter, end with a letter or number, only letters, numbers, spaces, commas, periods, max 200 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label for="upload-doc" class="form-label">Upload Document</label>
+                    <input type="file" id="upload-doc" class="form-control" name="uploadDoc" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+                    <div class="error-message" id="upload-doc-error">Please upload a valid file (PDF, DOC, DOCX, JPG, JPEG, PNG, TXT, max 5MB).</div>
+                </div>
+                <div class="form-group">
+                    <label for="task-status" class="form-label">Work Status</label>
+                    <select id="task-status" class="form-control form-select" name="taskStatus" required>
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="completed">Completed</option>
+                        <option value="inprocess">In Process</option>
+                    </select>
+                    <div class="error-message" id="task-status-error">Please select a work status.</div>
+                </div>
+                <button type="submit" class="btn btn-block" disabled>Submit Work Update</button>
+            </form>
+        </div>
+    </div>
+    <div class="panel history-container">
+        <div class="panel-header">
+            <h2 class="panel-title" id="title">Work History</h2>
+        </div>
+        <div id="workHistoryContainer">
+            <!-- History items will be inserted here -->
+        </div>
+    </div>
+    <script>
+        const API_BASE_URL = 'http://44.223.23.145:3423/api';
+        let validationTimeout;
+
+        class WorkAllocationApp {
+            constructor() {
+                this.touched = {
+                    'task-name': false,
+                    'employee-name': false,
+                    'employee-id': false,
+                    'email': false,
+                    'description': false,
+                    'upload-doc': false,
+                    'task-status': false
+                };
+                this.init();
+            }
+
+            init() {
+                this.setupValidation();
+                this.setupDarkMode();
+
+                const employeeIdInput = this.employeeId;
+                const employeeNameInput = this.employeeName;
+                const emailInput = this.email;
+                const globalError = document.getElementById('global-error');
+
+                try {
+                    const userData = JSON.parse(localStorage.getItem('abccompanyempdetails'));
+                    if (!userData || !userData.emp_id || !userData.name || !userData.email) {
+                        throw new Error('Missing or invalid employee details in localStorage');
+                    }
+
+                    // Validate and populate employee ID
+                    if (this.validateEmployeeId(userData.emp_id, false)) {
+                        employeeIdInput.value = userData.emp_id;
+                        employeeIdInput.readOnly = true;
+                    } else {
+                        throw new Error('Invalid employee ID in localStorage');
+                    }
+
+                    // Validate and populate employee name
+                    if (this.validateEmployeeName(userData.name, false)) {
+                        employeeNameInput.value = userData.name;
+                        employeeNameInput.readOnly = true;
+                    } else {
+                        throw new Error('Invalid employee name in localStorage');
+                    }
+
+                    // Validate and populate email
+                    if (this.validateEmail(userData.email, false)) {
+                        emailInput.value = userData.email;
+                        emailInput.readOnly = true;
+                    } else {
+                        throw new Error('Invalid email in localStorage');
+                    }
+
+                    // Fetch data if valid employee ID
+                    this.loadWorkItems(employeeIdInput.value.trim());
+                    this.loadHistory(employeeIdInput.value.trim());
+                } catch (err) {
+                    console.error('Error loading employee details:', err);
+                    globalError.style.display = 'block';
+                }
+
+                // Update submit button state
+                this.updateSubmitButton();
+            }
+
+            get employeeId() { return document.getElementById('employee-id'); }
+            get employeeName() { return document.getElementById('employee-name'); }
+            get email() { return document.getElementById('email'); }
+            get taskName() { return document.getElementById('task-name'); }
+            get description() { return document.getElementById('description'); }
+            get uploadDoc() { return document.getElementById('upload-doc'); }
+            get taskStatus() { return document.getElementById('task-status'); }
+            get workUpdateForm() { return document.getElementById('workUpdateForm'); }
+
+            setupDarkMode() {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                document.body.classList.toggle('dark-mode', isDarkMode);
+            }
+
+            setupValidation() {
+                const inputs = [
+                    { id: 'task-name', errorId: 'task-name-error', validate: () => this.validateTaskName() },
+                    { id: 'employee-name', errorId: 'employee-name-error', validate: () => this.validateEmployeeName() },
+                    { id: 'employee-id', errorId: 'employee-id-error', validate: () => this.validateEmployeeId() },
+                    { id: 'email', errorId: 'email-error', validate: () => this.validateEmail() },
+                    { id: 'description', errorId: 'description-error', validate: () => this.validateDescription() },
+                    { id: 'upload-doc', errorId: 'upload-doc-error', validate: () => this.validateUploadDoc() },
+                    { id: 'task-status', errorId: 'task-status-error', validate: () => this.validateTaskStatus() }
+                ];
+
+                inputs.forEach(({ id, validate }) => {
+                    const input = document.getElementById(id);
+                    input.addEventListener('input', () => {
+                        this.touched[id] = true;
+                        clearTimeout(validationTimeout);
+                        validationTimeout = setTimeout(() => {
+                            validate();
+                            this.updateSubmitButton();
+                        }, 500);
+                    });
+                    input.addEventListener('change', () => {
+                        this.touched[id] = true;
+                        validate();
+                        this.updateSubmitButton();
+                    });
+                });
+
+                this.workUpdateForm.addEventListener('submit', (e) => this.saveCompletedTask(e));
+            }
+
+            validateTaskName(showError = true) {
+                if (!this.touched['task-name'] && showError) return true;
+                const input = this.taskName;
+                const error = document.getElementById('task-name-error');
+                const value = input.value;
+                const onlySpaces = /^\s*$/;
+                const nameRegex = /^[A-Za-z][A-Za-z0-9\s\-_]*[A-Za-z0-9]$/;
+                const consecutiveSpaces = /\s{2,}/;
+                const leadingTrailingSpaces = /^\s+|\s+$/;
+                if (onlySpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Work Item name is required and cannot be only spaces.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (leadingTrailingSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No leading or trailing spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (consecutiveSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No consecutive spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (value.trim().length < 5) {
+                    if (showError) {
+                        error.textContent = 'Work Item name must be at least 5 characters long (excluding spaces).';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (value.length > 50) {
+                    if (showError) {
+                        error.textContent = 'Work Item name cannot exceed 50 characters.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (!nameRegex.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Invalid Work Item name: Must start with a letter, end with a letter or number, only letters, numbers, spaces, hyphens, underscores.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateEmployeeName(showError = true) {
+                if (this.employeeName.readOnly || (!this.touched['employee-name'] && showError)) return true;
+                const input = this.employeeName;
+                const error = document.getElementById('employee-name-error');
+                const value = input.value;
+                const onlySpaces = /^\s*$/;
+                const nameRegex = /^[A-Za-z]+(?:\.[A-Za-z]+)*(?: [A-Za-z]+)*(?:\.[A-Za-z]+){0,3}$/;
+                const consecutiveSpaces = /\s{2,}/;
+                const leadingTrailingSpaces = /^\s+|\s+$/;
+                if (onlySpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Employee name is required and cannot be only spaces.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (leadingTrailingSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No leading or trailing spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (consecutiveSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No consecutive spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (value.length < 3) {
+                    if (showError) {
+                        error.textContent = 'Employee name must be at least 3 characters long.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (value.length > 50) {
+                    if (showError) {
+                        error.textContent = 'Employee name cannot exceed 50 characters.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (!nameRegex.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Invalid employee name: Only letters, single spaces, and up to 3 dot-separated suffixes (e.g., John.M.Doe Smith.Jr).';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateEmployeeId(showError = true) {
+                if (this.employeeId.readOnly || (!this.touched['employee-id'] && showError)) return true;
+                const input = this.employeeId;
+                const error = document.getElementById('employee-id-error');
+                const value = input.value.trim();
+                const onlySpaces = /^\s*$/;
+                const idRegex = /^[ATS]{3}0(?!000)[0-9]{3}$/;
+                if (onlySpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Employee ID is required and cannot be only spaces.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (!idRegex.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Employee ID must be in the format ATS0xxx.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateEmail(showError = true) {
+                if (this.email.readOnly || (!this.touched['email'] && showError)) return true;
+                const input = this.email;
+                const error = document.getElementById('email-error');
+                const value = input.value.trim();
+                const onlySpaces = /^\s*$/;
+                const emailRegex = /^[a-zA-Z0-9._]{3,50}@gmail\.com$/;
+                if (onlySpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Email is required and cannot be only spaces.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (!emailRegex.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Email must be 3-50 characters before @gmail.com, no special characters except dots/underscores.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateDescription(showError = true) {
+                if (!this.touched['description'] && showError) return true;
+                const input = this.description;
+                const error = document.getElementById('description-error');
+                const value = input.value;
+                const onlySpaces = /^\s*$/;
+                const descRegex = /^[A-Za-z][A-Za-z0-9\s,.]*[A-Za-z0-9]$/;
+                const consecutiveSpaces = /\s{2,}/;
+                const leadingTrailingSpaces = /^\s+|\s+$/;
+                const invalidConsecutive = /(,{2,}|\.{2,}|,\s,|\.\s\.|,\s\.|\.\s,)/;
+                if (onlySpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Description is required and cannot be only spaces.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (leadingTrailingSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No leading or trailing spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (consecutiveSpaces.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No consecutive spaces allowed.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (value.length > 200) {
+                    if (showError) {
+                        error.textContent = 'Description cannot exceed 200 characters.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (!descRegex.test(value)) {
+                    if (showError) {
+                        error.textContent = 'Invalid description: Must start with a letter, end with a letter or number, only letters, numbers, spaces, commas, periods.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                if (invalidConsecutive.test(value)) {
+                    if (showError) {
+                        error.textContent = 'No consecutive commas, periods, or invalid punctuation patterns.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateUploadDoc(showError = true) {
+                if (!this.touched['upload-doc'] && showError) return true;
+                const input = this.uploadDoc;
+                const error = document.getElementById('upload-doc-error');
+                const files = input.files;
+                if (files.length === 0) {
+                    if (showError) {
+                        error.textContent = 'Please upload a file.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                const validTypes = [
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'image/jpeg',
+                    'image/png',
+                    'text/plain'
+                ];
+                for (const file of files) {
+                    if (!validTypes.includes(file.type)) {
+                        if (showError) {
+                            error.textContent = 'Only PDF, DOC, DOCX, JPG, JPEG, PNG, or TXT files allowed.';
+                            error.style.display = 'block';
+                        }
+                        return false;
+                    }
+                    if (file.size > 5 * 1024 * 1024) {
+                        if (showError) {
+                            error.textContent = 'Each file must be under 5MB.';
+                            error.style.display = 'block';
+                        }
+                        return false;
+                    }
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateTaskStatus(showError = true) {
+                if (!this.touched['task-status'] && showError) return true;
+                const input = this.taskStatus;
+                const error = document.getElementById('task-status-error');
+                const value = input.value;
+                if (!value) {
+                    if (showError) {
+                        error.textContent = 'Please select a work status.';
+                        error.style.display = 'block';
+                    }
+                    return false;
+                }
+                error.style.display = 'none';
+                return true;
+            }
+
+            validateAllFields() {
+                return [
+                    this.validateTaskName(),
+                    this.validateEmployeeName(),
+                    this.validateEmployeeId(),
+                    this.validateEmail(),
+                    this.validateDescription(),
+                    this.validateUploadDoc(),
+                    this.validateTaskStatus()
+                ].every(valid => valid);
+            }
+
+            updateSubmitButton() {
+                const submitButton = this.workUpdateForm.querySelector('button[type="submit"]');
+                submitButton.disabled = !this.validateAllFields();
+            }
+
+            async loadWorkItems(empId = null) {
+                const container = document.getElementById('workItemsContainer');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="Loading">
+                        <h3>Loading work items...</h3>
+                    </div>
+                `;
+                try {
+                    const response = await fetch(`${API_BASE_URL}/tasks`, {
+                        headers: { 'Accept': 'application/json' },
+                        mode: 'cors'
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    let tasks = await response.json();
+                    if (empId) {
+                        tasks = tasks.filter(task => task.employee_id === empId);
+                    }
+                    if (!Array.isArray(tasks) || tasks.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No work items">
+                                <h3>No work items assigned</h3>
+                                <p>You currently don't have any assigned work items</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    container.innerHTML = '';
+                    tasks.forEach(task => {
+                        const workCard = document.createElement('div');
+                        workCard.className = 'work-card';
+                        let statusBadge = '';
+                        const status = task.status || 'assigned';
+                        if (status === 'pending') {
+                            statusBadge = '<span class="status-badge status-pending">Pending</span>';
+                        } else if (status === 'inprocess') {
+                            statusBadge = '<span class="status-badge status-inprocess">In Process</span>';
+                        } else if (status === 'completed') {
+                            statusBadge = '<span class="status-badge status-completed">Completed</span>';
+                        } else {
+                            statusBadge = '<span class="status-badge status-assigned">Assigned</span>';
+                        }
+                        workCard.innerHTML = `
+                            ${statusBadge}
+                            <div class="work-project">HRMS Portal</div>
+                            <h3 class="work-title">${task.task_name}</h3>
+                            <div class="work-data">
+                                <div><i>📅</i> Assigned: ${task.allocated_date ? this.formatDate(task.allocated_date) : 'Not set'}</div>
+                                <div><i>⏰</i> Deadline: ${task.deadline ? this.formatDate(task.deadline) : 'Not set'}</div>
+                            </div>
+                        `;
+                        container.appendChild(workCard);
+                    });
+                } catch (err) {
+                    console.error('Error loading work items:', err);
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No work items">
+                            <h3>Error loading work items</h3>
+                            <p>Unable to load assigned work items: ${err.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            async loadHistory(empId = null) {
+                const historyContainer = document.getElementById('workHistoryContainer');
+                historyContainer.innerHTML = `
+                    <div class="empty-state">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="Loading">
+                        <h3>Loading work history...</h3>
+                    </div>
+                `;
+                try {
+                    const response = await fetch(`${API_BASE_URL}/task-history`, {
+                        headers: { 'Accept': 'application/json' },
+                        mode: 'cors'
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    let taskHistory = await response.json();
+                    if (empId) {
+                        taskHistory = taskHistory.filter(task => task.employee_id === empId);
+                    }
+                    if (!Array.isArray(taskHistory) || taskHistory.length === 0) {
+                        historyContainer.innerHTML = `
+                            <div class="empty-state">
+                                <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No history">
+                                <h3>No work history yet</h3>
+                                <p>Your submitted work updates will appear here</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    historyContainer.innerHTML = '';
+                    taskHistory.forEach(task => {
+                        const historyItem = document.createElement('div');
+                        historyItem.className = 'history-item';
+                        let statusClass = '';
+                        let statusText = '';
+                        if (task.task_status === 'inprocess') {
+                            statusClass = 'status-inprocess';
+                            statusText = 'In Process';
+                        } else if (task.task_status === 'completed') {
+                            statusClass = 'status-completed';
+                            statusText = 'Completed';
+                        } else {
+                            statusClass = 'status-pending';
+                            statusText = 'Pending';
+                        }
+                        historyItem.innerHTML = `
+                            <div class="history-info">
+                                <h4>${task.task_name}</h4>
+                                <p>HRMS Portal • ${task.employee_name} (${task.employee_id})</p>
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                            </div>
+                            <div class="history-date">${this.formatDate(task.allocated_time)}</div>
+                        `;
+                        historyContainer.appendChild(historyItem);
+                    });
+                } catch (err) {
+                    console.error('Error loading history:', err);
+                    historyContainer.innerHTML = `
+                        <div class="empty-state">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No history">
+                            <h3>Error loading history</h3>
+                            <p>Unable to load work history: ${err.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            async saveCompletedTask(event) {
+                event.preventDefault();
+                if (!this.validateAllFields()) {
+                    return;
+                }
+                const form = this.workUpdateForm;
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+
+                const formData = new FormData(form);
+                formData.set('taskName', this.taskName.value.trim());
+                formData.set('employeeName', this.employeeName.value.trim());
+                formData.set('employeeId', this.employeeId.value.trim());
+                formData.set('email', this.email.value.trim());
+                formData.set('description', this.description.value.trim());
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/task-history`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' },
+                        mode: 'cors'
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
+                    }
+                    const result = await response.json();
+                    form.reset();
+                    Object.keys(this.touched).forEach(key => this.touched[key] = false);
+                    this.clearErrors();
+                    await this.loadWorkItems(this.employeeId.readOnly ? this.employeeId.value.trim() : null);
+                    await this.loadHistory(this.employeeId.readOnly ? this.employeeId.value.trim() : null);
+                    alert('Work update submitted successfully!');
+                    this.updateSubmitButton();
+                } catch (err) {
+                    console.error('Error submitting work update:', err);
+                    alert(`Error submitting work update: ${err.message}`);
+                } finally {
+                    submitButton.disabled = !this.validateAllFields();
+                    submitButton.textContent = 'Submit Work Update';
+                }
+            }
+
+            clearErrors() {
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(error => error.style.display = 'none');
+            }
+
+            formatDate(dateString) {
+                if (!dateString) return 'Invalid date';
+                const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                try {
+                    return new Date(dateString).toLocaleDateString('en-US', options);
+                } catch (e) {
+                    return 'Invalid date';
+                }
+            }
+        }
+
+        const app = new WorkAllocationApp();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1486 @@
+Environment Configuration:
+Server running on port 3000
+Allowed CORS origins: http://localhost:8005, http://localhost:8006, http://localhost:8007, http://localhost:8008, http://localhost:3000, http://127.0.0.1:5500, http://127.0.0.1:5501, http://127.0.0.1:5502, http://44.223.23.145:8005, http://44.223.23.145:8006, http://44.223.23.145:8007, http://44.223.23.145:8008, http://44.223.23.145:8012, http://localhost:5500
+Environment: development
+Database client connected
+Successfully connected to PostgreSQL
+Database client connected
+Database schema initialized successfully
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+Login attempt for non-existent email: sample@gmail.com
+POST /api/login 401 1626ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Login attempt for non-existent email: sample@gmail.com
+POST /api/login 401 16ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1277ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 200 43ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 187ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 194ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 131ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+Login attempt for non-existent email: sample@gmail.com
+POST /api/login 401 263ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+User bob@gmail.com logged in successfully
+POST /api/login 200 1131ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 20ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 187ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 205ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 169ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 17ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 602ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 103ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 96ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 104ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User john@gmail.com logged in successfully
+POST /api/login 200 557ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+GET /api/profile 200 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 396ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+GET /api/profile 304 10ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 132ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 111ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 114ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 111ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+Database client connected
+GET /api/profile 304 129ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: john@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1132ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 200 21ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 235ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 220ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 113ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 14ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 20ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1307ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 23ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 163ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 160ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 112ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 403ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 58ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 194ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1331ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 96ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 157ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 38ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 136ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 24ms - 127.0.0.1
+POST /api/refresh 404 27ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+Token verification failed:
+GET /api/profile 401 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 22ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1245ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 86ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 10ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 19ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 158ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 201ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 277ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 139ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 96ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 96ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 23ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 15ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 42ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 607ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 120ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 24ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 19ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 355ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 114ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 112ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 20ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 17ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 21ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 27ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 33ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 113ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 194ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 29ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 11ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 106ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 96ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 10ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 16ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 15ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 30ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 95ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 56ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 41ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 508ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 98ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 135ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 102ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 106ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 141ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 0ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 3ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 571ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 6ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 88ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 200ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 79ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 336ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 5ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1061ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 86ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 198ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+GET /api/profile 304 161ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 9ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 12ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 4ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 2ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+Token verification failed:
+GET /api/profile 401 7ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+POST /api/refresh 404 1ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1373ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 304 17ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Database client connected
+User bob@gmail.com logged in successfully
+POST /api/login 200 1231ms - 127.0.0.1
+Auth Request: POST /api/login
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+GET /api/profile 200 13ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+CORS request from: http://127.0.0.1:5500
+Authenticated request from: bob@gmail.com
+Database client connected
+Environment Configuration:
+Server running on port 3406
+Allowed CORS origins: http://localhost:8005, http://localhost:8006, http://localhost:8007, http://localhost:8008, http://localhost:3000, http://127.0.0.1:5500, http://127.0.0.1:5501, http://127.0.0.1:5502, http://44.223.23.145:8005, http://44.223.23.145:8006, http://44.223.23.145:8007, http://44.223.23.145:8008, http://44.223.23.145:8012, http://localhost:8025
+Environment: development
+Database client connected
+Successfully connected to PostgreSQL
+Database client connected
+Database schema initialized successfully
+CORS request from: http://127.0.0.1:5500
+GET /api/requests?employeeId=ATS0121 404 8ms - 127.0.0.1
+CORS request from: http://127.0.0.1:5500
+GET /api/requests?employeeId=ATS0121 404 4ms - 127.0.0.1

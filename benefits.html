@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyEmployee Benefits Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6b46c1;
+            --primary-light: #9f7aea;
+            --primary-dark: #553c9a;
+            --secondary: #4c68d7;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --danger: #e53e3e;
+            --light: #f8fafc;
+            --dark: #2d3748;
+            --gray: #718096;
+            --gray-light: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #5f1aff, #b74cd7);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .circle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 15s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 20%;
+            animation-duration: 12s;
+        }
+
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 70%;
+            animation-duration: 18s;
+        }
+
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            top: 80%;
+            left: 40%;
+            animation-duration: 10s;
+        }
+
+        @keyframes moveCircles {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(50px, -50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .benefits-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .benefit-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: linear-gradient(rgba(161, 255, 230, 0.489), rgb(255, 221, 255));
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            color: black;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .benefit-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: black;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(46, 1, 152, 0.1);
+            border-radius: 50%;
+        }
+
+        .benefit-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: black;
+        }
+
+        .benefit-card p {
+            font-size: 0.95rem;
+            color: black;
+            margin-bottom: 1rem;
+        }
+
+        .program-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: black;
+            margin-bottom: 1rem;
+        }
+
+        .program-time i {
+            font-size: 1rem;
+        }
+
+        .status-info {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: black;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-info .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-pending {
+            background-color: rgba(214, 158, 46, 0.1);
+            color: var(--warning);
+        }
+
+        .status-approved {
+            background-color: rgba(56, 161, 105, 0.1);
+            color: var(--success);
+        }
+
+        .status-rejected {
+            background-color: rgba(229, 62, 62, 0.1);
+            color: var(--danger);
+        }
+
+        .status-ongoing {
+            background-color: rgba(76, 104, 215, 0.1);
+            color: var(--secondary);
+        }
+
+        .request-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 1rem;
+        }
+
+        .request-form h2 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid black;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.2);
+        }
+
+        .form-control[readonly] {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .form-control:invalid {
+            border-color: black;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .activities-section {
+            width: 100%;
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .activities-table-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .activities-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .activities-table thead {
+            background-color: var(--light);
+        }
+
+        .activities-table th, 
+        .activities-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .activities-table th {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .activities-table td {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .activities-table tr:hover {
+            background-color: rgba(107, 70, 193, 0.03);
+        }
+
+        .view-details-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .view-details-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gray-light);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--shadow-xl);
+            transform: translateY(0);
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .modal-info {
+            margin-bottom: 1rem;
+        }
+
+        .modal-info label {
+            display: block;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-info span {
+            display: block;
+            padding: 0.75rem;
+            background: var(--light);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .modal-divider {
+            height: 1px;
+            background: var(--gray-light);
+            margin: 1.5rem 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .loan-options {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary);
+        }
+
+        .file-upload {
+            margin-top: 1rem;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1rem;
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background: rgba(107, 70, 193, 0.05);
+        }
+
+        .file-upload-label i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-label span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .benefits-section, .form-section {
+                width: 100%;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .benefit-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-buttons button {
+                width: 100%;
+            }
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-warning {
+            color: var(--warning);
+        }
+
+        .text-danger {
+            color: var(--danger);
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <h1>Employee Benefits</h1>
+        <p>Explore and enroll in our exclusive employee benefits programs.</p>
+    </header>
+
+    <div class="container">
+        <section class="benefits-section">
+            <h2 class="section-title">Available Benefits</h2>
+            <div class="benefit-container">
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">🧘</div>
+                        <h3>Yoga and Meditation</h3>
+                        <p>Join weekly sessions to de-stress and improve mental clarity. Perfect for all skill levels.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Every Monday, 10:00 AM
+                        </div>
+                        <div class="status-info" id="status-yoga-and-meditation"></div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">❤️</div>
+                        <h3>Mental Health Support</h3>
+                        <p>Access confidential resources for stress management and emotional well-being.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Available Anytime
+                        </div>
+                        <div class="status-info" id="status-mental-health-support"></div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">🧠</div>
+                        <h3>Awareness Programs</h3>
+                        <p>Participate in monthly programs to boost mental awareness and resilience.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Last Friday of the Month
+                        </div>
+                        <div class="status-info" id="status-awareness-programs"></div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">💰</div>
+                        <h3>Employee Loans</h3>
+                        <p>Request financial assistance with flexible repayment options and low interest rates.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Available Year-Round
+                        </div>
+                        <div class="status-info" id="status-employee-loans"></div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">🏥</div>
+                        <h3>Health Checkup Camps</h3>
+                        <p>Attend quarterly health checkups for you and your family members.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Every Quarter, 9:00 AM
+                        </div>
+                        <div class="status-info" id="status-health-checkup-camps"></div>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">💪</div>
+                        <h3>Gym Membership</h3>
+                        <p>Get discounted access to premium gym facilities and personal trainers.</p>
+                        <div class="program-time">
+                            <i class="far fa-clock"></i> Available Year-Round
+                        </div>
+                        <div class="status-info" id="status-gym-membership"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="request-form">
+                <h2 class="section-title">Request Benefit</h2>
+                <form id="request-form">
+                    <div class="form-group">
+                        <label for="emp-id">Employee ID</label>
+                        <input type="text" id="emp-id" class="form-control" placeholder="ATS0xxx" required minlength="7" maxlength="7">
+                        <div class="error-message" id="emp-id-error">Employee ID must be ATS0 followed by 3 digits (not all zeros)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Employee Name" required>
+                        <div class="error-message" id="name-error">Please enter a valid name (letters and spaces only)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Employee email" required>
+                        <div class="error-message" id="email-error">Email must be 3-50 characters before @gmail.com, no special characters</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="program">Select Benefit</label>
+                        <select id="program" class="form-control" required>
+                            <option value="">Select a benefit</option>
+                            <option value="Yoga and Meditation">🧘 Yoga and Meditation</option>
+                            <option value="Mental Health Support">❤️ Mental Health Support</option>
+                            <option value="Awareness Programs">🧠 Awareness Programs</option>
+                            <option value="Employee Loans">💰 Employee Loans</option>
+                            <option value="Health Checkup Camps">🏥 Health Checkup Camps</option>
+                            <option value="Gym Membership">💪 Gym Membership</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="request-date">Request Date</label>
+                        <input type="date" id="request-date" class="form-control" required>
+                        <div class="error-message" id="date-error">Date must be between today and 6 months from now</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reason">Reason (Optional)</label>
+                        <textarea id="reason" class="form-control" rows="3" placeholder="Brief reason for requesting this benefit"></textarea>
+                        <div class="error-message" id="reason-error">Reason cannot have leading/trailing spaces or consecutive spaces</div>
+                    </div>
+                    
+                    <div class="loan-options" id="loan-options">
+                        <div class="form-group">
+                            <label for="loan-amount">Loan Amount (₹)</label>
+                            <input type="number" id="loan-amount" class="form-control" min="10000" max="1000000" placeholder="Between ₹10,000 to ₹10,00,000">
+                            <div class="error-message" id="loan-amount-error">Amount must be between ₹10,000 and ₹10,00,000</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loan-purpose">Loan Purpose</label>
+                            <select id="loan-purpose" class="form-control">
+                                <option value="">Select purpose</option>
+                                <option value="Medical Emergency">🏥 Medical Emergency</option>
+                                <option value="Education">🎓 Education</option>
+                                <option value="Home Renovation">🏠 Home Renovation</option>
+                                <option value="Vehicle Purchase">🚗 Vehicle Purchase</option>
+                                <option value="Other">❓ Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group file-upload">
+                            <label for="loan-docs">Supporting Documents (Optional)</label>
+                            <label for="loan-docs" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload documents (PDF, JPG, PNG)</span>
+                                <span class="file-name" id="file-name"></span>
+                            </label>
+                            <input type="file" id="loan-docs" accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                            <div class="error-message" id="loan-docs-error">File must be PDF, JPG, JPEG, or PNG (max 5MB)</div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="submit-btn" disabled>
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <section class="activities-section">
+        <h2 class="section-title">My Benefit Requests</h2>
+        <div class="activities-table-container">
+            <table class="activities-table">
+                <thead>
+                    <tr>
+                        <th>Benefit</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="activities-body">
+                    <tr>
+                        <td colspan="4" class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <p>Please enter your Employee ID to view your requests</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="modal" id="details-modal" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Request Details</h2>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="modal-info">
+                <label>Employee Name</label>
+                <span id="detail-name">-</span>
+            </div>
+            
+            <div class="modal-info">
+                <label>Employee ID</label>
+                <span id="detail-emp-id">-</span>
+            </div>
+            
+            <div class="modal-info">
+                <label>Benefit Program</label>
+                <span id="detail-program">-</span>
+            </div>
+            
+            <div class="modal-info">
+                <label>Request Date</label>
+                <span id="detail-date">-</span>
+            </div>
+            
+            <div class="modal-info">
+                <label>Status</label>
+                <span id="detail-status">-</span>
+            </div>
+            
+            <div class="modal-info">
+                <label>Reason</label>
+                <span id="detail-reason">Not specified</span>
+            </div>
+            
+            <div id="loan-details" style="display: none;">
+                <div class="modal-divider"></div>
+                
+                <div class="modal-info">
+                    <label>Loan Amount</label>
+                    <span id="detail-loan-amount">-</span>
+                </div>
+                
+                <div class="modal-info">
+                    <label>Loan Purpose</label>
+                    <span id="detail-loan-purpose">-</span>
+                </div>
+                
+                <div class="modal-info">
+                    <label>Documents</label>
+                    <span id="detail-loan-docs">No documents uploaded</span>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class EmployeeBenefitsApp {
+            constructor() {
+                this.BASE_URL = 'http://44.223.23.145:3422';
+                this.init();
+            }
+            
+            init() {
+                this.setupDateInput();
+                this.setupEventListeners();
+                this.setupValidations();
+
+                // Check if user is logged in and populate employee details
+                const empIdInput = this.empId;
+                const nameInput = this.name;
+                const emailInput = this.email;
+                const userData = JSON.parse(localStorage.getItem('abccompanyempdetails'));
+
+                if (userData) {
+                    // Validate and populate employee ID
+                    if (userData.emp_id && this.validateEmpId(userData.emp_id)) {
+                        empIdInput.value = userData.emp_id;
+                        empIdInput.readOnly = true;
+                    }
+                    // Validate and populate name
+                    if (userData.name && this.validateName(userData.name)) {
+                        nameInput.value = userData.name;
+                        nameInput.readOnly = true;
+                    }
+                    // Validate and populate email
+                    if (userData.email && this.validateEmail(userData.email)) {
+                        emailInput.value = userData.email;
+                        emailInput.readOnly = true;
+                    }
+                    // Fetch requests if valid employee ID is present
+                    if (empIdInput.value && this.validateEmpId(empIdInput.value)) {
+                        this.loadEmployeeRequests(empIdInput.value.trim());
+                    }
+                }
+
+                // Update submit button state after populating fields
+                this.updateSubmitButton();
+            }
+            
+            setupDateInput() {
+                const today = new Date();
+                const sixMonthsLater = new Date();
+                sixMonthsLater.setMonth(today.getMonth() + 6);
+                
+                const dateInput = this.requestDate;
+                dateInput.min = this.formatDateForInput(today);
+                dateInput.max = this.formatDateForInput(sixMonthsLater);
+                dateInput.value = this.formatDateForInput(today);
+            }
+            
+            setupEventListeners() {
+                this.program.addEventListener('change', () => {
+                    const loanOptions = document.getElementById('loan-options');
+                    loanOptions.style.display = this.program.value === 'Employee Loans' ? 'block' : 'none';
+                    this.updateSubmitButton();
+                });
+                
+                this.requestForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.submitRequest();
+                });
+                
+                this.empId.addEventListener('blur', () => {
+                    if (this.validateEmpId(this.empId.value.trim()) && !this.empId.readOnly) {
+                        this.loadEmployeeRequests(this.empId.value.trim());
+                    }
+                });
+                
+                this.loanDocs?.addEventListener('change', (e) => {
+                    const fileName = e.target.files[0]?.name || '';
+                    const fileNameElement = document.getElementById('file-name');
+                    
+                    if (fileName) {
+                        fileNameElement.textContent = fileName;
+                        fileNameElement.style.display = 'block';
+                    } else {
+                        fileNameElement.style.display = 'none';
+                    }
+                    this.updateSubmitButton();
+                });
+            }
+            
+            setupValidations() {
+                this.empId.addEventListener('input', () => {
+                    const isValid = this.validateEmpId(this.empId.value.trim());
+                    this.toggleError('emp-id-error', !isValid && !this.empId.readOnly);
+                    this.empId.setCustomValidity(isValid || this.empId.readOnly ? '' : 'Employee ID must be ATS0 followed by 3 digits (not all zeros)');
+                    this.updateSubmitButton();
+                });
+                
+                this.name.addEventListener('input', () => {
+                    const isValid = this.validateName(this.name.value.trim());
+                    this.toggleError('name-error', !isValid && !this.name.readOnly);
+                    this.name.setCustomValidity(isValid || this.name.readOnly ? '' : 'Invalid name format');
+                    this.updateSubmitButton();
+                });
+                
+                this.email.addEventListener('input', () => {
+                    const isValid = this.validateEmail(this.email.value.trim());
+                    this.toggleError('email-error', !isValid && !this.email.readOnly);
+                    this.email.setCustomValidity(isValid || this.email.readOnly ? '' : 'Email must be 3-50 characters before @gmail.com, no special characters');
+                    this.updateSubmitButton();
+                });
+                
+                this.requestDate.addEventListener('change', () => {
+                    const isValid = this.validateRequestDate(this.requestDate.value);
+                    this.toggleError('date-error', !isValid);
+                    this.requestDate.setCustomValidity(isValid ? '' : 'Invalid date range');
+                    this.updateSubmitButton();
+                });
+                
+                this.reason.addEventListener('input', () => {
+                    const value = this.reason.value.trim();
+                    const hasLeadingTrailing = value !== this.reason.value;
+                    const hasConsecutiveSpaces = /\s{2,}/.test(this.reason.value);
+                    
+                    const isValid = !hasLeadingTrailing && !hasConsecutiveSpaces;
+                    this.toggleError('reason-error', !isValid);
+                    this.reason.setCustomValidity(isValid ? '' : 'Invalid reason format');
+                    this.updateSubmitButton();
+                });
+                
+                this.loanAmount?.addEventListener('input', () => {
+                    const value = parseFloat(this.loanAmount.value);
+                    const isValid = !isNaN(value) && value >= 10000 && value <= 1000000;
+                    this.toggleError('loan-amount-error', !isValid);
+                    this.loanAmount.setCustomValidity(isValid ? '' : 'Invalid amount');
+                    this.updateSubmitButton();
+                });
+                
+                this.loanPurpose?.addEventListener('change', () => {
+                    this.updateSubmitButton();
+                });
+                
+                this.loanDocs?.addEventListener('change', () => {
+                    const file = this.loanDocs.files[0];
+                    const isValid = !file || (/\.(pdf|jpg|jpeg|png)$/i.test(file.name) && file.size <= 5 * 1024 * 1024);
+                    this.toggleError('loan-docs-error', !isValid);
+                    this.loanDocs.setCustomValidity(isValid ? '' : 'File must be PDF, JPG, JPEG, or PNG (max 5MB)');
+                    this.updateSubmitButton();
+                });
+            }
+            
+            get empId() { return document.getElementById('emp-id'); }
+            get name() { return document.getElementById('name'); }
+            get email() { return document.getElementById('email'); }
+            get program() { return document.getElementById('program'); }
+            get requestDate() { return document.getElementById('request-date'); }
+            get reason() { return document.getElementById('reason'); }
+            get loanAmount() { return document.getElementById('loan-amount'); }
+            get loanPurpose() { return document.getElementById('loan-purpose'); }
+            get loanDocs() { return document.getElementById('loan-docs'); }
+            get submitBtn() { return document.getElementById('submit-btn'); }
+            get requestForm() { return document.getElementById('request-form'); }
+            
+            formatDateForInput(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            validateEmpId(empId) {
+                if (this.empId.readOnly) return true;
+                return /^ATS0(?!000)[0-9]{3}$/.test(empId);
+            }
+            
+            validateName(name) {
+                if (this.name.readOnly) return true;
+                return /^[A-Za-z\s]+$/.test(name) && name.trim().length > 0;
+            }
+            
+            validateEmail(email) {
+                if (this.email.readOnly) return true;
+                return /^[a-zA-Z0-9._-]{3,50}@gmail\.com$/.test(email);
+            }
+            
+            validateRequestDate(date) {
+                if (!date) return false;
+                const selectedDate = new Date(date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const sixMonthsLater = new Date();
+                sixMonthsLater.setMonth(today.getMonth() + 6);
+                return selectedDate >= today && selectedDate <= sixMonthsLater;
+            }
+            
+            validateReason(reason) {
+                return reason === '' || (reason.trim() === reason && !/\s{2,}/.test(reason));
+            }
+            
+            validateLoanAmount(amount) {
+                const value = parseFloat(amount);
+                return !isNaN(value) && value >= 10000 && value <= 1000000;
+            }
+            
+            validateAllFields() {
+                const nameValid = this.validateName(this.name.value.trim());
+                const emailValid = this.validateEmail(this.email.value.trim());
+                const empIdValid = this.validateEmpId(this.empId.value.trim());
+                const programValid = this.program.value !== '';
+                const dateValid = this.validateRequestDate(this.requestDate.value);
+                const reasonValid = this.validateReason(this.reason.value.trim());
+                let loanAmountValid = true;
+                let loanPurposeValid = true;
+                let loanDocsValid = true;
+                
+                if (this.program.value === 'Employee Loans') {
+                    const amount = this.loanAmount?.value;
+                    loanAmountValid = amount ? this.validateLoanAmount(amount) : false;
+                    loanPurposeValid = this.loanPurpose?.value !== '';
+                    const file = this.loanDocs?.files[0];
+                    loanDocsValid = !file || (/\.(pdf|jpg|jpeg|png)$/i.test(file.name) && file.size <= 5 * 1024 * 1024);
+                }
+                
+                return nameValid && emailValid && empIdValid && programValid && dateValid && reasonValid && loanAmountValid && loanPurposeValid && loanDocsValid;
+            }
+            
+            updateSubmitButton() {
+                this.submitBtn.disabled = !this.validateAllFields();
+            }
+            
+            toggleError(errorId, show) {
+                document.getElementById(errorId).style.display = show ? 'block' : 'none';
+            }
+            
+            async loadEmployeeRequests(empId) {
+                try {
+                    const response = await fetch(`${this.BASE_URL}/api/requests/emp/${empId}`);
+                    if (response.ok) {
+                        const requests = await response.json();
+                        this.updateActivitiesTable(requests);
+                        this.updateStatusIndicators(requests);
+                    } else {
+                        console.error('Error loading requests');
+                        this.updateActivitiesTable([]);
+                    }
+                } catch (e) {
+                    console.error('Error:', e);
+                    this.updateActivitiesTable([]);
+                }
+            }
+            
+            updateActivitiesTable(requests) {
+                const tbody = document.getElementById('activities-body');
+                tbody.innerHTML = '';
+                
+                if (requests.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="empty-state">
+                                <i class="far fa-folder-open"></i>
+                                <p>No requests found for this employee</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                requests.forEach(req => {
+                    const tr = document.createElement('tr');
+                    const date = new Date(req.request_date).toLocaleDateString();
+                    const statusClass = `status-${req.status.toLowerCase()}`;
+                    
+                    tr.innerHTML = `
+                        <td>${req.program}</td>
+                        <td>${date}</td>
+                        <td><span class="status-badge ${statusClass}">${req.status}</span></td>
+                        <td>
+                            <button class="view-details-btn" onclick="app.showRequestDetails(${req.id})">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            
+            updateStatusIndicators(requests) {
+                document.querySelectorAll('.status-info').forEach(el => {
+                    el.innerHTML = '';
+                });
+                
+                requests.forEach(req => {
+                    const programId = req.program.toLowerCase().replace(/\s+/g, '-');
+                    const statusDiv = document.getElementById(`status-${programId}`);
+                    if (statusDiv) {
+                        const date = new Date(req.request_date).toLocaleDateString();
+                        
+                        const statusBadge = document.createElement('span');
+                        statusBadge.className = `status-badge status-${req.status.toLowerCase()}`;
+                        statusBadge.innerHTML = `<i class="fas fa-circle"></i> ${req.status}`;
+                        
+                        const dateSpan = document.createElement('span');
+                        dateSpan.textContent = `Requested: ${date}`;
+                        
+                        statusDiv.appendChild(statusBadge);
+                        statusDiv.appendChild(dateSpan);
+                        
+                        if (['Yoga and Meditation', 'Awareness Programs', 'Health Checkup Camps'].includes(req.program)) {
+                            if (req.status === 'Approved') {
+                                const ongoingBadge = document.createElement('span');
+                                ongoingBadge.className = 'status-badge status-ongoing';
+                                ongoingBadge.innerHTML = `<i class="fas fa-sync-alt"></i> Ongoing`;
+                                statusDiv.appendChild(ongoingBadge);
+                            }
+                        }
+                    }
+                });
+            }
+            
+            async showRequestDetails(requestId) {
+                try {
+                    const response = await fetch(`${this.BASE_URL}/api/requests/emp/${this.empId.value.trim()}`);
+                    const requests = await response.json();
+                    const request = requests.find(r => r.id === requestId);
+                    if (!request) {
+                        this.showAlert('Request not found', 'error');
+                        return;
+                    }
+                    this.displayRequestDetails(request);
+                } catch (e) {
+                    console.error('Error:', e);
+                    this.showAlert('Error loading request details', 'error');
+                }
+            }
+            
+            displayRequestDetails(request) {
+                document.getElementById('detail-name').textContent = request.name;
+                document.getElementById('detail-emp-id').textContent = request.emp_id;
+                document.getElementById('detail-program').textContent = request.program;
+                document.getElementById('detail-date').textContent = new Date(request.request_date).toLocaleDateString();
+                
+                const statusElement = document.getElementById('detail-status');
+                statusElement.textContent = request.status;
+                statusElement.className = `status-badge status-${request.status.toLowerCase()}`;
+                
+                document.getElementById('detail-reason').textContent = request.reason || 'Not specified';
+                
+                const loanDetails = document.getElementById('loan-details');
+                if (request.program === 'Employee Loans') {
+                    loanDetails.style.display = 'block';
+                    document.getElementById('detail-loan-amount').textContent = request.amount ? 
+                        `₹${parseInt(request.amount).toLocaleString('en-IN')}` : 'Not specified';
+                    document.getElementById('detail-loan-purpose').textContent = request.loan_type || 'Not specified';
+                    
+                    const docsElement = document.getElementById('detail-loan-docs');
+                    if (request.document_path) {
+                        // Normalize path to handle both forward and backslashes
+                        const normalizedPath = request.document_path.replace(/\\/g, '/');
+                        const filename = normalizedPath.split('/').pop();
+                        docsElement.innerHTML = `<a href="${this.BASE_URL}/download/${encodeURIComponent(filename)}" target="_blank" class="text-primary">
+                            <i class="fas fa-file-download"></i> Download Document
+                        </a>`;
+                    } else {
+                        docsElement.textContent = 'No documents uploaded';
+                    }
+                } else {
+                    loanDetails.style.display = 'none';
+                }
+                
+                document.getElementById('details-modal').style.display = 'flex';
+            }
+            
+            closeModal() {
+                document.getElementById('details-modal').style.display = 'none';
+            }
+            
+            showAlert(message, type = 'success') {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                alert.style.position = 'fixed';
+                alert.style.top = '20px';
+                alert.style.right = '20px';
+                alert.style.padding = '1rem';
+                alert.style.borderRadius = 'var(--radius-md)';
+                alert.style.boxShadow = 'var(--shadow-md)';
+                alert.style.zIndex = '1000';
+                alert.style.animation = 'slideIn 0.3s ease';
+                
+                if (type === 'success') {
+                    alert.style.backgroundColor = 'var(--success)';
+                    alert.style.color = 'white';
+                } else {
+                    alert.style.backgroundColor = 'var(--danger)';
+                    alert.style.color = 'white';
+                }
+                
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(alert);
+                    }, 300);
+                }, 3000);
+            }
+            
+            async submitRequest() {
+                this.submitBtn.disabled = true;
+                this.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                
+                const name = this.name.value.trim();
+                const email = this.email.value.trim();
+                const empId = this.empId.value.trim();
+                const program = this.program.value;
+                const date = this.requestDate.value;
+                const reason = this.reason.value.trim();
+                const loanAmount = this.loanAmount?.value;
+                const loanPurpose = this.loanPurpose?.value;
+                const loanDocs = this.loanDocs?.files[0];
+                
+                if (!this.validateAllFields()) {
+                    this.submitBtn.disabled = false;
+                    this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
+                    return;
+                }
+                
+                const oneTimePrograms = ['Yoga and Meditation', 'Mental Health Support', 'Awareness Programs', 'Health Checkup Camps', 'Gym Membership'];
+                if (oneTimePrograms.includes(program)) {
+                    try {
+                        const response = await fetch(`${this.BASE_URL}/api/requests/emp/${empId}`);
+                        const requests = await response.json();
+                        const existingRequest = requests.find(req => req.program === program && req.status !== 'Rejected');
+                        if (existingRequest) {
+                            this.showAlert(`You already have a ${existingRequest.status.toLowerCase()} request for ${program}`, 'error');
+                            this.submitBtn.disabled = false;
+                            this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
+                            return;
+                        }
+                    } catch (e) {
+                        console.error('Error checking existing requests:', e);
+                    }
+                }
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('email', email);
+                    formData.append('empId', empId);
+                    formData.append('program', program);
+                    formData.append('date', date);
+                    formData.append('reason', reason || '');
+                    formData.append('status', 'Pending');
+                    
+                    if (program === 'Employee Loans') {
+                        formData.append('amount', loanAmount);
+                        formData.append('loan_type', loanPurpose);
+                        if (loanDocs) formData.append('document', loanDocs);
+                    }
+                    
+                    const response = await fetch(`${this.BASE_URL}/api/requests`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        this.showAlert('🎉 Request submitted successfully!');
+                        this.loadEmployeeRequests(empId);
+                        this.requestForm.reset();
+                        document.getElementById('loan-options').style.display = 'none';
+                        document.getElementById('file-name').style.display = 'none';
+                        
+                        const today = new Date();
+                        this.requestDate.value = this.formatDateForInput(today);
+                        this.updateSubmitButton();
+                    } else {
+                        const error = await response.json();
+                        this.showAlert(error.error || 'Error submitting request', 'error');
+                    }
+                } catch (e) {
+                    console.error('Error:', e);
+                    this.showAlert('Error connecting to server. Please try again.', 'error');
+                }
+                
+                this.submitBtn.disabled = false;
+                this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
+            }
+        }
+
+        const app = new EmployeeBenefitsApp();
+        window.app = app;
+        
+        function closeModal() {
+            app.closeModal();
+        }
+    </script>
+</body>
+</html>
