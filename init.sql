@@ -33,17 +33,21 @@ CREATE TABLE auth_sessions (
     expires_at TIMESTAMP NOT NULL
 );
 
--- Create personnel table
+-- Create personnel table (using employees structure)
 CREATE TABLE personnel (
-    emp_id VARCHAR(50) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    job_role VARCHAR(100),
-    location VARCHAR(100),
-    department VARCHAR(100),
-    hire_date DATE,
-    phone VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id VARCHAR(7) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    role VARCHAR(40) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    dob DATE NOT NULL,
+    location VARCHAR(40) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(10) NOT NULL,
+    join_date DATE NOT NULL,
+    experience INTEGER NOT NULL,
+    skills TEXT NOT NULL,
+    achievement TEXT NOT NULL,
+    profile_image VARCHAR(255)
 );
 
 -- Create indexes for optimized querying
@@ -52,19 +56,10 @@ CREATE INDEX idx_sessions_user ON auth_sessions(user_id);
 CREATE INDEX idx_sessions_token ON auth_sessions(token);
 CREATE INDEX idx_personnel_email ON personnel(email);
 
--- Insert into user_accounts table (using provided bcrypt hash for 'password123')
+-- Insert sample users into user_accounts table (using same bcrypt hash for 'password123')
 INSERT INTO user_accounts (username, email, password, profile_image) VALUES
-('abc', 'john@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL),
-('abced', 'jane@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL),
-('abcedf', 'alice@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL),
-('emloyee', 'bob@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL),
-('employye abc', 'emma@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL);
+('sampleuser', 'sample@gmail.com', '$2b$12$fPDP31Z0L5jKGw3QMGOkGOaeRWq2SCydyGnWWYGsrxLnIij/zbJTO', NULL);
 
--- Insert into personnel table
-INSERT INTO personnel (emp_id, name, email, job_role, location, department, hire_date, phone) VALUES
-('ATS0121', 'ajay', 'john@gmail.com', 'Software Engineer', 'New York', 'Engineering', '2023-01-15', '123-456-7890'),
-('ATS0141', 'AjayKumar', 'sample@gmail.com', 'Software Engineer', 'New York', 'Engineering', '2023-01-15', '123-456-7890'),
-('ATS0132', 'Employee a', 'jane@gmail.com', 'Product Manager', 'San Francisco', 'Product', '2022-06-01', '234-567-8901'),
-('ATS0143', 'Abc', 'alice@gmail.com', 'Data Analyst', 'Chicago', 'Analytics', '2023-03-10', '345-678-9012'),
-('ATS0134', 'Abcd', 'bob@gmail.com', 'DevOps Engineer', 'Seattle', 'Engineering', '2021-11-20', '456-789-0123'),
-('ATS0125', 'abcdef', 'abcedf@gmail.com', 'HR Specialist', 'Boston', 'Human Resources', '2022-09-05', '567-890-1234');
+-- Insert personnel data (based on employees table structure)
+INSERT INTO personnel (id, name, role, gender, dob, location, email, phone, join_date, experience, skills, achievement, profile_image) VALUES
+('ATS0050', 'Sample User', 'Junior Java Developer', 'Male', '1998-04-15', 'Hyd', 'sample@gmail.com', '6789012345', '2024-07-01', 1, 'Java, Spring Boot, Hibernate', 'Completed major bug fix in first month', NULL);
