@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Notification Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #f43f5e;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gradient-emerald: linear-gradient(135deg, #059669, #34d399);
+            --gradient-indigo: linear-gradient(135deg, #4f46e5, #818cf8);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            height: 140px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-weight: 300;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        @keyframes moveCircles {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-50%); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 10s infinite linear;
+        }
+
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+
+        .circle:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 12s;
+        }
+
+        .circle:nth-child(3) {
+            top: 80%;
+            left: 40%;
+            animation-duration: 15s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--gradient-emerald);
+            color: white;
+            width: 100%;
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .notifications-container {
+            margin-top: 2rem;
+        }
+
+        .notifications-container h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .notification-item {
+            background: linear-gradient(rgb(231, 231, 255), rgb(248, 255, 248));
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        .notification-item h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .notification-item p {
+            color: black;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-item .timestamp {
+            font-size: 0.85rem;
+            color: black;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+
+        .no-data img {
+            width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 800px;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .form-container {
+                max-width: 100%;
+            }
+
+            header {
+                height: 120px;
+            }
+
+            .circle {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            input {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+
+            .notification-item {
+                padding: 1rem;
+            }
+
+            header {
+                height: 100px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .form-group {
+                margin-bottom: 0.75rem;
+            }
+
+            input {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            .btn {
+                font-size: 0.85rem;
+            }
+
+            .notification-item h3 {
+                font-size: 1rem;
+            }
+
+            .notification-item p {
+                font-size: 0.9rem;
+            }
+
+            .notification-item .timestamp {
+                font-size: 0.75rem;
+            }
+
+            header {
+                height: 80px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 0.8rem;
+                margin-top: 5px;
+            }
+
+            .circle {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 5px;
+            }
+
+            .main-content {
+                padding: 0.8rem;
+            }
+
+            input {
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .notification-item {
+                padding: 0.8rem;
+            }
+
+            .notification-item h3 {
+                font-size: 0.9rem;
+            }
+
+            .notification-item p {
+                font-size: 0.8rem;
+            }
+
+            .no-data img {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner-background">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <h1>Employee Notifications</h1>
+        <p>Stay informed with the latest updates</p>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="employeeId">Employee ID</label>
+                    <input
+                        type="text"
+                        id="employeeId"
+                        placeholder="ATS0xxx"
+                        required
+                        pattern="^ATS0(?!000)[0-9]{3}$"
+                        title="Employee ID must be ATS0xxx (not ATS0000)"
+                    >
+                    <p class="error-message" id="employeeIdError">Invalid employee ID format (e.g., ATS0123)</p>
+                </div>
+                <button class="btn" id="refreshBtn" disabled onclick="fetchNotifications()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div class="notifications-container">
+                <h2>Notifications</h2>
+                <div id="notificationsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://44.223.23.145:3429'; // For production
+        // const BASE_URL = 'http://localhost:3429'; // For local testing
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const employeeIdInput = document.getElementById('employeeId');
+            const refreshBtn = document.getElementById('refreshBtn');
+            const notificationsList = document.getElementById('notificationsList');
+            let debounceTimer;
+
+            setupValidation('employeeId', /^ATS0(?!000)[0-9]{3}$/, 'employeeIdError', 'Invalid employee ID format (e.g., ATS0123)');
+
+            employeeIdInput.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                const employeeId = employeeIdInput.value.trim();
+                const isValid = /^ATS0(?!000)[0-9]{3}$/.test(employeeId);
+                refreshBtn.disabled = !isValid;
+
+                if (isValid) {
+                    debounceTimer = setTimeout(() => {
+                        fetchNotifications(employeeId);
+                    }, 300);
+                } else {
+                    notificationsList.innerHTML = '';
+                }
+            });
+
+            async function fetchNotifications(empId) {
+                const errorElement = document.getElementById('employeeIdError');
+
+                try {
+                    const response = await fetch(`${BASE_URL}/api/notifications/${empId}`);
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || 'Failed to fetch notifications');
+                    }
+                    const notifications = await response.json();
+                    displayNotifications(notifications);
+                } catch (error) {
+                    console.error('Error:', error);
+                    errorElement.textContent = `Server error: ${error.message}. Please check if the server is running.`;
+                    errorElement.style.display = 'block';
+                    notificationsList.innerHTML = `
+                        <div class="no-data">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No Data">
+                            <p>${error.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            function displayNotifications(notifications) {
+                notificationsList.innerHTML = '';
+                if (notifications.length === 0) {
+                    notificationsList.innerHTML = `
+                        <div class="no-data">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No Data">
+                            <p>No notifications found</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                notifications.forEach((notif, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'notification-item';
+                    item.style.animationDelay = `${index * 0.1}s`;
+                    item.innerHTML = `
+                        <h3>${notif.title}</h3>
+                        <p>${notif.message}</p>
+                        <div class="timestamp">${new Date(notif.created_at).toLocaleString()}</div>
+                    `;
+                    notificationsList.appendChild(item);
+                });
+            }
+
+            function setupValidation(fieldId, pattern, errorId, errorMessage) {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(errorId);
+                field.addEventListener('input', () => {
+                    const isValid = pattern.test(field.value.trim());
+                    errorElement.textContent = errorMessage;
+                    errorElement.style.display = isValid ? 'none' : 'block';
+                    field.setCustomValidity(isValid ? '' : errorMessage);
+                });
+            }
+
+            window.fetchNotifications = () => {
+                const employeeId = employeeIdInput.value.trim();
+                if (/^ATS0(?!000)[0-9]{3}$/.test(employeeId)) {
+                    fetchNotifications(employeeId);
+                }
+            };
+        });
+    </script>
+</body>
+</html>
