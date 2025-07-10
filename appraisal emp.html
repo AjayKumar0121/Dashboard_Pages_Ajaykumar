@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appraisal Dashboard</title>
+    <title>Employee Appraisal Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -509,17 +509,23 @@
             <div class="circle"></div>
             <div class="circle"></div>
         </div>
-        <h1>Performance Appraisals</h1>
-        <p>Search for performance evaluations by Your Employee ID to track your professional growth journey</p>
+        <h1>Employee Appraisal Dashboard</h1>
+        <p>Enter your Employee ID to view your performance appraisals and feedback</p>
     </header>
 
     <div class="container">
         <div class="search-container">
-            <input type="text" id="searchEmpId" placeholder="Enter Employee ID (e.g., ATS0001)" pattern="^ATS0(?!000)[0-9]{3}$">
+            <input type="text" id="searchEmpId" placeholder="Enter Your Employee ID (e.g., ATS0001)" pattern="^ATS0(?!000)[0-9]{3}$">
             <span id="searchEmpId-error" class="error-message"></span>
             <button id="searchBtn" disabled><i class="fas fa-search"></i> Search</button>
         </div>
-        <div class="appraisal-container" id="appraisal-container"></div>
+        <div class="appraisal-container" id="appraisal-container">
+            <div class="no-data">
+                <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No appraisals" class="no-data-img">
+                <h3>Enter Your Employee ID</h3>
+                <p>Please enter your Employee ID (e.g., ATS0001) to view your performance appraisals.</p>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="appraisalModal">
@@ -608,7 +614,7 @@
                             <div class="no-data">
                                 <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png" alt="No appraisals" class="no-data-img">
                                 <h3>No Appraisals Found</h3>
-                                <p>No appraisals found for Employee ID ${empId}. Try another ID or contact your manager.</p>
+                                <p>No appraisals found for your Employee ID ${empId}. Contact HR for details.</p>
                             </div>
                         `;
                         return;
