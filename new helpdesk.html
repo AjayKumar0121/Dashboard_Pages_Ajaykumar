@@ -341,6 +341,7 @@
             font-size: 1rem;
         }
 
+        /* Enhanced Modal Styles */
         .modal {
             position: fixed;
             top: 0;
@@ -355,6 +356,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
@@ -364,40 +366,40 @@
 
         .modal-content {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 500px;
-            padding: 2rem;
-            transform: translateY(-20px);
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
             transition: all 0.3s ease;
-            text-align: center;
+            position: relative;
         }
 
         .modal.active .modal-content {
             transform: translateY(0);
         }
 
-        .modal-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: var(--success);
-        }
-
-        .modal h3 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .modal p {
-            margin-bottom: 2rem;
-            color: var(--gray);
-        }
-
         .modal-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .modal-close {
@@ -406,19 +408,117 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--gray);
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         .modal-close:hover {
             color: var(--danger);
+            background: rgba(247, 37, 133, 0.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
         }
 
         .ticket-details {
-            text-align: left;
+            margin-bottom: 2rem;
         }
 
         .ticket-details p {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .ticket-details strong {
+            color: var(--dark);
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        .ticket-description {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .comments-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .comments-section h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comment {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .comment-text {
+            line-height: 1.5;
+        }
+
+        .no-comments {
+            color: var(--gray);
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .success-modal .modal-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+            animation: bounce 1s;
+        }
+
+        .success-modal h3 {
+            margin-bottom: 1rem;
+            color: var(--success);
+        }
+
+        .success-modal p {
+            margin-bottom: 2rem;
+            color: var(--gray);
+            line-height: 1.6;
         }
 
         /* Animations */
@@ -543,8 +643,7 @@
             }
 
             .modal-content {
-                max-width: 450px;
-                padding: 1.5rem;
+                max-width: 90%;
             }
 
             header {
@@ -557,6 +656,10 @@
 
             header p {
                 font-size: 0.9rem;
+            }
+
+            .modal-header h3 {
+                font-size: 1.3rem;
             }
         }
 
@@ -584,16 +687,19 @@
             }
 
             .modal-content {
-                max-width: 90%;
+                max-width: 95%;
+            }
+
+            .modal-header {
                 padding: 1rem;
             }
 
-            .modal h3 {
-                font-size: 1.3rem;
+            .modal-body {
+                padding: 1rem;
             }
 
-            .modal p {
-                font-size: 0.9rem;
+            .modal-header h3 {
+                font-size: 1.2rem;
             }
 
             header {
@@ -612,6 +718,12 @@
             .circle {
                 width: 100px;
                 height: 100px;
+            }
+
+            .ticket-details strong {
+                min-width: 90px;
+                display: block;
+                margin-bottom: 0.25rem;
             }
         }
 
@@ -643,23 +755,23 @@
             }
 
             .modal-content {
-                padding: 0.8rem;
+                padding: 0;
             }
 
-            .modal-icon {
-                font-size: 3rem;
+            .modal-header {
+                padding: 0.75rem;
             }
 
-            .modal h3 {
+            .modal-body {
+                padding: 0.75rem;
+            }
+
+            .modal-header h3 {
                 font-size: 1.1rem;
             }
 
-            .modal p {
-                font-size: 0.8rem;
-            }
-
             .ticket-details p {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -807,45 +919,51 @@
     </div>
     
     <!-- Success Modal -->
-    <div id="successModal" class="modal">
+    <div id="successModal" class="modal success-modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-check-circle bounce"></i> Ticket Submitted Successfully!</h3>
-                <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Ticket Submitted Successfully!</h3>
+                <p>Your ticket has been created and assigned a reference number. Our team will get back to you shortly.</p>
+                <button class="btn btn-primary" onclick="closeModal()">
+                    <i class="fas fa-thumbs-up"></i> Got it!
+                </button>
             </div>
-            <p>Your ticket has been created and assigned a reference number. Our team will get back to you shortly.</p>
-            <button class="btn btn-primary" onclick="closeModal()">
-                <i class="fas fa-thumbs-up"></i> Got it!
-            </button>
         </div>
     </div>
 
     <!-- Ticket Detail Modal -->
     <div id="ticketModal" class="modal">
-        <div class="modal-content" style="max-width: 700px; text-align: left;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-ticket-alt"></i> <span id="modalTicketId"></span></h3>
-                <button class="modal-close" onclick="closeTicketModal()">×</button>
+                <button class="modal-close" onclick="closeTicketModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <div class="ticket-details">
-                <p><strong>Employee Name:</strong> <span id="modalEmpName"></span></p>
-                <p><strong>Email:</strong> <span id="modalEmpEmail"></span></p>
-                <p><strong>Status:</strong> <span id="modalStatus"></span></p>
-                <p><strong>Priority:</strong> <span id="modalPriority"></span></p>
-                <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
-                <p><strong>Issue Type:</strong> <span id="modalIssueType"></span></p>
-                <p><strong>Created:</strong> <span id="modalCreated"></span></p>
-                <p><strong>Description:</strong></p>
-                <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
-                    <span id="modalDescription"></span>
+            <div class="modal-body">
+                <div class="ticket-details">
+                    <p><strong>Employee Name:</strong> <span id="modalEmpName"></span></p>
+                    <p><strong>Email:</strong> <span id="modalEmpEmail"></span></p>
+                    <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+                    <p><strong>Priority:</strong> <span id="modalPriority"></span></p>
+                    <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
+                    <p><strong>Issue Type:</strong> <span id="modalIssueType"></span></p>
+                    <p><strong>Created:</strong> <span id="modalCreated"></span></p>
+                    <p><strong>Description:</strong></p>
+                    <div class="ticket-description">
+                        <span id="modalDescription"></span>
+                    </div>
                 </div>
-            </div>
-            
-            <div style="margin-top: 2rem;">
-                <h4><i class="fas fa-comments"></i> Comments</h4>
-                <div id="commentsContainer" style="margin-top: 1rem;">
-                    <!-- Comments will be loaded here -->
+                
+                <div class="comments-section">
+                    <h4><i class="fas fa-comments"></i> Comments</h4>
+                    <div id="commentsContainer">
+                        <!-- Comments will be loaded here -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1124,7 +1242,7 @@
                 commentsContainer.innerHTML = '';
                 
                 if (comments.length === 0) {
-                    commentsContainer.innerHTML = '<p>No comments yet</p>';
+                    commentsContainer.innerHTML = '<p class="no-comments">No comments yet</p>';
                     return;
                 }
                 
@@ -1133,21 +1251,21 @@
                     const formattedDate = commentDate.toLocaleDateString() + ' ' + commentDate.toLocaleTimeString();
                     
                     const commentDiv = document.createElement('div');
-                    commentDiv.style.padding = '1rem';
-                    commentDiv.style.marginBottom = '1rem';
-                    commentDiv.style.background = '#f8f9fa';
-                    commentDiv.style.borderRadius = '6px';
+                    commentDiv.className = 'comment';
                     
                     commentDiv.innerHTML = `
-                        <p><strong>${comment.author}</strong> <small>${formattedDate}</small></p>
-                        <p>${comment.comment}</p>
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-date">${formattedDate}</span>
+                        </div>
+                        <div class="comment-text">${comment.comment}</div>
                     `;
                     
                     commentsContainer.appendChild(commentDiv);
                 });
             } catch (error) {
                 console.error('Error loading comments:', error);
-                document.getElementById('commentsContainer').innerHTML = '<p>Error loading comments</p>';
+                document.getElementById('commentsContainer').innerHTML = '<p class="no-comments">Error loading comments</p>';
             }
         }
 
