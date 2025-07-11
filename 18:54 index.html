@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HRMS Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --primary-light: #e0e7ff;
+      --accent-color: #8b5cf6;
+      --dark-color: #1e293b;
+      --light-color: #ffffff;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-700: #334155;
+      --header-height: 70px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--gray-100);
+      color: var(--dark-color);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: var(--header-height);
+      padding: 0 40px;
+      background-color: var(--light-color);
+      box-shadow: var(--shadow-sm);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .logo-container {
+      padding: 4px;
+      border-radius: 4px;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .logo {
+      height: 70px;
+      transition: var(--transition);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      padding: 8px 7px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 15px;
+      width: 225px;
+      margin-left: 50px;
+      border: 0.5px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .search-bar:hover {
+      transform: translateY(-2px);
+      background-color: white;
+      border: 0.5px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      padding: 3px;
+      background-color: transparent;
+      width: 90%;
+      font-size: 0.9rem;
+      color: black;
+    }
+
+    .search-bar input::placeholder {
+      color: var(--gray-300);
+    }
+
+    .search-bar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--gray-700);
+      transition: var(--transition);
+    }
+
+    .search-bar button:hover {
+      color: var(--primary-color);
+    }
+
+    .autocomplete-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--light-color);
+      border-radius: 8px;
+      box-shadow: var(--shadow-md);
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1000;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .autocomplete-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      transition: var(--transition);
+    }
+
+    .autocomplete-item img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      object-fit: contain;
+    }
+
+    .autocomplete-item:hover {
+      background-color: var(--gray-100);
+      color: var(--primary-color);
+    }
+
+    .no-results {
+      padding: 10px;
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      text-align: center;
+    }
+
+    .header-icon {
+      position: relative;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--gray-700);
+      transition: var(--transition);
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon:hover {
+      color: var(--primary-color);
+      background-color: var(--gray-100);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .user-profile:hover {
+      background-color: var(--gray-100);
+    }
+
+    .user-name {
+      font-weight: 500;
+      font-size: 1.15rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gray-200);
+      transition: var(--transition);
+    }
+
+    .user-profile:hover .user-avatar {
+      border-color: var(--primary-color);
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--gray-700);
+      padding: 8px;
+      border-radius: 8px;
+      transition: var(--transition);
+      line-height: 1;
+    }
+
+    .toggle-btn:hover {
+      color: var(--primary-color);
+      background-color: var(--gray-100);
+    }
+
+    .toggle-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .radial-menu {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0) rotate(0deg);
+      width: 80px;
+      height: 80px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1s ease, width 0.3s ease, height 0.3s ease;
+      z-index: 2000;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .radial-menu.active {
+      transform: translate(-50%, -50%) scale(1) rotate(360deg);
+      width: 340px;
+      height: 340px;
+    }
+
+    .radial-menu.closing {
+      transform: translate(-50%, -50%) scale(0) rotate(720deg);
+    }
+
+    .inner-circle {
+      width: 140px;
+      height: 140px;
+      background-color: var(--light-color);
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition);
+      z-index: 2100;
+    }
+
+    .inner-circle select {
+      width: 100px;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      color: var(--primary-color);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition);
+      text-align: center;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .inner-circle select:hover {
+      color: var(--accent-color);
+    }
+
+    .inner-circle select option {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+    }
+
+    .emp-menu, .hr-menu {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .emp-menu.active, .hr-menu.active {
+      display: block;
+    }
+
+    .menu-item {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: var(--light-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .menu-item:hover {
+      background-color: var(--gray-100);
+    }
+
+    .menu-item img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .tooltip {
+      position: absolute;
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      z-index: 2100;
+      transform: translate(-50%, -50%);
+    }
+
+    .menu-item:hover .tooltip {
+      opacity: 1;
+    }
+
+    .emp-menu .menu-item[data-module="emp_attendance"] .tooltip { transform: translate(-50%, -100%); }
+    .emp-menu .menu-item[data-module="emp_leave"] .tooltip { transform: translate(-40%, -90%); }
+    .emp-menu .menu-item[data-module="emp_wfh"] .tooltip { transform: translate(-30%, -70%); }
+    .emp-menu .menu-item[data-module="emp_payslip"] .tooltip { transform: translate(-20%, -50%); }
+    .emp-menu .menu-item[data-module="emp_tasks"] .tooltip { transform: translate(-10%, -30%); }
+    .emp-menu .menu-item[data-module="emp_helpdesk"] .tooltip { transform: translate(0%, -20%); }
+    .emp-menu .menu-item[data-module="emp_Onboarding"] .tooltip { transform: translate(10%, -10%); }
+    .emp-menu .menu-item[data-module="emp_benefits"] .tooltip { transform: translate(20%, 0%); }
+    .emp-menu .menu-item[data-module="emp_Appraisal"] .tooltip { transform: translate(30%, 10%); }
+    .emp-menu .menu-item[data-module="emp_notifications"] .tooltip { transform: translate(40%, 20%); }
+    .emp-menu .menu-item[data-module="emp_asset"] .tooltip { transform: translate(50%, 30%); }
+    .emp-menu .menu-item[data-module="emp_bonus"] .tooltip { transform: translate(50%, 40%); }
+    .emp-menu .menu-item[data-module="emp_joblists"] .tooltip { transform: translate(40%, 50%); }
+    .emp-menu .menu-item[data-module="emp_claim"] .tooltip { transform: translate(30%, 60%); }
+    .emp-menu .menu-item[data-module="emp_offboarding"] .tooltip { transform: translate(20%, 70%); }
+    .emp-menu .menu-item[data-module="emp_jobapplication"] .tooltip { transform: translate(10%, 80%); }
+    .emp-menu .menu-item[data-module="emp_offerletter"] .tooltip { transform: translate(0%, 90%); }
+    .emp-menu .menu-item[data-module="emp_logout"] .tooltip { transform: translate(-10%, 100%); }
+
+    .hr-menu .menu-item[data-module="hr_attendance"] .tooltip { transform: translate(-50%, -100%); }
+    .hr-menu .menu-item[data-module="hr_leave"] .tooltip { transform: translate(-40%, -90%); }
+    .hr-menu .menu-item[data-module="hr_wfh"] .tooltip { transform: translate(-30%, -70%); }
+    .hr-menu .menu-item[data-module="hr_payslip"] .tooltip { transform: translate(-20%, -50%); }
+    .hr-menu .menu-item[data-module="hr_tasks"] .tooltip { transform: translate(-10%, -30%); }
+    .hr-menu .menu-item[data-module="hr_helpdesk"] .tooltip { transform: translate(0%, -20%); }
+    .hr-menu .menu-item[data-module="hr_employeemanagement"] .tooltip { transform: translate(10%, -10%); }
+    .hr-menu .menu-item[data-module="hr_benefits"] .tooltip { transform: translate(20%, 0%); }
+    .hr-menu .menu-item[data-module="hr_appraisal"] .tooltip { transform: translate(30%, 10%); }
+    .hr-menu .menu-item[data-module="hr_notifications"] .tooltip { transform: translate(40%, 20%); }
+    .hr-menu .menu-item[data-module="hr_asset"] .tooltip { transform: translate(50%, 30%); }
+    .hr-menu .menu-item[data-module="hr_bonus"] .tooltip { transform: translate(50%, 40%); }
+    .hr-menu .menu-item[data-module="hr_joblists"] .tooltip { transform: translate(40%, 50%); }
+    .hr-menu .menu-item[data-module="hr_claim"] .tooltip { transform: translate(30%, 60%); }
+    .hr-menu .menu-item[data-module="hr_offboarding"] .tooltip { transform: translate(20%, 70%); }
+    .hr-menu .menu-item[data-module="hr_jobapplication"] .tooltip { transform: translate(10%, 80%); }
+    .hr-menu .menu-item[data-module="hr_Onboarding"] .tooltip { transform: translate(0%, 90%); }
+    .hr-menu .menu-item[data-module="hr_logout"] .tooltip { transform: translate(-10%, 100%); }
+
+    .main-content {
+      margin-top: var(--header-height);
+      height: calc(100vh - var(--header-height));
+      width: 100%;
+      transition: filter 0.3s ease;
+    }
+
+    .main-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: var(--light-color);
+    }
+
+    .menu-open .main-content {
+      filter: blur(25px);
+    }
+
+    body.dark-mode {
+      background-color: #000000;
+      color: #f8fafc;
+    }
+
+    body.dark-mode .header {
+      background-color: #000000;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark-mode .logo-container {
+      background-color: #ffffff;
+      padding: 0px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .dark-mode .search-bar {
+      background-color: #000000b0;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(197, 190, 255, 0.865);
+    }
+
+    .dark-mode .search-bar:hover {
+      background-color: black;
+      border-radius: 20px;
+      color: white;
+      box-shadow: 0 2px 4px rgba(197, 190, 255, 0.865);
+    }
+
+    .dark-mode .search-bar input {
+      color: #ffffff;
+    }
+
+    .dark-mode .search-bar input::placeholder {
+      color: #a0a0a0;
+    }
+
+    .dark-mode .search-bar button {
+      color: #ffffff;
+    }
+
+    .dark-mode .autocomplete-dropdown {
+      background-color: #1e293b;
+    }
+
+    .dark-mode .autocomplete-item {
+      color: #f8fafc;
+    }
+
+    .dark-mode .autocomplete-item:hover {
+      background-color: #334155;
+      color: var(--primary-color);
+    }
+
+    .dark-mode .no-results {
+      color: #f8fafc;
+    }
+
+    body.dark-mode .header-icon,
+    body.dark-mode .toggle-btn {
+      color: #ffffff;
+    }
+
+    body.dark-mode .header-icon:hover,
+    body.dark-mode .toggle-btn:hover {
+      background-color: #333333;
+      color: var(--primary-color);
+    }
+
+    body.dark-mode .user-profile:hover {
+      background-color: #333333;
+    }
+
+    body.dark-mode .user-avatar {
+      border-color: #475569;
+    }
+
+    body.dark-mode .inner-circle {
+      background-color: #570057;
+      color: white;
+    }
+
+    body.dark-mode .inner-circle select {
+      background: transparent;
+      color: #ffffff;
+    }
+
+    body.dark-mode .inner-circle select:hover {
+      color: var(--accent-color);
+    }
+
+    body.dark-mode .inner-circle select option {
+      background-color: #444444;
+      color: #ffffff;
+    }
+
+    body.dark-mode .menu-item {
+      background-color: #ffffff;
+    }
+
+    body.dark-mode .menu-item:hover {
+      background-color: #f8fcff;
+    }
+
+    .alert {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-xl);
+      z-index: 1000;
+      animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                 slideOutRight 0.5s cubic-bezier(0.5, 0, 0.75, 0) 2.5s forwards;
+      max-width: 350px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .alert i {
+      font-size: 1.2rem;
+    }
+
+    .alert.error {
+      background: rgba(239, 68, 68, 0.9);
+    }
+
+    .alert.success {
+      background: rgba(16, 185, 129, 0.9);
+    }
+
+    .alert.warning {
+      background: rgba(245, 158, 11, 0.9);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOutRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    .skeleton {
+      background-color: var(--gray-200);
+      border-radius: 6px;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    body.dark-mode .skeleton {
+      background-color: #333333;
+    }
+
+    .login-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-color: rgb(255, 255, 255);
+      overflow: hidden;
+    }
+
+    .big-circle {
+      position: absolute;
+      width: 1200px;
+      height: 1200px;
+      background-color: #0077ff;
+      border-radius: 50%;
+      top: -500px;
+      left: -500px;
+      opacity: 0.9;
+    }
+
+    .small-circle {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background-color: #0055cc;
+      border-radius: 50%;
+      bottom: 20px;
+      left: 20px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .overlay-circle {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background-color: #0055cc;
+      border-radius: 50%;
+      top: 220px;
+      left: 350px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .right-bottom-circle {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background-color: #0055cc;
+      border-radius: 50%;
+      bottom: -42px;
+      right: -42px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .welcome-text {
+      position: absolute;
+      top: 35%;
+      left: 2%;
+      font-size: 18px;
+      font-weight: bold;
+      color: rgb(255, 255, 255);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .welcome-text span {
+      font-size: 31px;
+      color: rgb(255, 255, 255);
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 3s steps(20, end) forwards;
+    }
+
+    .welcome-text p {
+      font-size: 18px;
+      color: white;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards;
+      animation-delay: 3s;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 370px; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-container {
+      position: absolute;
+      top: 50%;
+      right: 16%;
+      transform: translateY(-50%);
+      width: 530px;
+      color: black;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    .login-container h2 {
+      margin-bottom: 10px;
+      font-size: 30px;
+      color: #0077ff;
+    }
+
+    .error-message {
+      color: #ff3333;
+      font-size: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      min-height: 14px;
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px 30px 10px 10px;
+      border: none;
+      border-bottom: 2px solid #000000;
+      background: transparent;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    .input-container input:focus {
+      border-bottom-color: #0077ff;
+    }
+
+    .input-container label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      color: #000000;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-container input:focus + label,
+    .input-container input:not(:placeholder-shown) + label {
+      top: -10px;
+      font-size: 15px;
+      color: #0077ff;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container .eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #0077ff;
+      font-size: 18px;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin-top: 10px;
+    }
+
+    .login-button:hover {
+      background-color: #0055cc;
+      transform: scale(1.02);
+    }
+
+    .links {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .links a {
+      color: #0077ff;
+      text-decoration: none;
+      margin: 0 5px;
+      transition: color 0.3s;
+    }
+
+    .links a:hover {
+      color: #0055cc;
+      text-decoration: underline;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      display: none;
+    }
+
+    .modal-content {
+      background-color: var(--light-color);
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--gray-700);
+    }
+
+    .modal-close:hover {
+      color: var(--primary-color);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--dark-color);
+    }
+
+    .modal-body {
+      max-height: 60vh;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: var(--gray-700);
+    }
+
+    .modal-body p {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .modal-body strong {
+      flex: 0 0 120px;
+    }
+
+    body.dark-mode .modal-content {
+      background-color: #1e293b;
+      color: #f8fafc;
+    }
+
+    body.dark-mode .modal-close {
+      color: #f8fafc;
+    }
+
+    body.dark-mode .modal-close:hover {
+      color: var(--primary-color);
+    }
+
+    body.dark-mode .modal-body {
+      color: #f8fafc;
+    }
+
+    @media (max-width: 1024px) {
+      .search-bar {
+        width: 240px;
+      }
+
+      .big-circle {
+        width: 800px;
+        height: 800px;
+        top: -400px;
+        left: -400px;
+      }
+
+      .overlay-circle {
+        top: 180px;
+        left: 250px;
+        width: 120px;
+        height: 120px;
+      }
+
+      .login-container {
+        right: 10%;
+        width: 300px;
+        padding: 20px;
+      }
+
+      .welcome-text {
+        top: 30%;
+        left: 5%;
+      }
+
+      .welcome-text span {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 20px;
+      }
+
+      .search-bar {
+        width: 200px;
+        margin-left: 0;
+      }
+
+      .logo {
+        height: 36px;
+      }
+
+      .big-circle {
+        width: 600px;
+        height: 600px;
+        top: -300px;
+        left: -300px;
+      }
+
+      .small-circle {
+        width: 80px;
+        height: 80px;
+        bottom: 10px;
+        left: 10px;
+      }
+
+      .overlay-circle {
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 100px;
+      }
+
+      .right-bottom-circle {
+        width: 100px;
+        height: 100px;
+        bottom: -30px;
+        right: -30px;
+      }
+
+      .welcome-text {
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      .welcome-text span {
+        font-size: 24px;
+      }
+
+      .welcome-text p {
+        font-size: 16px;
+      }
+
+      .login-container {
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 90%;
+        max-width: 280px;
+        padding: 15px;
+      }
+
+      .login-container h2 {
+        font-size: 24px;
+      }
+
+      .inner-circle select {
+        width: 80px;
+        font-size: 16px;
+        padding: 6px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .search-bar {
+        display: none;
+      }
+
+      .user-name {
+        display: none;
+      }
+
+      .user-profile {
+        padding: 0;
+      }
+
+      .header-icon,
+      .toggle-btn {
+        padding: 6px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .big-circle {
+        width: 500px;
+        height: 500px;
+        top: -250px;
+        left: -250px;
+      }
+
+      .small-circle {
+        width: 60px;
+        height: 60px;
+      }
+
+      .overlay-circle {
+        width: 80px;
+        height: 80px;
+        top: 120px;
+      }
+
+      .right-bottom-circle {
+        width: 80px;
+        height: 80px;
+        bottom: -20px;
+        right: -20px;
+      }
+
+      .welcome-text span {
+        font-size: 20px;
+      }
+
+      .welcome-text p {
+        font-size: 14px;
+      }
+
+      .login-container {
+        width: 95%;
+        padding: 10px;
+      }
+
+      .login-container h2 {
+        font-size: 20px;
+      }
+
+      .input-container input {
+        font-size: 14px;
+        padding: 8px 25px 8px 8px;
+      }
+
+      .input-container label {
+        font-size: 16px;
+      }
+
+      .eye-icon {
+        font-size: 16px;
+      }
+
+      .login-button {
+        font-size: 16px;
+        padding: 10px;
+      }
+
+      .error-message {
+        font-size: 11px;
+      }
+
+      .inner-circle select {
+        width: 70px;
+        font-size: 14px;
+        padding: 5px;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body id="appBody" class="login-body">
+  <div id="loginView" class="container">
+    <div class="big-circle"></div>
+    <div class="small-circle"></div>
+    <div class="overlay-circle"></div>
+    <div class="right-bottom-circle"></div>
+
+    <div class="welcome-text">
+      <span>Astrolite Tech Solutions</span>
+      <p>For a bright future, we stand together</p>
+    </div>
+
+    <div class="login-container">
+      <h2>Login</h2>
+      <div id="error-message" class="error-message"></div>
+      <form id="loginForm">
+        <div class="input-container">
+          <input type="email" id="email" placeholder=" " required>
+          <label for="email">Email</label>
+        </div>
+        <div class="input-container password-container">
+          <input type="password" id="password" placeholder=" " required>
+          <label for="password">Password</label>
+          <i class="fas fa-eye eye-icon" id="eyeIcon"></i>
+        </div>
+        <button type="submit" class="login-button">Login</button>
+      </form>
+      <div class="links">
+        <a href="http://localhost:8013/">Sign Up</a> | <a href="http://localhost:8010">Forgot Password?</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboardView" class="hidden">
+    <header class="header">
+      <div class="logo-container">
+        <img src="logo.png" alt="Company Logo" class="logo" />
+      </div>
+      <div class="header-right">
+        <div class="search-bar" id="searchBar">
+          <input type="text" id="searchInput" placeholder="Search employees, reports..." />
+          <button id="searchButton"><i class="fas fa-search"></i></button>
+          <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+        </div>
+        <div class="header-icon" id="themeToggle" title="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </div>
+        <div class="header-icon" id="infoIcon" title="Employee Details">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="user-profile">
+          <div class="skeleton" style="width:36px;height:36px;border-radius:50%;" id="avatarSkeleton"></div>
+          <img src="https://img.icons8.com/fluency/48/user-male-circle.png" alt="User Avatar" class="user-avatar" id="userAvatar" style="display:none;" />
+          <span class="user-name" id="userName">Loading...</span>
+        </div>
+        <button class="toggle-btn" id="toggleBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="radial-menu" id="radialMenu">
+      <div class="inner-circle" id="innerCircle">
+        <select id="moduleSelector">
+          <option value="emp">EMP</option>
+          <option value="hr">HR</option>
+        </select>
+      </div>
+      <div class="emp-menu" id="empMenu">
+        <div class="menu-item" data-module="emp_attendance">
+          <img src="https://img.icons8.com/color/24/calendar--v1.png" alt="Attendance"><span class="tooltip">Attendance</span>
+        </div>
+        <div class="menu-item" data-module="emp_leave">
+          <img src="https://img.icons8.com/color/24/beach.png" alt="Leave"><span class="tooltip">Leave</span>
+        </div>
+        <div class="menu-item" data-module="emp_wfh">
+          <img src="https://img.icons8.com/color/24/laptop.png" alt="WFH"><span class="tooltip">WFH</span>
+        </div>
+        <div class="menu-item" data-module="emp_payslip">
+          <img src="https://img.icons8.com/color/24/money.png" alt="Payslip"><span class="tooltip">Payslip</span>
+        </div>
+        <div class="menu-item" data-module="emp_tasks">
+          <img src="https://img.icons8.com/color/24/task.png" alt="Tasks"><span class="tooltip">Tasks</span>
+        </div>
+        <div class="menu-item" data-module="emp_helpdesk">
+          <img src="https://img.icons8.com/color/24/help.png" alt="Helpdesk"><span class="tooltip">Helpdesk</span>
+        </div>
+        <div class="menu-item" data-module="emp_Onboarding">
+          <img src="https://img.icons8.com/color/24/add-user-male.png" alt="Onboarding"><span class="tooltip">Onboarding</span>
+        </div>
+        <div class="menu-item" data-module="emp_benefits">
+          <img src="https://img.icons8.com/color/24/gift.png" alt="Benefits"><span class="tooltip">Benefits</span>
+        </div>
+        <div class="menu-item" data-module="emp_Appraisal">
+          <img src="https://img.icons8.com/color/24/performance.png" alt="Appraisal"><span class="tooltip">Appraisal</span>
+        </div>
+        <div class="menu-item" data-module="emp_notifications">
+          <img src="https://img.icons8.com/color/24/appointment-reminders.png" alt="Notifications"><span class="tooltip">Notifications</span>
+        </div>
+        <div class="menu-item" data-module="emp_asset">
+          <img src="https://img.icons8.com/color/24/laptop.png" alt="Asset"><span class="tooltip">Asset</span>
+        </div>
+        <div class="menu-item" data-module="emp_bonus">
+          <img src="https://img.icons8.com/color/24/money-bag.png" alt="Bonus"><span class="tooltip">Bonus</span>
+        </div>
+        <div class="menu-item" data-module="emp_joblists">
+          <img src="https://img.icons8.com/color/24/job.png" alt="Job Lists"><span class="tooltip">Job Lists</span>
+        </div>
+        <div class="menu-item" data-module="emp_claim">
+          <img src="https://img.icons8.com/color/24/expense.png" alt="Claim"><span class="tooltip">Claim</span>
+        </div>
+        <div class="menu-item" data-module="emp_offboarding">
+          <img src="https://img.icons8.com/color/24/exit.png" alt="Offboarding"><span class="tooltip">Offboarding</span>
+        </div>
+        <div class="menu-item" data-module="emp_jobapplication">
+          <img src="https://img.icons8.com/color/24/resume.png" alt="Job Application"><span class="tooltip">Job Application</span>
+        </div>
+        <div class="menu-item" data-module="emp_offerletter">
+          <img src="https://img.icons8.com/color/24/document.png" alt="Offer Letter"><span class="tooltip">Offer Letter</span>
+        </div>
+        <div class="menu-item" data-module="emp_logout">
+          <img src="https://img.icons8.com/color/24/logout-rounded.png" alt="Logout"><span class="tooltip">Logout</span>
+        </div>
+      </div>
+      <div class="hr-menu" id="hrMenu">
+        <div class="menu-item" data-module="hr_attendance">
+          <img src="https://img.icons8.com/color/24/calendar--v1.png" alt="Attendance"><span class="tooltip">Attendance</span>
+        </div>
+        <div class="menu-item" data-module="hr_leave">
+          <img src="https://img.icons8.com/color/24/beach.png" alt="Leave"><span class="tooltip">Leave</span>
+        </div>
+        <div class="menu-item" data-module="hr_wfh">
+          <img src="https://img.icons8.com/color/24/laptop.png" alt="WFH"><span class="tooltip">WFH</span>
+        </div>
+        <div class="menu-item" data-module="hr_payslip">
+          <img src="https://img.icons8.com/color/24/money.png" alt="Payslip"><span class="tooltip">Payslip</span>
+        </div>
+        <div class="menu-item" data-module="hr_tasks">
+          <img src="https://img.icons8.com/color/24/task.png" alt="Tasks"><span class="tooltip">Tasks</span>
+        </div>
+        <div class="menu-item" data-module="hr_helpdesk">
+          <img src="https://img.icons8.com/color/24/help.png" alt="Helpdesk"><span class="tooltip">Helpdesk</span>
+        </div>
+        <div class="menu-item" data-module="hr_employeemanagement">
+          <img src="https://img.icons8.com/color/24/conference.png" alt="Employee Management"><span class="tooltip">Employee Management</span>
+        </div>
+        <div class="menu-item" data-module="hr_benefits">
+          <img src="https://img.icons8.com/color/24/gift.png" alt="Benefits"><span class="tooltip">Benefits</span>
+        </div>
+        <div class="menu-item" data-module="hr_appraisal">
+          <img src="https://img.icons8.com/color/24/performance.png" alt="Appraisal"><span class="tooltip">Appraisal</span>
+        </div>
+        <div class="menu-item" data-module="hr_notifications">
+          <img src="https://img.icons8.com/color/24/appointment-reminders.png" alt="Notifications"><span class="tooltip">Notifications</span>
+        </div>
+        <div class="menu-item" data-module="hr_asset">
+          <img src="https://img.icons8.com/color/24/laptop.png" alt="Asset"><span class="tooltip">Asset</span>
+        </div>
+        <div class="menu-item" data-module="hr_bonus">
+          <img src="https://img.icons8.com/color/24/money-bag.png" alt="Bonus"><span class="tooltip">Bonus</span>
+        </div>
+        <div class="menu-item" data-module="hr_joblists">
+          <img src="https://img.icons8.com/color/24/job.png" alt="Job Lists"><span class="tooltip">Job Lists</span>
+        </div>
+        <div class="menu-item" data-module="hr_claim">
+          <img src="https://img.icons8.com/color/24/expense.png" alt="Claim"><span class="tooltip">Claim</span>
+        </div>
+        <div class="menu-item" data-module="hr_offboarding">
+          <img src="https://img.icons8.com/color/24/exit.png" alt="Offboarding"><span class="tooltip">Offboarding</span>
+        </div>
+        <div class="menu-item" data-module="hr_jobapplication">
+          <img src="https://img.icons8.com/color/24/resume.png" alt="Job Application"><span class="tooltip">Job Application</span>
+        </div>
+        <div class="menu-item" data-module="hr_Onboarding">
+          <img src="https://img.icons8.com/color/24/add-user-male.png" alt="Onboarding"><span class="tooltip">Onboarding</span>
+        </div>
+        <div class="menu-item" data-module="hr_logout">
+          <img src="https://img.icons8.com/color/24/logout-rounded.png" alt="Logout"><span class="tooltip">Logout</span>
+        </div>
+      </div>
+    </div>
+
+    <main class="main-content" id="mainContent">
+      <iframe id="contentFrame"></iframe>
+    </main>
+
+    <div class="modal" id="empDetailsModal">
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <h2 class="modal-title">Employee Details</h2>
+        <div class="modal-body" id="empDetailsContent">
+          <p><strong>Name:</strong> <span id="empName">N/A</span></p>
+          <p><strong>Email:</strong> <span id="empEmail">N/A</span></p>
+          <p><strong>Employee ID:</strong> <span id="empId">N/A</span></p>
+          <p><strong>Department:</strong> <span id="empDepartment">N/A</span></p>
+          <p><strong>Role:</strong> <span id="empRole">N/A</span></p>
+          <p><strong>Location:</strong> <span id="empLocation">N/A</span></p>
+          <p><strong>Hire Date:</strong> <span id="empHireDate">N/A</span></p>
+          <p><strong>Phone:</strong> <span id="empPhone">N/A</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // script.js
+const config = {
+  apiBaseUrl: 'http://localhost:3404/api',
+  wsUrl: 'ws://localhost:3404'
+};
+
+const state = {
+  isAuthenticated: false,
+  user: null,
+  token: null,
+  refreshToken: null,
+  personnelDetails: null,
+  isMenuOpen: false,
+  isDarkMode: localStorage.getItem('darkMode') === 'true'
+};
+
+const elements = {
+  appBody: document.getElementById('appBody'),
+  loginView: document.getElementById('loginView'),
+  dashboardView: document.getElementById('dashboardView'),
+  loginForm: document.getElementById('loginForm'),
+  emailInput: document.getElementById('email'),
+  passwordInput: document.getElementById('password'),
+  errorMessage: document.getElementById('error-message'),
+  eyeIcon: document.getElementById('eyeIcon'),
+  toggleBtn: document.getElementById('toggleBtn'),
+  radialMenu: document.getElementById('radialMenu'),
+  moduleSelector: document.getElementById('moduleSelector'),
+  empMenu: document.getElementById('empMenu'),
+  hrMenu: document.getElementById('hrMenu'),
+  searchInput: document.getElementById('searchInput'),
+  searchButton: document.getElementById('searchButton'),
+  autocompleteDropdown: document.getElementById('autocompleteDropdown'),
+  contentFrame: document.getElementById('contentFrame'),
+  userName: document.getElementById('userName'),
+  userAvatar: document.getElementById('userAvatar'),
+  avatarSkeleton: document.getElementById('avatarSkeleton'),
+  themeToggle: document.getElementById('themeToggle'),
+  infoIcon: document.getElementById('infoIcon'),
+  empDetailsModal: document.getElementById('empDetailsModal'),
+  modalClose: document.getElementById('modalClose'),
+  empName: document.getElementById('empName'),
+  empEmail: document.getElementById('empEmail'),
+  empId: document.getElementById('empId'),
+  empDepartment: document.getElementById('empDepartment'),
+  empRole: document.getElementById('empRole'),
+  empLocation: document.getElementById('empLocation'),
+  empHireDate: document.getElementById('empHireDate'),
+  empPhone: document.getElementById('empPhone')
+};
+
+const wsClient = {
+  ws: null,
+  connect() {
+    this.ws = new WebSocket(config.wsUrl);
+    this.ws.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+    this.ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        console.log('WebSocket message received:', data);
+        if (data.type === 'employeeDetails') {
+          state.personnelDetails = data.details;
+          console.log('Updated personnelDetails from WebSocket:', state.personnelDetails);
+          this.populateFormFields(data.details);
+        }
+      } catch (error) {
+        console.error('WebSocket message parse error:', {
+          error: error.message,
+          data: event.data
+        });
+      }
+    };
+    this.ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+    this.ws.onerror = (error) => {
+      console.error('WebSocket error:', {
+        error: error.message
+      });
+    };
+  },
+  sendEmployeeDetails(details) {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      const message = JSON.stringify({ type: 'employeeDetails', details });
+      this.ws.send(message);
+      console.log('Sent employeeDetails to WebSocket:', message);
+    } else {
+      console.warn('WebSocket not connected, cannot send employeeDetails');
+    }
+  },
+  populateFormFields(details) {
+    console.log('Populating form fields with:', details);
+    const formFields = document.querySelectorAll('[data-emp-field]');
+    formFields.forEach(field => {
+      const fieldName = field.dataset.empField;
+      field.value = details[fieldName] || '';
+      console.debug(`Set field ${fieldName} to: ${field.value}`);
+    });
+  }
+};
+
+const utils = {
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      const cookieValue = parts.pop().split(';').shift();
+      console.debug(`Retrieved cookie ${name}: ${cookieValue.substring(0, 10)}...`);
+      return cookieValue;
+    }
+    console.debug(`Cookie ${name} not found`);
+    return null;
+  },
+  async fetchWithAuth(endpoint, options = {}) {
+    const token = utils.getCookie('accessToken') || state.token;
+    console.debug(`Fetching ${endpoint} with token: ${token ? token.substring(0, 10) + '...' : 'null'}`);
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    };
+    const response = await fetch(`${config.apiBaseUrl}${endpoint}`, {
+      ...options,
+      headers: {
+        ...headers,
+        ...options.headers
+      },
+      credentials: 'include'
+    });
+    console.debug(`Response from ${endpoint}:`, { status: response.status, ok: response.ok });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || 'Network response was not ok');
+    }
+    return response.json();
+  },
+  showAlert(message, type = 'success') {
+    const alert = document.createElement('div');
+    alert.className = `alert ${type}`;
+    alert.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i> ${message}`;
+    document.body.appendChild(alert);
+    console.log(`Showing alert: ${type} - ${message}`);
+    setTimeout(() => alert.remove(), 3000);
+  }
+};
+
+const core = {
+  async verifySession() {
+    const token = utils.getCookie('accessToken') || state.token;
+    const refreshToken = utils.getCookie('refreshToken') || state.refreshToken;
+
+    console.debug('Verifying session', { token: token ? token.substring(0, 10) + '...' : null, refreshToken: refreshToken ? refreshToken.substring(0, 10) + '...' : null });
+
+    if (!token && !refreshToken) {
+      console.warn('No tokens found, showing login view');
+      state.isAuthenticated = false;
+      core.showLoginView();
+      return false;
+    }
+
+    try {
+      const response = await utils.fetchWithAuth('/profile');
+      console.log('Profile response:', response);
+      state.user = response.profile;
+      state.personnelDetails = response.profile.personnel || null;
+
+      if (state.personnelDetails) {
+        console.log('Personnel data received:', state.personnelDetails);
+        try {
+          localStorage.setItem('abccompanyempdetails', JSON.stringify(state.personnelDetails));
+          console.debug('Saved personnelDetails to localStorage:', state.personnelDetails);
+          wsClient.sendEmployeeDetails(state.personnelDetails);
+          wsClient.populateFormFields(state.personnelDetails);
+        } catch (storageError) {
+          console.error('Failed to save to localStorage:', {
+            error: storageError.message
+          });
+        }
+      } else {
+        console.debug('No personnel data available for this user', { email: state.user.email });
+      }
+
+      state.token = token;
+      state.isAuthenticated = true;
+
+      setTimeout(() => {
+        elements.avatarSkeleton.style.display = 'none';
+        elements.userAvatar.style.display = 'block';
+        elements.userAvatar.src = state.user.profile_image ||
+          'https://img.icons8.com/fluency/48/user-male-circle.png';
+        elements.userName.textContent = state.user.username || 'User';
+        elements.userName.style.opacity = 0;
+        setTimeout(() => {
+          elements.userName.style.transition = 'opacity 0.3s ease';
+          elements.userName.style.opacity = 1;
+          console.debug('User profile UI updated:', { username: state.user.username, profile_image: state.user.profile_image });
+        }, 50);
+      }, 800);
+
+      core.showDashboardView();
+      return true;
+    } catch (error) {
+      console.error('Session verification failed:', {
+        error: error.message,
+        status: error.status
+      });
+      if (refreshToken && error.status === 401) {
+        try {
+          console.debug('Attempting token refresh');
+          const refreshResponse = await fetch(`${config.apiBaseUrl}/refresh`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken }),
+            credentials: 'include'
+          });
+
+          if (refreshResponse.ok) {
+            const { accessToken } = await refreshResponse.json();
+            document.cookie = `accessToken=${accessToken}; maxAge=900; path=/`;
+            state.token = accessToken;
+            console.log('Token refreshed successfully, retrying session verification');
+            return await core.verifySession();
+          }
+        } catch (refreshError) {
+          console.error('Refresh token failed:', {
+            error: refreshError.message
+          });
+        }
+      }
+      localStorage.removeItem('abccompanyempdetails');
+      sessionStorage.removeItem('user');
+      document.cookie = 'accessToken=; Max-Age=0; path=/;';
+      document.cookie = 'refreshToken=; Max-Age=0; path=/;';
+      state.isAuthenticated = false;
+      state.user = null;
+      state.token = null;
+      state.refreshToken = null;
+      state.personnelDetails = null;
+      console.warn('Session invalidated, showing login view');
+      core.showLoginView();
+      return false;
+    }
+  },
+  showLoginView() {
+    console.debug('Showing login view');
+    elements.appBody.classList.add('login-body');
+    elements.loginView.classList.remove('hidden');
+    elements.dashboardView.classList.add('hidden');
+    elements.contentFrame.src = '';
+  },
+  showDashboardView() {
+    console.debug('Showing dashboard view');
+    elements.appBody.classList.remove('login-body');
+    elements.loginView.classList.add('hidden');
+    elements.dashboardView.classList.remove('hidden');
+    if (state.isDarkMode) {
+      elements.appBody.classList.add('dark-mode');
+      elements.themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+  },
+  toggleRadialMenu() {
+    console.debug('Toggling radial menu', { isMenuOpen: state.isMenuOpen });
+    state.isMenuOpen = !state.isMenuOpen;
+    elements.radialMenu.classList.toggle('active', state.isMenuOpen);
+    elements.appBody.classList.toggle('menu-open', state.isMenuOpen);
+    elements.toggleBtn.disabled = true;
+
+    if (!state.isMenuOpen) {
+      elements.radialMenu.classList.add('closing');
+      setTimeout(() => {
+        elements.radialMenu.classList.remove('closing');
+        elements.toggleBtn.disabled = false;
+      }, 500);
+    } else {
+      setTimeout(() => {
+        elements.toggleBtn.disabled = false;
+      }, 500);
+    }
+
+    const menuType = elements.moduleSelector.value;
+    elements.empMenu.classList.toggle('active', menuType === 'emp' && state.isMenuOpen);
+    elements.hrMenu.classList.toggle('active', menuType === 'hr' && state.isMenuOpen);
+    console.debug('Menu state updated:', { menuType, isMenuOpen: state.isMenuOpen });
+  },
+  updateEmployeeDetailsModal() {
+    console.debug('Updating employee details modal', { personnelDetails: state.personnelDetails, user: state.user });
+    if (state.personnelDetails) {
+      elements.empName.textContent = state.personnelDetails.name || 'N/A';
+      elements.empEmail.textContent = state.personnelDetails.email || 'N/A';
+      elements.empId.textContent = state.personnelDetails.emp_id || 'N/A';
+      elements.empDepartment.textContent = state.personnelDetails.department || 'N/A';
+      elements.empRole.textContent = state.personnelDetails.job_role || 'N/A';
+      elements.empLocation.textContent = state.personnelDetails.location || 'N/A';
+      elements.empHireDate.textContent = state.personnelDetails.hire_date ? new Date(state.personnelDetails.hire_date).toLocaleDateString() : 'N/A';
+      elements.empPhone.textContent = state.personnelDetails.phone || 'N/A';
+    } else {
+      elements.empName.textContent = state.user?.username || 'N/A';
+      elements.empEmail.textContent = state.user?.email || 'N/A';
+      elements.empId.textContent = 'N/A';
+      elements.empDepartment.textContent = 'N/A';
+      elements.empRole.textContent = 'N/A';
+      elements.empLocation.textContent = 'N/A';
+      elements.empHireDate.textContent = 'N/A';
+      elements.empPhone.textContent = 'N/A';
+      console.debug('No personnel data, using user data as fallback');
+    }
+  }
+};
+
+function initNavigation() {
+  console.debug('Initializing navigation');
+  const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    item.addEventListener('click', async () => {
+      const module = item.dataset.module;
+      console.debug('Menu item clicked:', { module });
+      if (module.includes('logout')) {
+        try {
+          await utils.fetchWithAuth('/logout', { method: 'POST' });
+          localStorage.removeItem('abccompanyempdetails');
+          sessionStorage.removeItem('user');
+          document.cookie = 'accessToken=; Max-Age=0; path=/;';
+          document.cookie = 'refreshToken=; Max-Age=0; path=/;';
+          state.isAuthenticated = false;
+          state.user = null;
+          state.token = null;
+          state.refreshToken = null;
+          state.personnelDetails = null;
+          console.log('Logged out successfully');
+          core.showLoginView();
+        } catch (error) {
+          console.error('Logout failed:', {
+            error: error.message
+          });
+          utils.showAlert('Logout failed', 'error');
+        }
+      } else {
+        const url = `http://localhost:3404/${module}`;
+        console.debug(`Loading module: ${url}`);
+        elements.contentFrame.src = url;
+        core.toggleRadialMenu();
+      }
+    });
+  });
+
+  elements.moduleSelector.addEventListener('change', () => {
+    const menuType = elements.moduleSelector.value;
+    console.debug('Module selector changed:', { menuType });
+    elements.empMenu.classList.toggle('active', menuType === 'emp' && state.isMenuOpen);
+    elements.hrMenu.classList.toggle('active', menuType === 'hr' && state.isMenuOpen);
+  });
+
+  elements.toggleBtn.addEventListener('click', core.toggleRadialMenu);
+
+  elements.infoIcon.addEventListener('click', () => {
+    console.debug('Opening employee details modal');
+    core.updateEmployeeDetailsModal();
+    elements.empDetailsModal.style.display = 'flex';
+  });
+
+  elements.modalClose.addEventListener('click', () => {
+    console.debug('Closing employee details modal');
+    elements.empDetailsModal.style.display = 'none';
+  });
+}
+
+function positionMenuItems() {
+  console.debug('Positioning menu items');
+  const radius = 140;
+  const empItems = elements.empMenu.querySelectorAll('.menu-item');
+  const hrItems = elements.hrMenu.querySelectorAll('.menu-item');
+
+  [empItems, hrItems].forEach((items, index) => {
+    items.forEach((item, i) => {
+      const angle = (i / items.length) * 2 * Math.PI - Math.PI / 2;
+      const x = radius * Math.cos(angle);
+      const y = radius * Math.sin(angle);
+      item.style.transform = `translate(${x}px, ${y}px)`;
+      console.debug(`Positioned menu item ${item.dataset.module}: x=${x}, y=${y}`);
+    });
+  });
+}
+
+function initSearch() {
+  console.debug('Initializing search');
+  let debounceTimeout;
+  elements.searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(async () => {
+      const query = elements.searchInput.value.trim();
+      console.debug('Search input:', { query });
+      if (query.length < 2) {
+        elements.autocompleteDropdown.style.display = 'none';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/personnel?search=${encodeURIComponent(query)}`, {
+          headers: {
+            Authorization: `Bearer ${utils.getCookie('accessToken') || state.token}`
+          },
+          credentials: 'include'
+        });
+        const data = await response.json();
+        console.log('Search results:', data);
+        elements.autocompleteDropdown.innerHTML = '';
+        if (data.personnel && data.personnel.length > 0) {
+          data.personnel.forEach(person => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.innerHTML = `
+              <img src="${person.profile_image || 'https://img.icons8.com/fluency/20/user-male-circle.png'}" alt="${person.name}">
+              <span>${person.name} (${person.email})</span>
+            `;
+            item.addEventListener('click', () => {
+              console.debug('Autocomplete item selected:', { name: person.name, email: person.email });
+              elements.searchInput.value = person.name;
+              elements.autocompleteDropdown.style.display = 'none';
+            });
+            elements.autocompleteDropdown.appendChild(item);
+          });
+          elements.autocompleteDropdown.style.display = 'block';
+        } else {
+          elements.autocompleteDropdown.innerHTML = '<div class="no-results">No results found</div>';
+          elements.autocompleteDropdown.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Search error:', {
+          error: error.message
+        });
+        elements.autocompleteDropdown.innerHTML = '<div class="no-results">Error fetching results</div>';
+        elements.autocompleteDropdown.style.display = 'block';
+      }
+    }, 300);
+  });
+
+  elements.searchButton.addEventListener('click', () => {
+    console.debug('Search button clicked');
+    elements.searchInput.dispatchEvent(new Event('input'));
+  });
+}
+
+function initThemeToggle() {
+  console.debug('Initializing theme toggle');
+  elements.themeToggle.addEventListener('click', () => {
+    state.isDarkMode = !state.isDarkMode;
+    console.debug('Toggling theme:', { isDarkMode: state.isDarkMode });
+    localStorage.setItem('darkMode', state.isDarkMode);
+    elements.appBody.classList.toggle('dark-mode', state.isDarkMode);
+    elements.themeToggle.innerHTML = `<i class="fas fa-${state.isDarkMode ? 'sun' : 'moon'}"></i>`;
+  });
+}
+
+function initLogin() {
+  console.debug('Initializing login');
+  elements.loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = elements.emailInput.value.trim();
+    const password = elements.passwordInput.value;
+    console.debug('Login form submitted:', { email });
+
+    try {
+      const response = await fetch(`${config.apiBaseUrl}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Login failed:', { error: errorData.error });
+        elements.errorMessage.textContent = errorData.error || 'Login failed';
+        utils.showAlert(errorData.error || 'Login failed', 'error');
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Login successful:', data);
+      document.cookie = `accessToken=${data.accessToken}; maxAge=900; path=/`;
+      document.cookie = `refreshToken=${data.refreshToken}; maxAge=${7 * 24 * 60 * 60}; path=/`;
+      state.token = data.accessToken;
+      state.refreshToken = data.refreshToken;
+      state.user = data.user;
+      state.personnelDetails = data.personnel || null;
+
+      if (state.personnelDetails) {
+        console.log('Personnel data received during login:', state.personnelDetails);
+        localStorage.setItem('abccompanyempdetails', JSON.stringify(state.personnelDetails));
+        wsClient.sendEmployeeDetails(state.personnelDetails);
+      } else {
+        console.debug('No personnel data received during login', { email });
+      }
+
+      elements.errorMessage.textContent = '';
+      utils.showAlert('Login successful', 'success');
+      await core.verifySession();
+    } catch (error) {
+      console.error('Login error:', {
+        error: error.message
+      });
+      elements.errorMessage.textContent = 'An error occurred. Please try again.';
+      utils.showAlert('An error occurred during login', 'error');
+    }
+  });
+
+  elements.eyeIcon.addEventListener('click', () => {
+    console.debug('Toggling password visibility');
+    const isPassword = elements.passwordInput.type === 'password';
+    elements.passwordInput.type = isPassword ? 'text' : 'password';
+    elements.eyeIcon.classList.toggle('fa-eye', isPassword);
+    elements.eyeIcon.classList.toggle('fa-eye-slash', !isPassword);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  console.debug('DOM loaded, initializing application');
+  wsClient.connect();
+  positionMenuItems();
+  initSearch();
+  initThemeToggle();
+  initLogin();
+  initNavigation();
+
+  if (state.isDarkMode) {
+    elements.appBody.classList.add('dark-mode');
+    elements.themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    console.debug('Applied dark mode from localStorage');
+  }
+
+  await core.verifySession();
+});
+  </script>
+</body>
+</html>
