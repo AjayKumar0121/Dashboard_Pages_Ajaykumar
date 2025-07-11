@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs');
 const retry = require('async-retry');
+const WebSocket = require('ws');
 
 const app = express();
 
@@ -342,6 +343,45 @@ connectWithRetry().catch(err => {
   process.exit(1);
 });
 
+const wss = new WebSocket.Server({ port: 3404 });
+
+wss.on('connection', (ws) => {
+  logger.info('WebSocket client connected');
+  ws.on('message', async (message) => {
+    try {
+      const data = JSON.parse(message);
+      if (data.type === 'employeeDetails') {
+        const { email } = data.details;
+        const result = await pool.query(
+          'SELECT emp_id, name, email, job_role, location, department, hire_date, phone FROM personnel WHERE email = $1',
+          [email]
+        );
+        if (result.rows.length > 0) {
+          const personnel = result.rows[0];
+          ws.send(JSON.stringify({
+            type: 'employeeDetails',
+            details: {
+              name: personnel.name,
+              email: personnel.email,
+              emp_id: personnel.emp_id,
+              department: personnel.department,
+              role: personnel.job_role // Map job_role to role
+            }
+          }));
+          logger.debug('Sent employee details via WebSocket', { email });
+        } else {
+          ws.send(JSON.stringify({ type: 'error', message: 'Personnel not found' }));
+          logger.warn('Personnel not found for WebSocket request', { email });
+        }
+      }
+    } catch (error) {
+      logger.error('WebSocket message error:', { message: error.message, stack: error.stack });
+      ws.send(JSON.stringify({ type: 'error', message: 'Server error' }));
+    }
+  });
+  ws.on('close', () => logger.info('WebSocket client disconnected'));
+});
+
 app.get('/api/health', async (req, res) => {
   try {
     const dbCheck = await pool.query('SELECT 1');
@@ -561,7 +601,6 @@ app.post('/api/login', async (req, res) => {
 
     const { password: _, ...userData } = user;
 
-    // Fetch personnel data
     let personnelData = null;
     try {
       const personnelResult = await pool.query(
@@ -573,7 +612,7 @@ app.post('/api/login', async (req, res) => {
           emp_id: personnelResult.rows[0].emp_id,
           name: personnelResult.rows[0].name,
           email: personnelResult.rows[0].email,
-          job_role: personnelResult.rows[0].job_role,
+          role: personnelResult.rows[0].job_role, // Map job_role to role
           location: personnelResult.rows[0].location,
           department: personnelResult.rows[0].department,
           hire_date: personnelResult.rows[0].hire_date,
@@ -589,18 +628,12 @@ app.post('/api/login', async (req, res) => {
     }
 
     logger.info(`User ${email} logged in successfully`, { userId: user.id });
-    
-    // Modified response to include personnel data
+
     res.json({
       message: 'Login successful',
       accessToken,
       refreshToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        profile_image: user.profile_image
-      },
+      user: userData,
       personnel: personnelData
     });
   } catch (err) {
@@ -711,7 +744,16 @@ app.get('/api/personnel', verifyToken, async (req, res) => {
 
     res.json({
       message: 'Personnel details fetched successfully',
-      personnel: result.rows[0]
+      personnel: {
+        emp_id: result.rows[0].emp_id,
+        name: result.rows[0].name,
+        email: result.rows[0].email,
+        role: result.rows[0].job_role, // Map job_role to role
+        location: result.rows[0].location,
+        department: result.rows[0].department,
+        hire_date: result.rows[0].hire_date,
+        phone: result.rows[0].phone
+      }
     });
   } catch (err) {
     logger.error('Personnel fetch error:', {
@@ -745,7 +787,18 @@ app.get('/api/profile', verifyToken, async (req, res) => {
         'SELECT emp_id, name, email, job_role, location, department, hire_date, phone FROM personnel WHERE email = $1',
         [user.email]
       );
-      personnelData = personnelResult.rows.length > 0 ? personnelResult.rows[0] : null;
+      if (personnelResult.rows.length > 0) {
+        personnelData = {
+          emp_id: personnelResult.rows[0].emp_id,
+          name: personnelResult.rows[0].name,
+          email: personnelResult.rows[0].email,
+          role: personnelResult.rows[0].job_role, // Map job_role to role
+          location: personnelResult.rows[0].location,
+          department: personnelResult.rows[0].department,
+          hire_date: personnelResult.rows[0].hire_date,
+          phone: personnelResult.rows[0].phone
+        };
+      }
     } catch (personnelError) {
       logger.warn('Failed to fetch personnel data in profile endpoint:', {
         error: personnelError.message,
@@ -754,16 +807,18 @@ app.get('/api/profile', verifyToken, async (req, res) => {
     }
 
     const profileData = {
-      ...user,
+      id: user.id,
+      username: user.username,
+      email: user.email,
       profile_image: user.profile_image
         ? `${req.protocol}://${req.get('host')}${user.profile_image}`
-        : null,
-      personnel: personnelData
+        : null
     };
 
     res.json({
       message: 'Profile fetched successfully',
-      profile: profileData
+      profile: profileData,
+      personnel: personnelData
     });
   } catch (err) {
     logger.error('Profile fetch error:', {
