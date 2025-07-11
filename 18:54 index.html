@@ -1129,7 +1129,7 @@
         <button type="submit" class="login-button">Login</button>
       </form>
       <div class="links">
-        <a href="http://localhost:8013/">Sign Up</a> | <a href="http://localhost:8010">Forgot Password?</a>
+        <a href="http://44.223.23.145:8013/">Sign Up</a> | <a href="http://44.223.23.145:8010">Forgot Password?</a>
       </div>
     </div>
   </div>
@@ -1308,8 +1308,8 @@
   <script>
     // script.js
 const config = {
-  apiBaseUrl: 'http://localhost:3404/api',
-  wsUrl: 'ws://localhost:3404'
+  apiBaseUrl: 'http://44.223.23.145:3404/api',
+  wsUrl: 'ws://44.223.23.145:3404'
 };
 
 const state = {
@@ -1644,7 +1644,7 @@ function initNavigation() {
           utils.showAlert('Logout failed', 'error');
         }
       } else {
-        const url = `http://localhost:3404/${module}`;
+        const url = `http://44.223.23.145:3404/${module}`;
         console.debug(`Loading module: ${url}`);
         elements.contentFrame.src = url;
         core.toggleRadialMenu();
