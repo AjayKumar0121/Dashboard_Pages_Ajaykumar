@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        @keyframes moveCircles {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-50%); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        header {
+            position: relative;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            position: relative;
+        }
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 10px auto 0;
+            opacity: 0.9;
+            z-index: 2;
+        }
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 10s infinite linear;
+        }
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+        .circle:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 12s;
+        }
+        .circle:nth-child(3) {
+            top: 80%;
+            left: 40%;
+            animation-duration: 15s;
+        }
+        .notification-section {
+            background: linear-gradient(135deg, rgba(195, 195, 255, 0.8), rgba(187, 238, 250, 0.7));
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .notification-section h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .user-profile:hover {
+            transform: translateY(-3px);
+        }
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        .user-profile-content {
+            flex: 1;
+            text-align: left;
+        }
+        .user-profile-content .username {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+        .user-profile-content p {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin: 3px 0;
+        }
+        .user-profile-close {
+            cursor: pointer;
+            font-size: 1rem;
+            color: summation-section {
+            width: 100%;
+        }
+        }
+        @media screen and (max-width: 480px) {
+            header {
+                padding: 15px;
+                border-radius: 0 0 10px 10px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+            header p {
+                font-size: 0.9rem;
+            }
+            .top-section {
+                flex-direction: row;
+                gap: 10px;
+            }
+            .addnew {
+                width: 40%;
+                padding: 10px;
+            }
+            .search-bar {
+                width: 55%;
+                margin-top: 0;
+            }
+            .search-bar input {
+                width: 80%;
+                font-size: 0.9rem;
+            }
+            .form-container input,
+            .form-container select {
+                width: 100%;
+                padding: 10px;
+            }
+            .employee-row {
+                padding: 10px;
+            }
+            .para {
+                font-size: 0.85rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .para strong {
+                width: auto;
+            }
+            .para .editable {
+                margin-left: 0;
+            }
+            .deletee, .edit-btn {
+                width: 45%;
+                margin: 5px;
+            }
+            .notification-section {
+                width: 100%;
+            }
+            .user-profile {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+            .user-profile img {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .employee-image {
+                width: 50px;
+                height: 50px;
+            }
+            .profile-image-preview {
+                max-width: 80px;
+                max-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner-background">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <h1>Employee's Profile Management Page</h1>
+        <p>Track and manage employee details, add and remove employees</p>
+    </header>
+
+    <!-- <div class="notification-section" id="notificationSection">
+        <h3>All Signed-Up Members</h3>
+        <div id="notificationList"></div>
+    </div> -->
+
+    <div class="top-section">
+        <button class="addnew" id="addNewButton">Add New Employee</button>
+        <div class="search-bar">
+            <input type="text" placeholder="Search..." id="searchInput" />
+            <i class="fa-brands fa-searchengin" onclick="searchEmployees()"></i>
+        </div>
+    </div>
+
+    <div class="form-container" id="employeeForm">
+        <h2>Enter Employee Details</h2>
+        <form id="addEmployeeForm" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="empName">Employee Name:</label>
+                <input type="text" id="empName" placeholder="Enter Employee Name" required minlength="3" maxlength="50" pattern="^[A-Za-z]+(?: [A-Za-z]+)*$" title="Name should contain only letters and single spaces, no leading/trailing/consecutive spaces">
+                <div class="error-message" id="nameError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empId">Employee ID:</label>
+                <input type="text" id="empId" placeholder="Enter Employee ID (e.g., ATS0xxx)" required minlength="7" maxlength="7" pattern="^ATS0(?!000)[0-9]{3}$" title="Please enter a valid Employee ID (ATS0 followed by 3 digits, not all zeros)">
+                <div class="error-message" id="idError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empRole">Role:</label>
+                <select id="empRole" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Tester">Tester</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Analyst">Analyst</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Administrator">Administrator</option>
+                </select>
+                <div class="error-message" id="roleError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empGender">Gender:</label>
+                <select id="empGender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="genderError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empDob">Date of Birth:</label>
+                <input type="date" id="empDob" placeholder="Enter Date of Birth" required>
+                <div class="error-message" id="dobError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empLocation">Location:</label>
+                <input type="text" id="empLocation" placeholder="Enter Location" required minlength="3" maxlength="40" pattern="^[A-Za-z]+(?: [A-Za-z]+)*$" title="Location should contain only letters and single spaces, no leading/trailing/consecutive spaces">
+                <div class="error-message" id="locationError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empEmail">Email Address:</label>
+                <input type="email" id="empEmail" placeholder="Enter Email Address" required minlength="7" maxlength="50" pattern="^[a-zA-Z][a-zA-Z0-9._-]*[a-zA-Z0-9]@astrolitetech\.com$" title="Email must have at least 3 letters, allow ._- (not consecutive), and use astrolitetech.com, no spaces">
+                <div class="error-message" id="emailError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empPhone">Phone Number:</label>
+                <input type="tel" id="empPhone" placeholder="Enter Phone Number (10 digits)" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" required title="Phone number must be 10 digits starting with 6, 7, 8, or 9, no spaces">
+                <div class="error-message" id="phoneError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empJoinDate">Join Date:</label>
+                <input type="date" id="empJoinDate" placeholder="Enter Join Date" required>
+                <div class="error-message" id="joinDateError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empExperience">Experience (in years):</label>
+                <input type="number" id="empExperience" placeholder="Enter Experience (in years)" required min="0" max="40" title="Experience must be between 0 and 40 years">
+                <div class="error-message" id="experienceError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empSkills">Skills:</label>
+                <input type="text" id="empSkills" placeholder="Enter Skills (comma separated)" required minlength="3" maxlength="100" pattern="^[A-Za-z]+(?:,[A-Za-z]+)*$" title="Enter skills separated by commas, only letters and single spaces, no leading/trailing/consecutive spaces">
+                <div class="error-message" id="skillsError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empAchievement">Career Achievement:</label>
+                <input type="text" id="empAchievement" placeholder="Enter Career Achievement" minlength="4" maxlength="100" title="Achievement should be at least 4 characters if provided, no leading/trailing/consecutive spaces">
+                <div class="error-message" id="achievementError"></div>
+            </div>
+            <div class="input-group">
+                <label for="empProfileImage">Profile Image:</label>
+                <input type="file" id="empProfileImage" accept="image/jpeg,image/png" required>
+                <img class="profile-image-preview" id="profileImagePreview" alt="Profile Image Preview">
+                <div class="error-message" id="profileImageError"></div>
+            </div>
+            <button type="submit" id="addemp" class="button">Add Employee</button>
+        </form>
+    </div>
+
+    <div class="main-content" id="employeeCards"></div>
+
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-dialog-content">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage">Are you sure you want to proceed?</p>
+            <div class="confirm-dialog-buttons">
+                <button class="confirm-cancel" id="confirmCancel">Cancel</button>
+                <button class="confirm-ok" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchEmployees() {
+            try {
+                const response = await fetch('http://44.223.23.145:3412/api/employees');
+                if (!response.ok) throw new Error('Failed to fetch employees');
+                const employees = await response.json();
+                localStorage.setItem('employees', JSON.stringify(employees));
+                document.getElementById('employeeCards').innerHTML = '';
+                employees.forEach(displayEmployeeCard);
+            } catch (err) {
+                console.error('Error fetching employees:', err);
+                const localEmployees = JSON.parse(localStorage.getItem('employees')) || [];
+                localEmployees.forEach(displayEmployeeCard);
+                showAlert('error', 'Failed to fetch employees: ' + err.message);
+            }
+        }
+
+        async function fetchAllUsers() {
+            try {
+                const response = await fetch('http://44.223.23.145:3412/api/all-users');
+                if (!response.ok) throw new Error('Failed to fetch all users');
+                const users = await response.json();
+                users.forEach(showUserProfile);
+            } catch (err) {
+                console.error('Error fetching all users:', err);
+                showAlert('error', 'Failed to fetch users: ' + err.message);
+            }
+        }
+
+        function showUserProfile(user) {
+            if (!user.username || !user.email) {
+                console.warn('Skipping user profile due to missing username or email:', user);
+                return;
+            }
+
+            let imageUrl = 'https://via.placeholder.com/40';
+            if (user.profile_image) {
+                const normalizedPath = user.profile_image.startsWith('/Uploads/') 
+                    ? user.profile_image 
+                    : `/Uploads/${user.profile_image}`;
+                imageUrl = `http://44.223.23.145:3412${normalizedPath}`;
+                const img = new Image();
+                img.onerror = () => {
+                    console.warn(`Failed to load image for ${user.username}: ${imageUrl}`);
+                    img.src = 'https://via.placeholder.com/40';
+                };
+                img.src = imageUrl;
+            }
+
+            const notificationList = document.getElementById('notificationList');
+            const profile = document.createElement('div');
+            profile.classList.add('user-profile');
+            profile.innerHTML = `
+                <img src="${imageUrl}" alt="Profile Image">
+                <div class="user-profile-content">
+                    <p class="username">${user.username}</p>
+                    <p>${user.email}</p>
+                </div>
+                <span class="user-profile-close" onclick="closeUserProfile(this)">×</span>
+            `;
+            notificationList.prepend(profile);
+        }
+
+        function closeUserProfile(element) {
+            const profile = element.parentElement;
+            profile.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+            setTimeout(() => profile.remove(), 500);
+        }
+
+        function showConfirmDialog(title, message, callback) {
+            const dialog = document.getElementById('confirmDialog');
+            const titleEl = document.getElementById('confirmTitle');
+            const messageEl = document.getElementById('confirmMessage');
+            const confirmOk = document.getElementById('confirmOk');
+            const confirmCancel = document.getElementById('confirmCancel');
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            dialog.style.display = 'flex';
+
+            confirmOk.onclick = () => {
+                callback();
+                dialog.style.display = 'none';
+            };
+
+            confirmCancel.onclick = () => {
+                dialog.style.display = 'none';
+            };
+        }
+
+        function showAlert(type, message) {
+            const alert = document.createElement('div');
+            alert.className = `alert ${type}`;
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        }
+
+        function validateProfileImage() {
+            const fileInput = document.getElementById('empProfileImage');
+            const errorElement = document.getElementById('profileImageError');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                errorElement.textContent = 'Profile image is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            const validTypes = ['image/jpeg', 'image/png'];
+            const maxSize = 5 * 1024 * 1024;
+
+            if (!validTypes.includes(file.type)) {
+                errorElement.textContent = 'Only JPEG or PNG images are allowed';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                errorElement.textContent = 'Image size must be less than 5MB';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function previewProfileImage() {
+            const fileInput = document.getElementById('empProfileImage');
+            const preview = document.getElementById('profileImagePreview');
+            const file = fileInput.files[0];
+
+            if (file && validateProfileImage()) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+                preview.src = '';
+            }
+        }
+
+        function normalizeInput(value, fieldId) {
+            if (fieldId === 'empId' || fieldId === 'empPhone') {
+                return value.replace(/\s/g, '');
+            }
+            return value.trim().replace(/\s+/g, fieldId === 'empSkills' ? ',' : ' ');
+        }
+
+        function validateName() {
+            const field = document.getElementById('empName');
+            const value = field.value;
+            const errorElement = document.getElementById('nameError');
+            if (!value) {
+                errorElement.textContent = 'Employee name is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (!value.match(/^[A-Za-z]+(?: [A-Za-z]+)*$/) || /\s{2,}/.test(value) || /^\s/.test(value) || /\s$/.test(value)) {
+                errorElement.textContent = 'Name should contain only letters and single spaces, no leading/trailing/consecutive spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateId() {
+            const field = document.getElementById('empId');
+            const value = normalizeInput(field.value, field.id);
+            field.value = value;
+            const errorElement = document.getElementById('idError');
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            if (!value) {
+                errorElement.textContent = 'Employee ID is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (!value.match(/^ATS0(?!000)[0-9]{3}$/) || /\s/.test(field.value)) {
+                errorElement.textContent = 'Please enter a valid Employee ID (ATS0 followed by 3 digits, not all zeros).';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (document.getElementById('addemp').style.display !== 'none' && 
+                employees.some(emp => emp.id === value)) {
+                errorElement.textContent = 'This Employee ID already exists';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateRole() {
+            const field = document.getElementById('empRole');
+            const value = field.value;
+            const errorElement = document.getElementById('roleError');
+            if (!value) {
+                errorElement.textContent = 'Role is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateGender() {
+            const field = document.getElementById('empGender');
+            const value = field.value;
+            const errorElement = document.getElementById('genderError');
+            if (!value) {
+                errorElement.textContent = 'Gender is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateEmail() {
+            const field = document.getElementById('empEmail');
+            const value = normalizeInput(field.value, field.id);
+            field.value = value;
+            const errorElement = document.getElementById('emailError');
+            if (!value) {
+                errorElement.textContent = 'Email address is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            const letters = (value.match(/[a-zA-Z]/g) || []).length;
+            if (!value.match(/^[a-zA-Z][a-zA-Z0-9._-]*[a-zA-Z0-9]@astrolitetech\.com$/) || 
+                letters < 3 || 
+                /[._-]{2,}/.test(value) || 
+                /\s{2,}/.test(field.value) || 
+                /^\s/.test(field.value) || 
+                /\s$/.test(field.value)) {
+                errorElement.textContent = 'Email must have at least 3 letters, allow ._- (not consecutive), use astrolitetech.com, no spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validatePhone() {
+            const field = document.getElementById('empPhone');
+            const value = normalizeInput(field.value, field.id);
+            field.value = value;
+            const errorElement = document.getElementById('phoneError');
+            if (!value) {
+                errorElement.textContent = 'Phone number is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (!value.match(/^[6-9][0-9]{9}$/) || /\s/.test(field.value)) {
+                errorElement.textContent = 'Phone number must be 10 digits starting with 6, 7, 8, or 9, no spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateDob() {
+            const field = document.getElementById('empDob');
+            const dob = field.value;
+            const errorElement = document.getElementById('dobError');
+            if (!dob) {
+                errorElement.textContent = 'Date of birth is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            const age = calculateAge(dob);
+            if (age < 20 || age > 60) {
+                errorElement.textContent = "Employee's age must be between 20 and 60 years";
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateJoinDate() {
+            const field = document.getElementById('empJoinDate');
+            const joinDate = field.value;
+            const dob = document.getElementById('empDob').value;
+            const errorElement = document.getElementById('joinDateError');
+            if (!joinDate) {
+                errorElement.textContent = 'Join date is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            const today = new Date().toISOString().split('T')[0];
+            const minJoinDate = '2021-01-01';
+            if (joinDate > today) {
+                errorElement.textContent = 'Join date must be today or a previous date';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (joinDate < minJoinDate) {
+                errorElement.textContent = 'Join date cannot be earlier than January 1, 2021';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (dob && new Date(joinDate) < new Date(dob)) {
+                errorElement.textContent = 'Join date cannot be before date of birth';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateLocation() {
+            const field = document.getElementById('empLocation');
+            const value = field.value;
+            const errorElement = document.getElementById('locationError');
+            if (!value) {
+                errorElement.textContent = 'Location is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (!value.match(/^[A-Za-z]+(?: [A-Za-z]+)*$/) || /\s{2,}/.test(value) || /^\s/.test(value) || /\s$/.test(value)) {
+                errorElement.textContent = 'Location should contain only letters and single spaces, no leading/trailing/consecutive spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateExperience() {
+            const field = document.getElementById('empExperience');
+            const value = field.value;
+            const errorElement = document.getElementById('experienceError');
+            if (value === '') {
+                errorElement.textContent = 'Experience is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            const numValue = Number(value);
+            if (numValue < 0 || numValue > 40) {
+                errorElement.textContent = 'Experience must be between 0 and 40 years';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateSkills() {
+            const field = document.getElementById('empSkills');
+            const value = field.value;
+            const errorElement = document.getElementById('skillsError');
+            if (!value) {
+                errorElement.textContent = 'Skills are required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            if (!value.match(/^[A-Za-z]+(?:,[A-Za-z]+)*$/) || /\s{2,}/.test(value) || /^\s/.test(value) || /\s$/.test(value)) {
+                errorElement.textContent = 'Skills should be comma-separated letters, single spaces allowed, no leading/trailing/consecutive spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function validateAchievement() {
+            const field = document.getElementById('empAchievement');
+            const value = field.value;
+            const errorElement = document.getElementById('achievementError');
+            if (value && (value.length < 4 || /\s{2,}/.test(value) || /^\s/.test(value) || /\s$/.test(value)) {
+                errorElement.textContent = 'Achievement must be at least 4 characters, no leading/trailing/consecutive spaces';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        function calculateAge(dob) {
+            if (!dob) return 0;
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function validateEmployeeForm() {
+            const isNameValid = validateName();
+            const isIdValid = validateId();
+            const isRoleValid = validateRole();
+            const isGenderValid = validateGender();
+            const isDobValid = validateDob();
+            const isLocationValid = validateLocation();
+            const isEmailValid = validateEmail();
+            const isPhoneValid = validatePhone();
+            const isJoinDateValid = validateJoinDate();
+            const isExperienceValid = validateExperience();
+            const isSkillsValid = validateSkills();
+            const isAchievementValid = validateAchievement();
+            const isProfileImageValid = validateProfileImage();
+            return isNameValid && isIdValid && isRoleValid && isGenderValid &&
+                   isDobValid && isLocationValid && isEmailValid && isPhoneValid &&
+                   isJoinDateValid && isExperienceValid && isSkillsValid &&
+                   isAchievementValid && isProfileImageValid;
+        }
+
+        function toggleForm() {
+            const form = document.getElementById('employeeForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('addemp').style.display = 'block';
+            const saveBtn = document.querySelector('.save-btn');
+            if (saveBtn) saveBtn.remove();
+            document.getElementById('addEmployeeForm').reset();
+            document.getElementById('profileImagePreview').style.display = 'none';
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+        }
+
+        window.onload = function() {
+            fetchEmployees();
+            fetchAllUsers();
+            document.getElementById('empName').addEventListener('input', validateName);
+            document.getElementById('empId').addEventListener('input', validateId);
+            document.getElementById('empRole').addEventListener('change', validateRole);
+            document.getElementById('empGender').addEventListener('change', validateGender);
+            document.getElementById('empEmail').addEventListener('input', validateEmail);
+            document.getElementById('empPhone').addEventListener('input', validatePhone);
+            document.getElementById('empDob').addEventListener('change', validateDob);
+            document.getElementById('empJoinDate').addEventListener('change', validateJoinDate);
+            document.getElementById('empLocation').addEventListener('input', validateLocation);
+            document.getElementById('empExperience').addEventListener('input', validateExperience);
+            document.getElementById('empSkills').addEventListener('input', validateSkills);
+            document.getElementById('empAchievement').addEventListener('input', validateAchievement);
+            document.getElementById('empProfileImage').addEventListener('change', previewProfileImage);
+            document.getElementById('searchInput').addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') searchEmployees();
+            });
+            document.getElementById('addNewButton').addEventListener('click', toggleForm);
+        };
+
+        document.getElementById('addEmployeeForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const existingSaveBtn = document.querySelector('.save-btn');
+            if (existingSaveBtn) existingSaveBtn.remove();
+            if (!validateEmployeeForm()) return;
+
+            const formData = new FormData();
+            formData.append('id', normalizeInput(document.getElementById('empId').value, 'empId'));
+            formData.append('name', normalizeInput(document.getElementById('empName').value, 'empName'));
+            formData.append('role', document.getElementById('empRole').value);
+            formData.append('gender', document.getElementById('empGender').value);
+            formData.append('dob', document.getElementById('empDob').value);
+            formData.append('location', normalizeInput(document.getElementById('empLocation').value, 'empLocation'));
+            formData.append('email', normalizeInput(document.getElementById('empEmail').value, 'empEmail'));
+            formData.append('phone', normalizeInput(document.getElementById('empPhone').value, 'empPhone'));
+            formData.append('joinDate', document.getElementById('empJoinDate').value);
+            formData.append('experience', document.getElementById('empExperience').value);
+            formData.append('skills', normalizeInput(document.getElementById('empSkills').value, 'empSkills'));
+            const achievement = normalizeInput(document.getElementById('empAchievement').value, 'empAchievement');
+            if (achievement) formData.append('achievement', achievement);
+            const fileInput = document.getElementById('empProfileImage');
+            formData.append('profileImage', fileInput.files[0]);
+
+            showConfirmDialog('Confirm Add Employee', 'Are you sure you want to add this employee?', async () => {
+                try {
+                    const response = await fetch('http://44.223.23.145:3412/api/add-employee', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Failed to add employee');
+                    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+                    const newEmployee = {
+                        id: document.getElementById('empId').value,
+                        name: normalizeInput(document.getElementById('empName').value, 'empName'),
+                        role: document.getElementById('empRole').value,
+                        gender: document.getElementById('empGender').value,
+                        dob: document.getElementById('empDob').value,
+                        location: normalizeInput(document.getElementById('empLocation').value, 'empLocation'),
+                        email: document.getElementById('empEmail').value,
+                        phone: document.getElementById('empPhone').value,
+                        joinDate: document.getElementById('empJoinDate').value,
+                        experience: document.getElementById('empExperience').value,
+                        skills: normalizeInput(document.getElementById('empSkills').value, 'empSkills'),
+                        achievement: document.getElementById('empAchievement').value || null,
+                        profile_image: result.profile_image || null
+                    };
+                    const existingIndex = employees.findIndex(emp => emp.id === newEmployee.id);
+                    if (existingIndex >= 0) employees[existingIndex] = newEmployee;
+                    else employees.push(newEmployee);
+                    localStorage.setItem('employees', JSON.stringify(employees));
+                    await fetchEmployees();
+                    document.getElementById('addEmployeeForm').reset();
+                    document.getElementById('profileImagePreview').style.display = 'none';
+                    document.getElementById('employeeForm').style.display = 'none';
+                    showAlert('success', result.message);
+                } catch (err) {
+                    console.error('Error adding employee:', err);
+                    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+                    const newEmployee = {
+                        id: document.getElementById('empId').value,
+                        name: normalizeInput(document.getElementById('empName').value, 'empName'),
+                        role: document.getElementById('empRole').value,
+                        gender: document.getElementById('empGender').value,
+                        dob: document.getElementById('empDob').value,
+                        location: normalizeInput(document.getElementById('empLocation').value, 'empLocation'),
+                        email: document.getElementById('empEmail').value,
+                        phone: document.getElementById('empPhone').value,
+                        joinDate: document.getElementById('empJoinDate').value,
+                        experience: document.getElementById('empExperience').value,
+                        skills: normalizeInput(document.getElementById('empSkills').value, 'empSkills'),
+                        achievement: document.getElementById('empAchievement').value || null,
+                        profile_image: null
+                    };
+                    const existingIndex = employees.findIndex(emp => emp.id === newEmployee.id);
+                    if (existingIndex >= 0) employees[existingIndex] = newEmployee;
+                    else employees.push(newEmployee);
+                    localStorage.setItem('employees', JSON.stringify(employees));
+                    document.getElementById('employeeCards').innerHTML = '';
+                    employees.forEach(displayEmployeeCard);
+                    document.getElementById('addEmployeeForm').reset();
+                    document.getElementById('profileImagePreview').style.display = 'none';
+                    document.getElementById('employeeForm').style.display = 'none';
+                    showAlert('error', 'Saved locally due to server error: ' + err.message);
+                }
+            });
+        });
+
+        function displayEmployeeCard(employee) {
+            const employeeCard = document.createElement('div');
+            employeeCard.classList.add('employee-row');
+            employeeCard.id = `employee-${employee.id}`;
+            const dobDate = new Date(employee.dob);
+            const joinDate = new Date(employee.join_date || employee.joinDate);
+            const formattedDob = dobDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const formattedJoinDate = joinDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const imageUrl = employee.profile_image 
+                ? `http://44.223.23.145:3412/${employee.profile_image}` 
+                : 'https://via.placeholder.com/60';
+            const experienceText = employee.experience == 0 ? 'Fresher' : `${employee.experience} years`;
+            employeeCard.innerHTML = `
+                <img src="${imageUrl}" alt="Employee Image" class="employee-image">
+                <div class="employee-details">
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-user icon"></i><strong class="label">Name</strong><span class="colon">:</span><span class="editable value" data-field="name">${employee.name}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-id-badge icon"></i><strong class="label">Employee ID</strong><span class="colon">:</span><span class="editable value" data-field="id">${employee.id}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-briefcase icon"></i><strong class="label">Role</strong><span class="colon">:</span><span class="editable value" data-field="role">${employee.role}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-person icon"></i><strong class="label">Gender</strong><span class="colon">:</span><span class="editable value" data-field="gender">${employee.gender}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-cake-candles icon"></i><strong class="label">DOB</strong><span class="colon">:</span><span class="editable value" data-field="dob">${formattedDob}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-map-marker-alt icon"></i><strong class="label">Location</strong><span class="colon">:</span><span class="editable value" data-field="location">${employee.location}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-envelope icon"></i><strong class="label">Email</strong><span class="colon">:</span><span class="editable value" data-field="email">${employee.email}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-phone icon"></i><strong class="label">Phone</strong><span class="colon">:</span><span class="editable value" data-field="phone">${employee.phone}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-calendar-check icon"></i><strong class="label">Join Date</strong><span class="colon">:</span><span class="editable value" data-field="joinDate">${formattedJoinDate}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-chalkboard-teacher icon"></i><strong class="label">Experience</strong><span class="colon">:</span><span class="editable value" data-field="experience">${experienceText}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-certificate icon"></i><strong class="label">Skills</strong><span class="colon">:</span><span class="editable value" data-field="skills">${employee.skills}</span></p>
+                    </div>
+                    <div class="detail-row">
+                        <p class="para"><i class="fa-solid fa-trophy icon"></i><strong class="label">Achievement</strong><span class="colon">:</span><span class="editable value" data-field="achievement">${employee.achievement || 'None'}</span></p>
+                    </div>
+                    <button class="deletee" onclick="deleteEmployee('${employee.id}')">Delete</button>
+                    <button class="edit-btn" onclick="editEmployee('${employee.id}')">Edit</button>
+                </div>
+            `;
+            document.getElementById('employeeCards').appendChild(employeeCard);
+        }
+
+        async function deleteEmployee(employeeId) {
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            const employee = employees.find(emp => emp.id === employeeId);
+            showConfirmDialog('Confirm Delete', `Are you sure you want to delete ${employee ? employee.name : 'this employee'}?`, async () => {
+                try {
+                    const response = await fetch(`http://44.223.23.145:3412/api/delete-employee/${employeeId}`, {
+                        method: 'DELETE'
+                    });
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Failed to delete employee');
+                    let employees = JSON.parse(localStorage.getItem('employees')) || [];
+                    employees = employees.filter(emp => emp.id !== employeeId);
+                    localStorage.setItem('employees', JSON.stringify(employees));
+                    const employeeCard = document.getElementById(`employee-${employeeId}`);
+                    if (employeeCard) employeeCard.remove();
+                    showAlert('success', 'Employee deleted successfully');
+                } catch (err) {
+                    console.error('Error deleting employee:', err);
+                    let employees = JSON.parse(localStorage.getItem('employees')) || [];
+                    employees = employees.filter(emp => emp.id !== employeeId);
+                    localStorage.setItem('employees', JSON.stringify(employees));
+                    const employeeCard = document.getElementById(`employee-${employeeId}`);
+                    if (employeeCard) employeeCard.remove();
+                    showAlert('error', 'Deleted locally due to server error: ' + err.message);
+                }
+            });
+        }
+
+        function editEmployee(employeeId) {
+            const employees = JSON.parse(localStorage.getItem('employees'));
+            const employee = employees.find(emp => emp.id === employeeId);
+            if (!employee) return;
+            document.getElementById('empId').value = employee.id;
+            document.getElementById('empName').value = employee.name;
+            document.getElementById('empRole').value = employee.role;
+            document.getElementById('empGender').value = employee.gender;
+            document.getElementById('empDob').value = employee.dob;
+            document.getElementById('empLocation').value = employee.location;
+            document.getElementById('empEmail').value = employee.email;
+            document.getElementById('empPhone').value = employee.phone;
+            document.getElementById('empJoinDate').value = employee.joinDate;
+            document.getElementById('empExperience').value = employee.experience;
+            document.getElementById('empSkills').value = employee.skills;
+            document.getElementById('empAchievement').value = employee.achievement || '';
+            const preview = document.getElementById('profileImagePreview');
+            if (employee.profile_image) {
+                preview.src = `http://44.223.23.145:3412/${employee.profile_image}`;
+                preview.style.display = 'block';
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+            document.getElementById('empProfileImage').value = '';
+            document.getElementById('employeeForm').style.display = 'block';
+            document.getElementById('addemp').style.display = 'none';
+            const existingSaveBtn = document.querySelector('.save-btn');
+            if (existingSaveBtn) existingSaveBtn.remove();
+            const saveBtn = document.createElement('button');
+            saveBtn.classList.add('save-btn');
+            saveBtn.textContent = 'Save Changes';
+            saveBtn.onclick = async function() {
+                if (!validateEmployeeForm()) return;
+                const formData = new FormData();
+                formData.append('id', normalizeInput(document.getElementById('empId').value, 'empId'));
+                formData.append('name', normalizeInput(document.getElementById('empName').value, 'empName'));
+                formData.append('role', document.getElementById('empRole').value);
+                formData.append('gender', document.getElementById('empGender').value);
+                formData.append('dob', document.getElementById('empDob').value);
+                formData.append('location', normalizeInput(document.getElementById('empLocation').value, 'empLocation'));
+                formData.append('email', normalizeInput(document.getElementById('empEmail').value, 'empEmail'));
+                formData.append('phone', normalizeInput(document.getElementById('empPhone').value, 'empPhone'));
+                formData.append('joinDate', document.getElementById('empJoinDate').value);
+                formData.append('experience', document.getElementById('empExperience').value);
+                formData.append('skills', normalizeInput(document.getElementById('empSkills').value, 'empSkills'));
+                const achievement = normalizeInput(document.getElementById('empAchievement').value, 'empAchievement');
+                if (achievement) formData.append('achievement', achievement);
+                const fileInput = document.getElementById('empProfileImage');
+                if (fileInput.files[0]) {
+                    formData.append('profileImage', fileInput.files[0]);
+                } else if (employee.profile_image) {
+                    formData.append('existingProfileImage', employee.profile_image);
+                }
+                showConfirmDialog('Confirm Update', 'Are you sure you want to update this employee?', async () => {
+                    try {
+                        const response = await fetch('http://44.223.23.145:3412/api/add-employee', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const result = await response.json();
+                        if (!response.ok) throw new Error(result.error || 'Failed to update employee');
+                        const index = employees.findIndex(emp => emp.id === employeeId);
+                        if (index !== -1) {
+                            employees[index] = {
+                                id: document.getElementById('empId').value,
+                                name: normalizeInput(document.getElementById('empName').value, 'empName'),
+                                role: document.getElementById('empRole').value,
+                                gender: document.getElementById('empGender').value,
+                                dob: document.getElementById('empDob').value,
+                                location: normalizeInput(document.getElementById('empLocation').value, 'empLocation'),
+                                email: document.getElementById('empEmail').value,
+                                phone: document.getElementById('empPhone').value,
+                                joinDate: document.getElementById('empJoinDate').value,
+                                experience: document.getElementById('empExperience').value,
+                                skills: normalizeInput(document.getElementById('empSkills').value, 'empSkills'),
+                                achievement: document.getElementById('empAchievement').value || null,
+                                profile_image: result.profile_image || employee.profile_image
+                            };
+                            localStorage.setItem('employees', JSON.stringify(employees));
+                            await fetchEmployees();
+                        }
+                        document.getElementById('employeeForm').style.display = 'none';
+                        document.getElementById('addEmployeeForm').reset();
+                        document.getElementById('profileImagePreview').style.display = 'none';
+                        showAlert('success', result.message);
+                    } catch (err) {
+                        console.error('Error updating employee:', err);
+                        const index = employees.findIndex(emp => emp.id === employeeId);
+                        if (index !== -1) {
+                            employees[index] = {
+                                id: document.getElementById('empId').value,
+                                name: normalizeInput(document.getElementById('empName').value, 'empName'),
+                                role: document.getElementById('empRole').value,
+                                gender: document.getElementById('empGender').value,
+                                dob: document.getElementById('empDob').value,
+                                location: normalizeInput(document.getElementById('empLocation').value, 'empLocation'),
+                                email: document.getElementById('empEmail').value,
+                                phone: document.getElementById('empPhone').value,
+                                joinDate: document.getElementById('empJoinDate').value,
+                                experience: document.getElementById('empExperience').value,
+                                skills: normalizeInput(document.getElementById('empSkills').value, 'empSkills'),
+                                achievement: document.getElementById('empAchievement').value || null,
+                                profile_image: employee.profile_image
+                            };
+                            localStorage.setItem('employees', JSON.stringify(employees));
+                            document.getElementById('employeeCards').innerHTML = '';
+                            employees.forEach(displayEmployeeCard);
+                        }
+                        document.getElementById('employeeForm').style.display = 'none';
+                        document.getElementById('addEmployeeForm').reset();
+                        document.getElementById('profileImagePreview').style.display = 'none';
+                        showAlert('error', 'Saved locally due to server error: ' + err.message);
+                    }
+                });
+            };
+            document.getElementById('employeeForm').appendChild(saveBtn);
+            document.getElementById('employeeForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function searchEmployees() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            if (!searchTerm) {
+                document.getElementById('employeeCards').innerHTML = '';
+                employees.forEach(displayEmployeeCard);
+                return;
+            }
+            const filteredEmployees = employees.filter(emp => 
+                emp.name.toLowerCase().includes(searchTerm) || 
+                emp.id.toLowerCase().includes(searchTerm) ||
+                emp.role.toLowerCase().includes(searchTerm) ||
+                emp.email.toLowerCase().includes(searchTerm) ||
+                emp.phone.includes(searchTerm)
+            );
+            document.getElementById('employeeCards').innerHTML = '';
+            filteredEmployees.forEach(displayEmployeeCard);
+        }
+    </script>
+</body>
+</html>
