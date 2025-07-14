@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Offboarding Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --warning: #f8961e;
+      --info: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --bright-blue: #00b4d8;
+      --bright-green: #38b000;
+      --bright-orange: #ff7b00;
+      --bright-purple: #7209b7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: var(--dark);
+      padding: 10px;
+      transition: all 0.3s ease;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      height: 140px;
+      background: linear-gradient(rgb(10, 10, 255),rgb(203, 11, 242));
+      color: #f8f9fa;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header p {
+      font-weight: 300;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      max-width: 700px;
+      opacity: 0.9;
+      z-index: 2;
+    }
+
+    .banner-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .circle {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: moveCircles 10s infinite linear;
+    }
+
+    @keyframes moveCircles {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-50%) translateX(-50%); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    .circle:nth-child(1) {
+      top: 10%;
+      left: 20%;
+      animation-duration: 8s;
+    }
+
+    .circle:nth-child(2) {
+      top: 50%;
+      left: 70%;
+      animation-duration: 12s;
+    }
+
+    .circle:nth-child(3) {
+      top: 80%;
+      left: 40%;
+      animation-duration: 15s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .dashboard-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--bright-blue), var(--bright-green));
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-card:hover::after {
+      width: 8px;
+    }
+
+    .action-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--bright-blue);
+    }
+
+    .filter-section {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-section input {
+      padding: 0.5rem;
+      border: 1px solid var(--gray);
+      border-radius: 4px;
+      font-size: 1rem;
+      min-width: 200px;
+      flex: 1;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    .attendance-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .attendance-table th {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.1), rgba(114, 9, 183, 0.1));
+      color: var(--bright-blue);
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    .attendance-table td {
+      color: var(--dark);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .attendance-table td:hover {
+      white-space: normal;
+      overflow: visible;
+    }
+
+    .no-records {
+      text-align: center;
+      padding: 2rem;
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    .view-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: var(--bright-green);
+      color: var(--white);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .view-button:hover {
+      background: var(--success);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      color: var(--bright-blue);
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+
+    .modal-table-container {
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal-table th,
+    .modal-table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+      text-align: left;
+    }
+
+    .modal-table th {
+      background-color: #f8f9fa;
+      color: var(--dark);
+      font-weight: 600;
+      min-width: 180px;
+    }
+
+    .modal-table td {
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .modal-buttons button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .close-button {
+      background: var(--gray);
+      color: var(--white);
+    }
+
+    .close-button:hover {
+      background: var(--dark);
+    }
+
+    .download-button {
+      background: var(--bright-orange);
+      color: var(--white);
+    }
+
+    .download-button:hover {
+      background: var(--warning);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--bright-blue), var(--bright-purple));
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      z-index: 1100;
+      transform: translateX(200%);
+      transition: transform 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast i {
+      margin-right: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .toast.success {
+      background: linear-gradient(135deg, var(--bright-green), var(--bright-blue));
+    }
+
+    .toast.error {
+      background: linear-gradient(135deg, var(--danger), #b5179e);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      .dashboard-card {
+        padding: 1.5rem;
+      }
+      
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        height: 120px;
+        padding: 1.5rem;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      .dashboard-card {
+        padding: 1.25rem;
+      }
+      
+      .action-title {
+        font-size: 1.1rem;
+      }
+      
+      .filter-section {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .filter-section input {
+        width: 100%;
+        min-width: auto;
+      }
+      
+      .attendance-table th,
+      .attendance-table td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+      
+      .modal-content {
+        padding: 1.25rem;
+      }
+      
+      .modal-title {
+        font-size: 1.3rem;
+      }
+      
+      .modal-table th,
+      .modal-table td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+      
+      .modal-buttons button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      header {
+        height: 110px;
+        padding: 1rem;
+        border-radius: 12px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      header p {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+      }
+      
+      .dashboard-card {
+        padding: 1rem;
+        border-radius: 12px;
+      }
+      
+      .action-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .attendance-table th,
+      .attendance-table td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+      
+      .view-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .modal-content {
+        padding: 1rem;
+        width: 98%;
+        max-height: 90vh;
+      }
+      
+      .modal-header {
+        margin-bottom: 1rem;
+      }
+      
+      .modal-title {
+        font-size: 1.2rem;
+      }
+      
+      .modal-close {
+        font-size: 1.3rem;
+      }
+      
+      .modal-table th,
+      .modal-table td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+      
+      .modal-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .modal-buttons button {
+        width: 100%;
+      }
+      
+      .toast {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      
+      .modal-content {
+        padding: 0.75rem;
+      }
+      
+      .modal-title {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="banner-background">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <h1>HR Offboarding Dashboard</h1>
+    <p>View all employee offboarding records</p>
+  </header>
+
+  <div class="container">
+    <div class="dashboard-card">
+      <div class="history-card">
+        <h3 class="action-title">All Offboarding Records</h3>
+        <div class="filter-section">
+          <input type="text" id="empIdFilter" placeholder="Filter by Employee ID" />
+          <input type="text" id="nameFilter" placeholder="Filter by Name" />
+        </div>
+        <div class="table-container">
+          <table class="attendance-table" id="offboardingTable">
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="offboardingBody">
+              <tr><td colspan="5" class="no-records">Loading offboarding records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="viewModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Offboarding Details</h3>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-table-container">
+        <table class="modal-table">
+          <tr><th>Employee ID</th><td id="modal-emp_id"></td></tr>
+          <tr><th>Name</th><td id="modal-name"></td></tr>
+          <tr><th>Email</th><td id="modal-email"></td></tr>
+          <tr><th>Department</th><td id="modal-department"></td></tr>
+          <tr><th>Role</th><td id="modal-role"></td></tr>
+          <tr><th>Laptop Returned</th><td id="modal-laptop_returned"></td></tr>
+          <tr><th>Phone Returned</th><td id="modal-phone_returned"></td></tr>
+          <tr><th>Access Cards Returned</th><td id="modal-access_cards_returned"></td></tr>
+          <tr><th>Final Paycheck</th><td id="modal-final_paycheck"></td></tr>
+          <tr><th>Benefits Cleared</th><td id="modal-benefits_cleared"></td></tr>
+          <tr><th>Exit Interview</th><td id="modal-exit_interview"></td></tr>
+          <tr><th>Reason for Leaving</th><td id="modal-reason_for_leaving"></td></tr>
+          <tr><th>Submission Date</th><td id="modal-submission_date"></td></tr>
+        </table>
+      </div>
+      <div class="modal-buttons">
+        <button class="download-button" id="downloadButton">Download PDF</button>
+        <button class="close-button" id="closeModalButton">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastNotification">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Offboarding records fetched successfully!</span>
+  </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+    const offboardingBody = document.getElementById('offboardingBody');
+    const toastNotification = document.getElementById('toastNotification');
+    const empIdFilter = document.getElementById('empIdFilter');
+    const nameFilter = document.getElementById('nameFilter');
+    const viewModal = document.getElementById('viewModal');
+    const closeModal = document.getElementById('closeModal');
+    const closeModalButton = document.getElementById('closeModalButton');
+    const downloadButton = document.getElementById('downloadButton');
+    let allRecords = [];
+    let currentRecord = null;
+
+    // Truncate text with ellipsis if longer than max length
+    function truncateText(text, maxLength = 20) {
+      if (!text) return '--';
+      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    }
+
+    async function fetchAllOffboardingRecords() {
+      try {
+        const response = await fetch('http://44.223.23.145:3421/api/offboarding/all', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch offboarding records');
+        }
+        
+        const data = await response.json();
+        return data;
+      } catch (err) {
+        console.error('Fetch Error:', err);
+        throw err;
+      }
+    }
+
+    function formatDateTime(isoString) {
+      if (!isoString) return '--';
+      const date = new Date(isoString);
+      return date.toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      }).toLowerCase();
+    }
+
+    function showToast(message, type) {
+      const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+      toastNotification.innerHTML = `
+        <i class="fas ${icon}"></i>
+        <span id="toastMessage">${message}</span>
+      `;
+      toastNotification.className = `toast ${type}`;
+      toastNotification.classList.add('show');
+      setTimeout(() => {
+        toastNotification.classList.remove('show');
+      }, 3000);
+    }
+
+    function filterRecords() {
+      const empIdValue = empIdFilter.value.trim().toUpperCase();
+      const nameValue = nameFilter.value.trim().toLowerCase();
+      
+      if (!empIdValue && !nameValue) {
+        return allRecords;
+      }
+      
+      return allRecords.filter(record => {
+        const matchesEmpId = empIdValue ? record.emp_id.includes(empIdValue) : true;
+        const matchesName = nameValue ? record.name.toLowerCase().includes(nameValue) : true;
+        return matchesEmpId && matchesName;
+      });
+    }
+
+    function renderOffboardingRecords() {
+      const filteredRecords = filterRecords();
+      
+      offboardingBody.innerHTML = '';
+      
+      if (!filteredRecords.length) {
+        offboardingBody.innerHTML = '<tr><td colspan="5" class="no-records">No offboarding records found</td></tr>';
+        return;
+      }
+      
+      filteredRecords.forEach(record => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td title="${record.emp_id || ''}">${truncateText(record.emp_id)}</td>
+          <td title="${record.name || ''}">${truncateText(record.name)}</td>
+          <td title="${record.email || ''}">${truncateText(record.email)}</td>
+          <td title="${record.department || ''}">${truncateText(record.department)}</td>
+          <td><button class="view-button" onclick="showModal(${JSON.stringify(record).replace(/"/g, '&quot;')})">View</button></td>
+        `;
+        offboardingBody.appendChild(row);
+      });
+    }
+
+    function showModal(record) {
+      currentRecord = record;
+      
+      // Set modal content
+      document.getElementById('modal-emp_id').textContent = record.emp_id || '--';
+      document.getElementById('modal-name').textContent = record.name || '--';
+      document.getElementById('modal-email').textContent = record.email || '--';
+      document.getElementById('modal-department').textContent = record.department || '--';
+      document.getElementById('modal-role').textContent = record.role ? 
+        record.role.charAt(0).toUpperCase() + record.role.slice(1) : '--';
+      document.getElementById('modal-laptop_returned').textContent = record.laptop_returned || '--';
+      document.getElementById('modal-phone_returned').textContent = record.phone_returned || '--';
+      document.getElementById('modal-access_cards_returned').textContent = record.access_cards_returned || '--';
+     document.getElementById('modal-final_paycheck').textContent =
+  record.final_paycheck != null
+    ? `₹${Number(record.final_paycheck).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    : '--';
+
+
+      document.getElementById('modal-benefits_cleared').textContent = record.benefits_cleared || '--';
+      document.getElementById('modal-exit_interview').textContent = record.exit_interview || '--';
+      
+      // Format reason for leaving
+      const reason = record.reason_for_leaving ? 
+        record.reason_for_leaving.replace(/-/g, ' ')
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ') : '--';
+      document.getElementById('modal-reason_for_leaving').textContent = reason;
+      
+      document.getElementById('modal-submission_date').textContent = formatDateTime(record.submission_date);
+      
+      // Show modal
+      viewModal.style.display = 'flex';
+    }
+
+    function downloadPDF() {
+      if (!currentRecord) return;
+      
+      const doc = new jsPDF();
+      doc.setFont('helvetica', 'normal');
+      
+      // Add title
+      doc.setFontSize(18);
+      doc.setTextColor(0, 180, 216);
+      doc.text('Offboarding Record Details', 105, 20, { align: 'center' });
+      
+      // Add divider line
+      doc.setDrawColor(0, 180, 216);
+      doc.setLineWidth(0.5);
+      doc.line(20, 25, 190, 25);
+      
+      // Reset text color
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(12);
+      
+      // Prepare data for the table
+      const data = [
+        ['Employee ID', currentRecord.emp_id || '--'],
+        ['Name', currentRecord.name || '--'],
+        ['Email', currentRecord.email || '--'],
+        ['Department', currentRecord.department || '--'],
+        ['Role', currentRecord.role ? 
+          currentRecord.role.charAt(0).toUpperCase() + currentRecord.role.slice(1) : '--'],
+        ['Laptop Returned', currentRecord.laptop_returned || '--'],
+        ['Phone Returned', currentRecord.phone_returned || '--'],
+        ['Access Cards Returned', currentRecord.access_cards_returned || '--'],
+        ['Final Paycheck', currentRecord.final_paycheck ? 
+          `${currentRecord.final_paycheck}` : '--'],
+        ['Benefits Cleared', currentRecord.benefits_cleared || '--'],
+        ['Exit Interview', currentRecord.exit_interview || '--'],
+        ['Reason for Leaving', currentRecord.reason_for_leaving ? 
+          currentRecord.reason_for_leaving.replace(/-/g, ' ')
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ') : '--'],
+        ['Submission Date', formatDateTime(currentRecord.submission_date)]
+      ];
+      
+      // Create the table
+      doc.autoTable({
+        startY: 30,
+        head: [['Field', 'Value']],
+        body: data,
+        theme: 'grid',
+        headStyles: {
+          fillColor: [0, 180, 216],
+          textColor: [255, 255, 255],
+          fontStyle: 'bold'
+        },
+        alternateRowStyles: {
+          fillColor: [248, 249, 250]
+        },
+        margin: { left: 20, right: 20 }
+      });
+      
+      // Save the PDF
+      doc.save(`offboarding_record_${currentRecord.emp_id || 'details'}.pdf`);
+    }
+
+    async function loadOffboardingRecords() {
+      try {
+        allRecords = await fetchAllOffboardingRecords();
+        renderOffboardingRecords();
+        showToast('Offboarding records loaded successfully', 'success');
+      } catch (err) {
+        showToast(`Error: ${err.message}`, 'error');
+        offboardingBody.innerHTML = '<tr><td colspan="5" class="no-records">Failed to load offboarding records</td></tr>';
+      }
+    }
+
+    // Event listeners
+    empIdFilter.addEventListener('input', renderOffboardingRecords);
+    nameFilter.addEventListener('input', renderOffboardingRecords);
+    
+    // Handle both close buttons
+    [closeModal, closeModalButton].forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewModal.style.display = 'none';
+        currentRecord = null;
+      });
+    });
+    
+    downloadButton.addEventListener('click', downloadPDF);
+    
+    // Close modal when clicking outside content
+    viewModal.addEventListener('click', (e) => {
+      if (e.target === viewModal) {
+        viewModal.style.display = 'none';
+        currentRecord = null;
+      }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', loadOffboardingRecords);
+  </script>
+</body>
+</html>
