@@ -255,7 +255,7 @@
             font-size: 0.85rem;
             margin: 4px 0;
             width: 100%;
-            max-width: 120px;
+          max-width: 120px;
         }
 
         .btn-view {
@@ -356,14 +356,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
         }
 
         .modal-body {
@@ -557,6 +549,13 @@
                 display: none;
             }
         }
+
+        .request-id-row {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -638,7 +637,6 @@
                     <i class="fas fa-file-alt"></i>
                     Request Details
                 </h3>
-                <button class="modal-close">×</button>
             </div>
             <div class="modal-body" id="viewModalBody">
                 <!-- Details will be loaded here -->
@@ -918,10 +916,7 @@ function showRequestDetails(requestId) {
     
     console.log('Showing details for request:', request);
     viewModalBody.innerHTML = `
-        <div class="detail-row">
-            <div class="detail-label">Request ID:</div>
-            <div class="detail-value">${request.id || 'N/A'}</div>
-        </div>
+        <div class="request-id-row">Request ID: ${request.id || 'N/A'}</div>
         <div class="detail-row">
             <div class="detail-label">Employee Name:</div>
             <div class="detail-value">${request.employee_name || 'N/A'}</div>
@@ -933,10 +928,6 @@ function showRequestDetails(requestId) {
         <div class="detail-row">
             <div class="detail-label">Email:</div>
             <div class="detail-value">${request.email || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Department:</div>
-            <div class="detail-value">${request.department || 'N/A'}</div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Asset Type:</div>
@@ -966,7 +957,7 @@ function showRequestDetails(requestId) {
         ` : ''}
     `;
     
-    // Add approve/reject buttons if status is pending
+    // Show only actions in modal
     viewModalActions.innerHTML = '';
     if (request.status === 'Pending') {
         viewModalActions.innerHTML = `
