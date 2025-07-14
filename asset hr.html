@@ -255,7 +255,7 @@
             font-size: 0.85rem;
             margin: 4px 0;
             width: 100%;
-          max-width: 120px;
+            max-width: 120px;
         }
 
         .btn-view {
@@ -356,6 +356,14 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
         }
 
         .modal-body {
@@ -637,6 +645,7 @@
                     <i class="fas fa-file-alt"></i>
                     Request Details
                 </h3>
+                <button class="modal-close">×</button>
             </div>
             <div class="modal-body" id="viewModalBody">
                 <!-- Details will be loaded here -->
@@ -645,7 +654,6 @@
                 <div class="modal-actions" id="viewModalActions">
                     <!-- Approve/Reject buttons will be added here for pending requests -->
                 </div>
-                <button class="btn btn-cancel close-view-modal">Close</button>
             </div>
         </div>
     </div>
@@ -678,402 +686,380 @@
 
     <script>
       const ASSET_API = 'http://44.223.23.145:3425/api/requests';
-let currentRequestId = null;
-let currentAction = null;
-let currentPage = 1;
-const itemsPerPage = 10;
-let allRequests = [];
+      let currentRequestId = null;
+      let currentAction = null;
+      let currentPage = 1;
+      const itemsPerPage = 10;
+      let allRequests = [];
 
-// DOM Elements
-const confirmationModal = document.getElementById('confirmationModal');
-const viewModal = document.getElementById('viewModal');
-const viewModalBody = document.getElementById('viewModalBody');
-const viewModalActions = document.getElementById('viewModalActions');
-const modalTitle = document.getElementById('modalTitle');
-const modalMessage = document.getElementById('modalMessage');
-const confirmActionBtn = document.getElementById('confirmActionBtn');
-const modalCloseButtons = document.querySelectorAll('.modal-close, .btn-cancel');
-const closeViewModalBtn = document.querySelector('.close-view-modal');
-const toast = document.getElementById('toast');
-const toastMessage = document.getElementById('toastMessage');
-const pagination = document.getElementById('pagination');
-const statusFilter = document.getElementById('statusFilter');
-const assetTypeFilter = document.getElementById('assetTypeFilter');
-const searchInput = document.getElementById('searchInput');
-const requestsContainer = document.getElementById('requests-container');
+      // DOM Elements
+      const confirmationModal = document.getElementById('confirmationModal');
+      const viewModal = document.getElementById('viewModal');
+      const viewModalBody = document.getElementById('viewModalBody');
+      const viewModalActions = document.getElementById('viewModalActions');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const confirmActionBtn = document.getElementById('confirmActionBtn');
+      const modalCloseButtons = document.querySelectorAll('.modal-close, .btn-cancel');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const pagination = document.getElementById('pagination');
+      const statusFilter = document.getElementById('statusFilter');
+      const assetTypeFilter = document.getElementById('assetTypeFilter');
+      const searchInput = document.getElementById('searchInput');
+      const requestsContainer = document.getElementById('requests-container');
 
-// Initialize the app
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing HR Asset Requests Management...');
-    fetchRequests();
-    setupEventListeners();
-});
+      // Initialize the app
+      document.addEventListener('DOMContentLoaded', () => {
+          console.log('Initializing HR Asset Requests Management...');
+          fetchRequests();
+          setupEventListeners();
+      });
 
-function setupEventListeners() {
-    // Filter and search events
-    statusFilter.addEventListener('change', () => {
-        currentPage = 1;
-        displayRequests();
-    });
-    assetTypeFilter.addEventListener('change', () => {
-        currentPage = 1;
-        displayRequests();
-    });
-    searchInput.addEventListener('input', () => {
-        currentPage = 1;
-        clearTimeout(window.searchTimeout);
-        window.searchTimeout = setTimeout(displayRequests, 300);
-    });
+      function setupEventListeners() {
+          // Filter and search events
+          statusFilter.addEventListener('change', () => {
+              currentPage = 1;
+              displayRequests();
+          });
+          assetTypeFilter.addEventListener('change', () => {
+              currentPage = 1;
+              displayRequests();
+          });
+          searchInput.addEventListener('input', () => {
+              currentPage = 1;
+              clearTimeout(window.searchTimeout);
+              window.searchTimeout = setTimeout(displayRequests, 300);
+          });
 
-    // Modal events
-    modalCloseButtons.forEach(btn => {
-        btn.addEventListener('click', closeModal);
-    });
-    
-    closeViewModalBtn.addEventListener('click', () => {
-        viewModal.classList.remove('active');
-    });
+          // Modal events
+          modalCloseButtons.forEach(btn => {
+              btn.addEventListener('click', closeModal);
+          });
 
-    // Confirm action button
-    confirmActionBtn.addEventListener('click', () => {
-        updateStatus(currentRequestId, currentAction);
-        closeModal();
-    });
-}
+          // Confirm action button
+          confirmActionBtn.addEventListener('click', () => {
+              updateStatus(currentRequestId, currentAction);
+              closeModal();
+          });
+      }
 
-async function fetchRequests() {
-    try {
-        const response = await fetchWithRetry(ASSET_API);
-        allRequests = await response.json();
-        console.log('Fetched requests:', allRequests);
-        displayRequests();
-    } catch (err) {
-        console.error('Fetch error:', err.message);
-        showToast('Error loading requests. Please try again.', 'error');
-        requestsContainer.innerHTML = `
-            <tr>
-                <td colspan="7" style="text-align: center; color: var(--danger); padding: 20px;">
-                    <i class="fas fa-exclamation-triangle"></i> Error loading requests
-                </td>
-            </tr>
-        `;
-    }
-}
+      async function fetchRequests() {
+          try {
+              const response = await fetchWithRetry(ASSET_API);
+              allRequests = await response.json();
+              console.log('Fetched requests:', allRequests);
+              displayRequests();
+          } catch (err) {
+              console.error('Fetch error:', err.message);
+              showToast('Error loading requests. Please try again.', 'error');
+              requestsContainer.innerHTML = `
+                  <tr>
+                      <td colspan="7" style="text-align: center; color: var(--danger); padding: 20px;">
+                          <i class="fas fa-exclamation-triangle"></i> Error loading requests
+                      </td>
+                  </tr>
+              `;
+          }
+      }
 
-async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            const response = await fetch(url, options);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            return response;
-        } catch (err) {
-            if (i < retries - 1) {
-                await new Promise(resolve => setTimeout(resolve, delay));
-                continue;
-            }
-            throw err;
-        }
-    }
-}
+      async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+          for (let i = 0; i < retries; i++) {
+              try {
+                  const response = await fetch(url, options);
+                  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                  return response;
+              } catch (err) {
+                  if (i < retries - 1) {
+                      await new Promise(resolve => setTimeout(resolve, delay));
+                      continue;
+                  }
+                  throw err;
+              }
+          }
+      }
 
-function truncateText(text, maxLength = 30) {
-    if (!text) return 'N/A';
-    return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
-}
+      function truncateText(text, maxLength = 30) {
+          if (!text) return 'N/A';
+          return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
+      }
 
-function displayRequests() {
-    const statusFilterValue = statusFilter.value;
-    const assetTypeFilterValue = assetTypeFilter.value;
-    const searchQuery = searchInput.value.toLowerCase();
+      function displayRequests() {
+          const statusFilterValue = statusFilter.value;
+          const assetTypeFilterValue = assetTypeFilter.value;
+          const searchQuery = searchInput.value.toLowerCase();
 
-    const filteredRequests = allRequests.filter(req => {
-        const matchesStatus = !statusFilterValue || req.status === statusFilterValue;
-        const matchesAssetType = !assetTypeFilterValue || req.asset_type === assetTypeFilterValue;
-        const matchesSearch = !searchQuery ||
-            (req.id && req.id.toString().includes(searchQuery)) ||
-            (req.employee_id && req.employee_id.toLowerCase().includes(searchQuery)) ||
-            (req.employee_name && req.employee_name.toLowerCase().includes(searchQuery)) ||
-            (req.asset_type && req.asset_type.toLowerCase().includes(searchQuery));
-        return matchesStatus && matchesAssetType && matchesSearch;
-    });
+          const filteredRequests = allRequests.filter(req => {
+              const matchesStatus = !statusFilterValue || req.status === statusFilterValue;
+              const matchesAssetType = !assetTypeFilterValue || req.asset_type === assetTypeFilterValue;
+              const matchesSearch = !searchQuery ||
+                  (req.id && req.id.toString().includes(searchQuery)) ||
+                  (req.employee_id && req.employee_id.toLowerCase().includes(searchQuery)) ||
+                  (req.employee_name && req.employee_name.toLowerCase().includes(searchQuery)) ||
+                  (req.asset_type && req.asset_type.toLowerCase().includes(searchQuery));
+              return matchesStatus && matchesAssetType && matchesSearch;
+          });
 
-    // Pagination
-    const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
-    renderPagination(totalPages);
+          // Pagination
+          const totalPages = Math-ceil(filteredRequests.length / itemsPerPage);
+          renderPagination(totalPages);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedRequests = filteredRequests.slice(startIndex, startIndex + itemsPerPage);
+          const startIndex = (currentPage - 1) * itemsPerPage;
+          const paginatedRequests = filteredRequests.slice(startIndex, startIndex + itemsPerPage);
 
-    requestsContainer.innerHTML = '';
+          requestsContainer.innerHTML = '';
 
-    if (paginatedRequests.length === 0) {
-        requestsContainer.innerHTML = `
-            <tr>
-                <td colspan="7" style="text-align: center; color: var(--gray); padding: 20px;">
-                    No requests found matching your criteria
-                </td>
-            </tr>
-        `;
-        return;
-    }
+          if (paginatedRequests.length === 0) {
+              requestsContainer.innerHTML = `
+                  <tr>
+                      <td colspan="7" style="text-align: center; color: var(--gray); padding: 20px;">
+                          No requests found matching your criteria
+                      </td>
+                  </tr>
+              `;
+              return;
+          }
 
-    paginatedRequests.forEach(request => {
-        const statusClass = getStatusClass(request.status);
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${request.id || 'N/A'}</td>
-            <td class="truncate" title="${request.employee_name || 'N/A'}">${truncateText(request.employee_name)}</td>
-            <td>${request.employee_id || 'N/A'}</td>
-            <td class="truncate" title="${request.asset_type || 'N/A'}">${truncateText(request.asset_type)}</td>
-            <td>${formatDate(request.request_date) || 'N/A'}</td>
-            <td><span class="status-badge ${statusClass}">${request.status || 'N/A'}</span></td>
-            <td>
-                <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                    <button class="action-btn btn-view" data-request-id="${request.id}">
-                        <i class="fas fa-eye"></i> View
-                    </button>
-                    ${request.status === 'Pending' ? `
-                    <button class="action-btn btn-approve" data-request-id="${request.id}" data-action="Approved">
-                        <i class="fas fa-check"></i> Approve
-                    </button>
-                    <button class="action-btn btn-reject" data-request-id="${request.id}" data-action="Rejected">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                    ` : ''}
-                </div>
-            </td>
-        `;
-        requestsContainer.appendChild(row);
-    });
+          paginatedRequests.forEach(request => {
+              const statusClass = getStatusClass(request.status);
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td>${request.id || 'N/A'}</td>
+                  <td class="truncate" title="${request.employee_name || 'N/A'}">${truncateText(request.employee_name)}</td>
+                  <td>${request.employee_id || 'N/A'}</td>
+                  <td class="truncate" title="${request.asset_type || 'N/A'}">${truncateText(request.asset_type)}</td>
+                  <td>${formatDate(request.request_date) || 'N/A'}</td>
+                  <td><span class="status-badge ${statusClass}">${request.status || 'N/A'}</span></td>
+                  <td>
+                      <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                          <button class="action-btn btn-view" data-request-id="${request.id}">
+                              <i class="fas fa-eye"></i> View
+                          </button>
+                      </div>
+                  </td>
+              `;
+              requestsContainer.appendChild(row);
+          });
 
-    // Add event listeners to dynamically created buttons
-    document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const requestId = btn.getAttribute('data-request-id');
-            console.log('View button clicked for request ID:', requestId);
-            showRequestDetails(requestId);
-        });
-    });
+          // Add event listeners to dynamically created buttons
+          document.querySelectorAll('.btn-view').forEach(btn => {
+              btn.addEventListener('click', () => {
+                  const requestId = btn.getAttribute('data-request-id');
+                  console.log('View button clicked for request ID:', requestId);
+                  showRequestDetails(requestId);
+              });
+          });
+      }
 
-    document.querySelectorAll('.btn-approve, .btn-reject').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const requestId = btn.getAttribute('data-request-id');
-            const action = btn.getAttribute('data-action');
-            console.log(`${action} button clicked for request ID:`, requestId);
-            showConfirmationModal(requestId, action);
-        });
-    });
-}
+      function renderPagination(totalPages) {
+          pagination.innerHTML = '';
+          
+          if (totalPages <= 1) return;
+          
+          const prevBtn = document.createElement('button');
+          prevBtn.className = 'page-btn';
+          prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+          prevBtn.disabled = currentPage === 1;
+          prevBtn.addEventListener('click', () => {
+              if (currentPage > 1) {
+                  currentPage--;
+                  displayRequests();
+              }
+          });
+          pagination.appendChild(prevBtn);
+          
+          for (let i = 1; i <= totalPages; i++) {
+              const pageBtn = document.createElement('button');
+              pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+              pageBtn.textContent = i;
+              pageBtn.addEventListener('click', () => {
+                  currentPage = i;
+                  displayRequests();
+              });
+              pagination.appendChild(pageBtn);
+          }
+          
+          const nextBtn = document.createElement('button');
+          nextBtn.className = 'page-btn';
+          nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+          nextBtn.disabled = currentPage === totalPages;
+          nextBtn.addEventListener('click', () => {
+              if (currentPage < totalPages) {
+                  currentPage++;
+                  displayRequests();
+              }
+          });
+          pagination.appendChild(nextBtn);
+      }
 
-function renderPagination(totalPages) {
-    pagination.innerHTML = '';
-    
-    if (totalPages <= 1) return;
-    
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'page-btn';
-    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-    prevBtn.disabled = currentPage === 1;
-    prevBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            displayRequests();
-        }
-    });
-    pagination.appendChild(prevBtn);
-    
-    for (let i = 1; i <= totalPages; i++) {
-        const pageBtn = document.createElement('button');
-        pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-        pageBtn.textContent = i;
-        pageBtn.addEventListener('click', () => {
-            currentPage = i;
-            displayRequests();
-        });
-        pagination.appendChild(pageBtn);
-    }
-    
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'page-btn';
-    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-    nextBtn.disabled = currentPage === totalPages;
-    nextBtn.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayRequests();
-        }
-    });
-    pagination.appendChild(nextBtn);
-}
+      function showRequestDetails(requestId) {
+          const request = allRequests.find(req => req.id == requestId);
+          if (!request) {
+              console.error('Request not found for ID:', requestId);
+              showToast('Request not found.', 'error');
+              return;
+          }
+          
+          console.log('Showing details for request:', request);
+          viewModalBody.innerHTML = `
+              <div class="request-id-row">Request ID: ${request.id || 'N/A'}</div>
+              <div class="detail-row">
+                  <div class="detail-label">Employee Name:</div>
+                  <div class="detail-value">${request.employee_name || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Employee ID:</div>
+                  <div class="detail-value">${request.employee_id || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Email:</div>
+                  <div class="detail-value">${request.email || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Asset Type:</div>
+                  <div class="detail-value">${request.asset_type || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Asset Name:</div>
+                  <div class="detail-value">${request.asset_name || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Request Date:</div>
+                  <div class="detail-value">${formatDate(request.request_date) || 'N/A'}</div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Status:</div>
+                  <div class="detail-value"><span class="status-badge ${getStatusClass(request.status)}">${request.status || 'N/A'}</span></div>
+              </div>
+              <div class="detail-row">
+                  <div class="detail-label">Details:</div>
+                  <div class="detail-value">${request.details || 'N/A'}</div>
+              </div>
+              ${request.notes ? `
+              <div class="detail-row">
+                  <div class="detail-label">Admin Notes:</div>
+                  <div class="detail-value">${request.notes}</div>
+              </div>
+              ` : ''}
+          `;
+          
+          // Show actions in modal for pending requests
+          viewModalActions.innerHTML = '';
+          if (request.status === 'Pending') {
+              viewModalActions.innerHTML = `
+                  <button class="btn btn-approve" data-request-id="${request.id}" data-action="Approved">
+                      <i class="fas fa-check"></i> Approve
+                  </button>
+                  <button class="btn btn-reject" data-request-id="${request.id}" data-action="Rejected">
+                      <i class="fas fa-times"></i> Reject
+                  </button>
+              `;
+              // Add event listeners to modal action buttons
+              viewModalActions.querySelectorAll('.btn-approve, .btn-reject').forEach(btn => {
+                  btn.addEventListener('click', () => {
+                      const requestId = btn.getAttribute('data-request-id');
+                      const action = btn.getAttribute('data-action');
+                      console.log(`${action} button clicked in view modal for request ID:`, requestId);
+                      showConfirmationModal(requestId, action);
+                  });
+              });
+          }
+          
+          viewModal.classList.add('active');
+      }
 
-function showRequestDetails(requestId) {
-    const request = allRequests.find(req => req.id == requestId);
-    if (!request) {
-        console.error('Request not found for ID:', requestId);
-        showToast('Request not found.', 'error');
-        return;
-    }
-    
-    console.log('Showing details for request:', request);
-    viewModalBody.innerHTML = `
-        <div class="request-id-row">Request ID: ${request.id || 'N/A'}</div>
-        <div class="detail-row">
-            <div class="detail-label">Employee Name:</div>
-            <div class="detail-value">${request.employee_name || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Employee ID:</div>
-            <div class="detail-value">${request.employee_id || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Email:</div>
-            <div class="detail-value">${request.email || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Asset Type:</div>
-            <div class="detail-value">${request.asset_type || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Asset Name:</div>
-            <div class="detail-value">${request.asset_name || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Request Date:</div>
-            <div class="detail-value">${formatDate(request.request_date) || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Status:</div>
-            <div class="detail-value"><span class="status-badge ${getStatusClass(request.status)}">${request.status || 'N/A'}</span></div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">Details:</div>
-            <div class="detail-value">${request.details || 'N/A'}</div>
-        </div>
-        ${request.notes ? `
-        <div class="detail-row">
-            <div class="detail-label">Admin Notes:</div>
-            <div class="detail-value">${request.notes}</div>
-        </div>
-        ` : ''}
-    `;
-    
-    // Show only actions in modal
-    viewModalActions.innerHTML = '';
-    if (request.status === 'Pending') {
-        viewModalActions.innerHTML = `
-            <button class="btn btn-approve" data-request-id="${request.id}" data-action="Approved">
-                <i class="fas fa-check"></i> Approve
-            </button>
-            <button class="btn btn-reject" data-request-id="${request.id}" data-action="Rejected">
-                <i class="fas fa-times"></i> Reject
-            </button>
-        `;
-        // Add event listeners to modal action buttons
-        viewModalActions.querySelectorAll('.btn-approve, .btn-reject').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const requestId = btn.getAttribute('data-request-id');
-                const action = btn.getAttribute('data-action');
-                console.log(`${action} button clicked in view modal for request ID:`, requestId);
-                showConfirmationModal(requestId, action);
-            });
-        });
-    }
-    
-    viewModal.classList.add('active');
-}
+      function showConfirmationModal(requestId, action) {
+          currentRequestId = requestId;
+          currentAction = action;
 
-function showConfirmationModal(requestId, action) {
-    currentRequestId = requestId;
-    currentAction = action;
+          // Customize modal based on action
+          if (action === 'Approved') {
+              modalTitle.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> Confirm Approval`;
+              modalMessage.textContent = `Are you sure you want to approve this request?`;
+              confirmActionBtn.className = 'btn btn-approve';
+              confirmActionBtn.innerHTML = `<i class="fas fa-check"></i> Approve`;
+          } else {
+              modalTitle.innerHTML = `<i class="fas fa-times-circle" style="color: var(--danger);"></i> Confirm Rejection`;
+              modalMessage.textContent = `Are you sure you want to reject this request?`;
+              confirmActionBtn.className = 'btn btn-reject';
+              confirmActionBtn.innerHTML = `<i class="fas fa-times"></i> Reject`;
+          }
 
-    // Customize modal based on action
-    if (action === 'Approved') {
-        modalTitle.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success);"></i> Confirm Approval`;
-        modalMessage.textContent = `Are you sure you want to approve this request?`;
-        confirmActionBtn.className = 'btn btn-approve';
-        confirmActionBtn.innerHTML = `<i class="fas fa-check"></i> Approve`;
-    } else {
-        modalTitle.innerHTML = `<i class="fas fa-times-circle" style="color: var(--danger);"></i> Confirm Rejection`;
-        modalMessage.textContent = `Are you sure you want to reject this request?`;
-        confirmActionBtn.className = 'btn btn-reject';
-        confirmActionBtn.innerHTML = `<i class="fas fa-times"></i> Reject`;
-    }
+          confirmationModal.classList.add('active');
+      }
 
-    confirmationModal.classList.add('active');
-}
+      function closeModal() {
+          confirmationModal.classList.remove('active');
+          viewModal.classList.remove('active');
+      }
 
-function closeModal() {
-    confirmationModal.classList.remove('active');
-    viewModal.classList.remove('active');
-}
+      async function updateStatus(id, status) {
+          try {
+              const response = await fetchWithRetry(`${ASSET_API}/${id}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ status })
+              });
+              const updatedRequest = await response.json();
+              
+              // Update the local data
+              const index = allRequests.findIndex(req => req.id == id);
+              if (index !== -1) {
+                  allRequests[index] = updatedRequest;
+              }
+              
+              // Show success toast
+              showToast(
+                  `Request ${status.toLowerCase()} successfully!`,
+                  status === 'Approved' ? 'success' : 'error'
+              );
+              
+              // Refresh requests display
+              displayRequests();
+              
+              // Close view modal if open
+              viewModal.classList.remove('active');
+          } catch (err) {
+              console.error('Update error:', err.message);
+              showToast('Error updating request. Please try again.', 'error');
+          }
+      }
 
-async function updateStatus(id, status) {
-    try {
-        const response = await fetchWithRetry(`${ASSET_API}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status })
-        });
-        const updatedRequest = await response.json();
-        
-        // Update the local data
-        const index = allRequests.findIndex(req => req.id == id);
-        if (index !== -1) {
-            allRequests[index] = updatedRequest;
-        }
-        
-        // Show success toast
-        showToast(
-            `Request ${status.toLowerCase()} successfully!`,
-            status === 'Approved' ? 'success' : 'error'
-        );
-        
-        // Refresh requests display
-        displayRequests();
-        
-        // Close view modal if open
-        viewModal.classList.remove('active');
-    } catch (err) {
-        console.error('Update error:', err.message);
-        showToast('Error updating request. Please try again.', 'error');
-    }
-}
+      function showToast(message, type) {
+          toast.className = `toast toast-${type}`;
+          toastMessage.textContent = message;
+          
+          if (type === 'success') {
+              toast.innerHTML = `<i class="fas fa-check-circle"></i> <span id="toastMessage">${message}</span>`;
+          } else {
+              toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span id="toastMessage">${message}</span>`;
+          }
+          
+          toast.classList.add('show');
+          
+          setTimeout(() => {
+              toast.classList.remove('show');
+          }, 5000);
+      }
 
-function showToast(message, type) {
-    toast.className = `toast toast-${type}`;
-    toastMessage.textContent = message;
-    
-    if (type === 'success') {
-        toast.innerHTML = `<i class="fas fa-check-circle"></i> <span id="toastMessage">${message}</span>`;
-    } else {
-        toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span id="toastMessage">${message}</span>`;
-    }
-    
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 5000);
-}
+      function formatDate(dateString) {
+          if (!dateString) return '';
+          const options = { year: 'numeric', month: 'short', day: 'numeric' };
+          return new Date(dateString).toLocaleDateString('en-US', options);
+      }
 
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-}
+      function getStatusClass(status) {
+          if (!status) return '';
+          switch (status.toLowerCase()) {
+              case 'pending': return 'status-pending';
+              case 'approved': return 'status-approved';
+              case 'rejected': return 'status-rejected';
+              default: return '';
+          }
+      }
 
-function getStatusClass(status) {
-    if (!status) return '';
-    switch (status.toLowerCase()) {
-        case 'pending': return 'status-pending';
-        case 'approved': return 'status-approved';
-        case 'rejected': return 'status-rejected';
-        default: return '';
-    }
-}
-
-// Auto-refresh every 30 seconds
-setInterval(fetchRequests, 30000);
+      // Auto-refresh every 30 seconds
+      setInterval(fetchRequests, 30000);
     </script>
 </body>
 </html>
