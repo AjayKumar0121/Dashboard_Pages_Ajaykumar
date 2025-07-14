@@ -47,7 +47,7 @@
         }
 
         header {
-                       background: linear-gradient(rgb(10, 10, 255),rgb(203, 11, 242));
+            background: linear-gradient(rgb(10, 10, 255),rgb(203, 11, 242));
             color: white;
             text-align: center;
             padding: 20px;
@@ -248,7 +248,7 @@
         .status-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 1rem;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
@@ -257,19 +257,16 @@
 
         .status-pending {
             background-color: rgba(253, 203, 110, 0.2);
-            /* color: var(--warning); */
-            color: black;
+            color: #b8860b; /* Dark yellow for pending */
         }
 
         .status-approved {
-            /* background-color: rgba(0, 184, 148, 0.2); */
-            background-color: green;
-            color: White;
+            background-color: var(--success);
+            color: white;
         }
 
         .status-rejected {
-            background-color: rgba(214, 48, 49, 0.2);
-            /* color: var(--danger); */
+            background-color: var(--danger);
             color: white;
         }
 
@@ -351,7 +348,7 @@
 
         .modal-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
+            font-size: 0.9rem;
             color: var(--dark);
             display: flex;
             align-items: center;
@@ -388,12 +385,13 @@
             flex: 0 0 150px;
             font-weight: bold;
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .detail-value {
             flex: 1;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .detail-value.status {
@@ -420,7 +418,7 @@
             border: none;
             border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: var(--transition);
             display: inline-flex;
@@ -477,7 +475,7 @@
 
         .confirmation-text {
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .alert {
@@ -540,6 +538,7 @@
             
             .detail-label {
                 flex: none;
+                font-size: 0.9rem;
             }
 
             .table-header {
@@ -779,7 +778,7 @@
                     this.renderRequests(this.allRequests);
                 } catch (e) {
                     console.error('Error:', e);
-                    this.showAlert('Error loading requests', 'error');
+                    this.showAlert('Error loading requests wurld', 'error');
                     this.renderRequests([]);
                 }
             }
