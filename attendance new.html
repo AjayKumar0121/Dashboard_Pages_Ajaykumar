@@ -169,7 +169,7 @@
             border: 1px solid rgba(114, 9, 183, 0.2);
         }
 
-        .dark-mode .attendance-status {
+        .dark-modeKnight .attendance-status {
             background: linear-gradient(135deg, rgba(114, 9, 183, 0.2), rgba(0, 180, 216, 0.2));
             border: 1px solid rgba(114, 9, 183, 0.3);
         }
@@ -735,7 +735,7 @@
         .dark-mode .filter-input {
             background-color: #2d2d2d;
             border-color: rgba(255, 255, 255, 0.1);
-            color primaries: var(--light);
+            color: var(--light);
         }
 
         @media (max-width: 768px) {
@@ -898,7 +898,9 @@
 
         // Helper functions
         function isValidEmployeeId(id) {
-            return empIdRegex.test(id);
+            if (!empIdRegex.test(id)) return false;
+            const numPart = parseInt(id.slice(4), 10);
+            return numPart >= 1 && numPart <= 999;
         }
 
         function validateInput(input, validationFn, errorElement, errorMessage) {
@@ -941,8 +943,7 @@
 
         async function fetchAttendanceRecords(empId, date) {
             try {
-                const response = await fetch(`http://44.223.23.145:3427/api/attendance/${empId}${date ? `?date=${date}` : '' _
-
+                const response = await fetch(`http://44.223.23.145:3427/api/attendance/${empId}${date ? `?date=${date}` : ''}`);
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || 'Failed to fetch attendance records');
                 return date ? data.filter(record => {
@@ -1077,6 +1078,7 @@
         function initPage() {
             updateCurrentTime();
             setInterval(updateCurrentTime, 1000);
+            renderPunchInAction();
             dateFilter.value = selectedDate;
             dateFilter.addEventListener('change', async () => {
                 selectedDate = dateFilter.value;
@@ -1090,16 +1092,13 @@
                     document.getElementById('empId'),
                     isValidEmployeeId,
                     document.getElementById('empIdError'),
-                    'ID must be ATS0 followed by 3 digits (000–999, e.g., ATS0001)'
+                    'ID must be ATS0 followed by 3 digits (001–999, e.g., ATS0001)'
                 );
                 if (isValidEmployeeId(empId)) {
                     currentEmpId = empId;
                     await determineStatus(empId);
                 }
             });
-
-            // Initial rendering
-            renderPunchInAction();
         }
 
         // Determine current attendance status
@@ -1164,7 +1163,7 @@
                     statusText.textContent = 'Completed - Attendance approved';
                     break;
                 case 'pending':
-                    statusDot.className = 'status-dot active';
+                    statusDot.className = 'status-dot pending';
                     statusText.textContent = 'Pending - Awaiting HR approval';
                     break;
                 case 'rejected':
@@ -1205,7 +1204,7 @@
             const empIdError = document.getElementById('empIdError');
 
             empIdInput.addEventListener('input', () => {
-                validateInput(empIdInput, isValidEmployeeId, empIdError, 'ID must be ATS0 followed by 3 digits (000–999, e.g., ATS0001)');
+                validateInput(empIdInput, isValidEmployeeId, empIdError, 'ID must be ATS0 followed by 3 digits (001–999, e.g., ATS0001)');
             });
 
             document.getElementById('punchInForm').addEventListener('submit', async (e) => {
@@ -1215,7 +1214,7 @@
                 const empId = empIdInput.value.trim();
 
                 if (!isValidEmployeeId(empId)) {
-                    showToast('Invalid Employee ID format. Use ATS0 followed by 3 digits (000–999, e.g., ATS0001)', 'error');
+                    showToast('Invalid Employee ID format. Use ATS0 followed by 3 digits (001–999, e.g., ATS0001)', 'error');
                     isSubmitting = false;
                     return;
                 }
@@ -1274,12 +1273,13 @@
                         'Confirm Punch Out',
                         `Are you sure you want to punch out and end your workday? ${employeeData.isNewEmployee ? 'This is pending HR approval.' : ''}`,
                         () => recordPunchOut(empId));
-                } catch (err) {
-                    showToast(`Error: ${err.message}`, 'error');
-                } finally {
-                    isSubmitting = false;
+                    } catch (err) {
+                        showToast(`Error: ${err.message}`, 'error');
+                    } finally {
+                        isSubmitting = false;
+                    }
                 }
-            });
+            );
         }
 
         // Render completed status
@@ -1319,7 +1319,7 @@
                         </div>
                         <div class="completed-detail">
                             <div class="detail-label">Next Punch In</div>
-                            <div class="detail-value">${hoursRemaining > 0 ? `After ${hoursRemaining} hours` : 'Now'}</div>
+                           <div class="detail-value">${hoursRemaining > 0 ? `After ${hoursRemaining} hours` : 'Now'}</div>
                         </div>
                     </div>
                     <p class="completed-subtext">${employeeData.status === 'rejected' ? 'Your attendance was rejected by HR. Please contact HR for details.' : employeeData.isNewEmployee || employeeData.status === 'pending' ? 'Your attendance is awaiting HR approval.' : 'You have completed your workday. You can punch in again after the cooldown period.'}</p>
@@ -1330,7 +1330,7 @@
             const empIdError = document.getElementById('empIdError');
 
             empIdInput.addEventListener('input', () => {
-                validateInput(empIdInput, isValidEmployeeId, empIdError, 'ID must be ATS0 followed by 3 digits (000-999, e.g., ATS0001)');
+                validateInput(empIdInput, isValidEmployeeId, empIdError, 'ID must be ATS0 followed by 3 digits (001-999, e.g., ATS0001)');
             });
 
             document.getElementById('punchInForm').addEventListener('submit', async (e) => {
