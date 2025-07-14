@@ -13,7 +13,7 @@
             --primary-dark: #553c9a;
             --secondary: #4c68d7;
             --success: #38a169;
-            --warning: #d69e2e;
+            --warning: #f1c40f;
             --danger: #e53e3e;
             --light: #f8fafc;
             --dark: #2d3748;
@@ -245,7 +245,7 @@
         }
 
         .status-pending {
-            background-color: rgba(214, 158, 46, 0.1);
+            background-color: rgba(241, 196, 15, 0.2);
             color: var(--warning);
         }
 
@@ -308,11 +308,6 @@
             box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.2);
         }
 
-        .form-control[readonly] {
-            background-color: #f5f5f5;
-            cursor: not-allowed;
-        }
-
         .form-control:invalid {
             border-color: black;
         }
@@ -351,6 +346,16 @@
             background: var(--gray-light);
             color: var(--gray);
             cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--gray);
+            color: white;
         }
 
         .activities-section {
@@ -741,7 +746,7 @@
         <section class="form-section">
             <div class="request-form">
                 <h2 class="section-title">Request Benefit</h2>
-                <form id="request-form">
+                <div id="request-form">
                     <div class="form-group">
                         <label for="emp-id">Employee ID</label>
                         <input type="text" id="emp-id" class="form-control" placeholder="ATS0xxx" required minlength="7" maxlength="7">
@@ -757,7 +762,7 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" class="form-control" placeholder="Employee email" required>
-                        <div class="error-message" id="email-error">Email must be 3-50 characters before @gmail.com, no special characters</div>
+                        <div class="error-message" id="email-error">Email must be 3-50 characters before @astrolitetech.com, no special characters</div>
                     </div>
                     
                     <div class="form-group">
@@ -816,10 +821,10 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" id="submit-btn" disabled>
+                    <button type="button" class="btn btn-primary" id="submit-btn" onclick="app.confirmSubmit()">
                         <i class="fas fa-paper-plane"></i> Submit Request
                     </button>
-                </form>
+                </div>
             </div>
         </section>
     </div>
@@ -857,32 +862,32 @@
             
             <div class="modal-info">
                 <label>Employee Name</label>
-                <span id="detail-name">-</span>
+                <div id="detail-name" class="modal-info-content">-</div>
             </div>
             
             <div class="modal-info">
                 <label>Employee ID</label>
-                <span id="detail-emp-id">-</span>
+                <div id="detail-emp-id" class="modal-info-content">-</div>
             </div>
             
             <div class="modal-info">
                 <label>Benefit Program</label>
-                <span id="detail-program">-</span>
+                <div id="detail-program" class="modal-info-content">-</div>
             </div>
             
             <div class="modal-info">
                 <label>Request Date</label>
-                <span id="detail-date">-</span>
+                <div id="detail-date" class="modal-info-content">-</div>
             </div>
             
             <div class="modal-info">
                 <label>Status</label>
-                <span id="detail-status">-</span>
+                <div id="detail-status" class="modal-info-content status-badge">-</div>
             </div>
             
             <div class="modal-info">
                 <label>Reason</label>
-                <span id="detail-reason">Not specified</span>
+                <div id="detail-reason" class="modal-info-content">Not specified</div>
             </div>
             
             <div id="loan-details" style="display: none;">
@@ -890,23 +895,43 @@
                 
                 <div class="modal-info">
                     <label>Loan Amount</label>
-                    <span id="detail-loan-amount">-</span>
+                    <div id="detail-loan-amount" class="modal-info-content">-</div>
                 </div>
                 
                 <div class="modal-info">
                     <label>Loan Purpose</label>
-                    <span id="detail-loan-purpose">-</span>
+                    <div id="detail-loan-purpose" class="modal-info-content">-</div>
                 </div>
                 
                 <div class="modal-info">
                     <label>Documents</label>
-                    <span id="detail-loan-docs">No documents uploaded</span>
+                    <div id="detail-loan-docs" class="modal-info-content">No documents uploaded</div>
                 </div>
             </div>
             
             <div class="modal-buttons">
                 <button class="btn close-btn" onclick="closeModal()">
                     <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirm-modal" role="dialog" aria-labelledby="confirm-modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="confirm-modal-title">Confirm Submission</h2>
+                <button class="close-modal" onclick="app.closeConfirmModal()">×</button>
+            </div>
+            <div class="modal-info">
+                <p>Are you sure you want to submit this request?</p>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="app.closeConfirmModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" onclick="app.submitRequest()">
+                    <i class="fas fa-check"></i> Confirm
                 </button>
             </div>
         </div>
@@ -923,37 +948,6 @@
                 this.setupDateInput();
                 this.setupEventListeners();
                 this.setupValidations();
-
-                // Check if user is logged in and populate employee details
-                const empIdInput = this.empId;
-                const nameInput = this.name;
-                const emailInput = this.email;
-                const userData = JSON.parse(localStorage.getItem('abccompanyempdetails'));
-
-                if (userData) {
-                    // Validate and populate employee ID
-                    if (userData.emp_id && this.validateEmpId(userData.emp_id)) {
-                        empIdInput.value = userData.emp_id;
-                        empIdInput.readOnly = true;
-                    }
-                    // Validate and populate name
-                    if (userData.name && this.validateName(userData.name)) {
-                        nameInput.value = userData.name;
-                        nameInput.readOnly = true;
-                    }
-                    // Validate and populate email
-                    if (userData.email && this.validateEmail(userData.email)) {
-                        emailInput.value = userData.email;
-                        emailInput.readOnly = true;
-                    }
-                    // Fetch requests if valid employee ID is present
-                    if (empIdInput.value && this.validateEmpId(empIdInput.value)) {
-                        this.loadEmployeeRequests(empIdInput.value.trim());
-                    }
-                }
-
-                // Update submit button state after populating fields
-                this.updateSubmitButton();
             }
             
             setupDateInput() {
@@ -961,31 +955,25 @@
                 const sixMonthsLater = new Date();
                 sixMonthsLater.setMonth(today.getMonth() + 6);
                 
-                const dateInput = this.requestDate;
+                const dateInput = document.getElementById('request-date');
                 dateInput.min = this.formatDateForInput(today);
                 dateInput.max = this.formatDateForInput(sixMonthsLater);
                 dateInput.value = this.formatDateForInput(today);
             }
             
             setupEventListeners() {
-                this.program.addEventListener('change', () => {
+                document.getElementById('program').addEventListener('change', () => {
                     const loanOptions = document.getElementById('loan-options');
                     loanOptions.style.display = this.program.value === 'Employee Loans' ? 'block' : 'none';
-                    this.updateSubmitButton();
                 });
                 
-                this.requestForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.submitRequest();
-                });
-                
-                this.empId.addEventListener('blur', () => {
-                    if (this.validateEmpId(this.empId.value.trim()) && !this.empId.readOnly) {
+                document.getElementById('emp-id').addEventListener('blur', () => {
+                    if (this.validateEmpId(this.empId.value.trim())) {
                         this.loadEmployeeRequests(this.empId.value.trim());
                     }
                 });
                 
-                this.loanDocs?.addEventListener('change', (e) => {
+                document.getElementById('loan-docs').addEventListener('change', (e) => {
                     const fileName = e.target.files[0]?.name || '';
                     const fileNameElement = document.getElementById('file-name');
                     
@@ -995,37 +983,38 @@
                     } else {
                         fileNameElement.style.display = 'none';
                     }
-                    this.updateSubmitButton();
                 });
             }
             
             setupValidations() {
                 this.empId.addEventListener('input', () => {
                     const isValid = this.validateEmpId(this.empId.value.trim());
-                    this.toggleError('emp-id-error', !isValid && !this.empId.readOnly);
-                    this.empId.setCustomValidity(isValid || this.empId.readOnly ? '' : 'Employee ID must be ATS0 followed by 3 digits (not all zeros)');
-                    this.updateSubmitButton();
+                    this.toggleError('emp-id-error', !isValid);
+                    this.empId.setCustomValidity(isValid ? '' : 'Employee ID must be ATS0 followed by 3 digits (not all zeros)');
                 });
                 
                 this.name.addEventListener('input', () => {
-                    const isValid = this.validateName(this.name.value.trim());
-                    this.toggleError('name-error', !isValid && !this.name.readOnly);
-                    this.name.setCustomValidity(isValid || this.name.readOnly ? '' : 'Invalid name format');
-                    this.updateSubmitButton();
+                    const isValid = /^[A-Za-z\s]+$/.test(this.name.value.trim());
+                    this.toggleError('name-error', !isValid);
+                    this.name.setCustomValidity(isValid ? '' : 'Invalid name format');
                 });
                 
                 this.email.addEventListener('input', () => {
-                    const isValid = this.validateEmail(this.email.value.trim());
-                    this.toggleError('email-error', !isValid && !this.email.readOnly);
-                    this.email.setCustomValidity(isValid || this.email.readOnly ? '' : 'Email must be 3-50 characters before @gmail.com, no special characters');
-                    this.updateSubmitButton();
+                    const isValid = /^[a-zA-Z0-9._-]{3,50}@astrolitetech\.com$/.test(this.email.value.trim());
+                    this.toggleError('email-error', !isValid);
+                    this.email.setCustomValidity(isValid ? '' : 'Email must be 3-50 characters before @astrolitetech.com, no special characters');
                 });
                 
                 this.requestDate.addEventListener('change', () => {
-                    const isValid = this.validateRequestDate(this.requestDate.value);
+                    const selectedDate = new Date(this.requestDate.value);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const sixMonthsLater = new Date();
+                    sixMonthsLater.setMonth(today.getMonth() + 6);
+                    
+                    const isValid = selectedDate >= today && selectedDate <= sixMonthsLater;
                     this.toggleError('date-error', !isValid);
                     this.requestDate.setCustomValidity(isValid ? '' : 'Invalid date range');
-                    this.updateSubmitButton();
                 });
                 
                 this.reason.addEventListener('input', () => {
@@ -1036,7 +1025,6 @@
                     const isValid = !hasLeadingTrailing && !hasConsecutiveSpaces;
                     this.toggleError('reason-error', !isValid);
                     this.reason.setCustomValidity(isValid ? '' : 'Invalid reason format');
-                    this.updateSubmitButton();
                 });
                 
                 this.loanAmount?.addEventListener('input', () => {
@@ -1044,11 +1032,6 @@
                     const isValid = !isNaN(value) && value >= 10000 && value <= 1000000;
                     this.toggleError('loan-amount-error', !isValid);
                     this.loanAmount.setCustomValidity(isValid ? '' : 'Invalid amount');
-                    this.updateSubmitButton();
-                });
-                
-                this.loanPurpose?.addEventListener('change', () => {
-                    this.updateSubmitButton();
                 });
                 
                 this.loanDocs?.addEventListener('change', () => {
@@ -1056,7 +1039,6 @@
                     const isValid = !file || (/\.(pdf|jpg|jpeg|png)$/i.test(file.name) && file.size <= 5 * 1024 * 1024);
                     this.toggleError('loan-docs-error', !isValid);
                     this.loanDocs.setCustomValidity(isValid ? '' : 'File must be PDF, JPG, JPEG, or PNG (max 5MB)');
-                    this.updateSubmitButton();
                 });
             }
             
@@ -1070,7 +1052,6 @@
             get loanPurpose() { return document.getElementById('loan-purpose'); }
             get loanDocs() { return document.getElementById('loan-docs'); }
             get submitBtn() { return document.getElementById('submit-btn'); }
-            get requestForm() { return document.getElementById('request-form'); }
             
             formatDateForInput(date) {
                 const year = date.getFullYear();
@@ -1080,63 +1061,7 @@
             }
             
             validateEmpId(empId) {
-                if (this.empId.readOnly) return true;
                 return /^ATS0(?!000)[0-9]{3}$/.test(empId);
-            }
-            
-            validateName(name) {
-                if (this.name.readOnly) return true;
-                return /^[A-Za-z\s]+$/.test(name) && name.trim().length > 0;
-            }
-            
-            validateEmail(email) {
-                if (this.email.readOnly) return true;
-                return /^[a-zA-Z0-9._-]{3,50}@gmail\.com$/.test(email);
-            }
-            
-            validateRequestDate(date) {
-                if (!date) return false;
-                const selectedDate = new Date(date);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const sixMonthsLater = new Date();
-                sixMonthsLater.setMonth(today.getMonth() + 6);
-                return selectedDate >= today && selectedDate <= sixMonthsLater;
-            }
-            
-            validateReason(reason) {
-                return reason === '' || (reason.trim() === reason && !/\s{2,}/.test(reason));
-            }
-            
-            validateLoanAmount(amount) {
-                const value = parseFloat(amount);
-                return !isNaN(value) && value >= 10000 && value <= 1000000;
-            }
-            
-            validateAllFields() {
-                const nameValid = this.validateName(this.name.value.trim());
-                const emailValid = this.validateEmail(this.email.value.trim());
-                const empIdValid = this.validateEmpId(this.empId.value.trim());
-                const programValid = this.program.value !== '';
-                const dateValid = this.validateRequestDate(this.requestDate.value);
-                const reasonValid = this.validateReason(this.reason.value.trim());
-                let loanAmountValid = true;
-                let loanPurposeValid = true;
-                let loanDocsValid = true;
-                
-                if (this.program.value === 'Employee Loans') {
-                    const amount = this.loanAmount?.value;
-                    loanAmountValid = amount ? this.validateLoanAmount(amount) : false;
-                    loanPurposeValid = this.loanPurpose?.value !== '';
-                    const file = this.loanDocs?.files[0];
-                    loanDocsValid = !file || (/\.(pdf|jpg|jpeg|png)$/i.test(file.name) && file.size <= 5 * 1024 * 1024);
-                }
-                
-                return nameValid && emailValid && empIdValid && programValid && dateValid && reasonValid && loanAmountValid && loanPurposeValid && loanDocsValid;
-            }
-            
-            updateSubmitButton() {
-                this.submitBtn.disabled = !this.validateAllFields();
             }
             
             toggleError(errorId, show) {
@@ -1252,7 +1177,7 @@
                 
                 const statusElement = document.getElementById('detail-status');
                 statusElement.textContent = request.status;
-                statusElement.className = `status-badge status-${request.status.toLowerCase()}`;
+                statusElement.className = `modal-info-content status-badge status-${request.status.toLowerCase()}`;
                 
                 document.getElementById('detail-reason').textContent = request.reason || 'Not specified';
                 
@@ -1283,6 +1208,10 @@
             
             closeModal() {
                 document.getElementById('details-modal').style.display = 'none';
+            }
+            
+            closeConfirmModal() {
+                document.getElementById('confirm-modal').style.display = 'none';
             }
             
             showAlert(message, type = 'success') {
@@ -1316,7 +1245,46 @@
                 }, 3000);
             }
             
+            confirmSubmit() {
+                const nameValid = /^[A-Za-z\s]+$/.test(this.name.value.trim());
+                const emailValid = /^[a-zA-Z0-9._-]{3,50}@astrolitetech\.com$/.test(this.email.value.trim());
+                const empIdValid = this.validateEmpId(this.empId.value.trim());
+                const programValid = this.program.value !== '';
+                const selectedDate = new Date(this.requestDate.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const sixMonthsLater = new Date();
+                sixMonthsLater.setMonth(today.getMonth() + 6);
+                const dateValid = selectedDate >= today && selectedDate <= sixMonthsLater;
+                const reasonValid = this.reason.value.trim() === '' || (this.reason.value.trim() === this.reason.value && !/\s{2,}/.test(this.reason.value));
+                let loanAmountValid = true;
+                let loanPurposeValid = true;
+                let loanDocsValid = true;
+                
+                if (this.program.value === 'Employee Loans') {
+                    const amount = parseFloat(this.loanAmount.value);
+                    loanAmountValid = !isNaN(amount) && amount >= 10000 && amount <= 1000000;
+                    loanPurposeValid = this.loanPurpose.value !== '';
+                    loanDocsValid = !this.loanDocs.files[0] || (/\.(pdf|jpg|jpeg|png)$/i.test(this.loanDocs.files[0].name) && this.loanDocs.files[0].size <= 5 * 1024 * 1024);
+                    this.toggleError('loan-amount-error', !loanAmountValid);
+                    this.toggleError('loan-docs-error', !loanDocsValid);
+                }
+                
+                this.toggleError('name-error', !nameValid);
+                this.toggleError('email-error', !emailValid);
+                this.toggleError('emp-id-error', !empIdValid);
+                this.toggleError('date-error', !dateValid);
+                this.toggleError('reason-error', !reasonValid);
+                
+                if (!nameValid || !emailValid || !empIdValid || !programValid || !dateValid || !reasonValid || !loanAmountValid || !loanPurposeValid || !loanDocsValid) {
+                    return;
+                }
+                
+                document.getElementById('confirm-modal').style.display = 'flex';
+            }
+            
             async submitRequest() {
+                this.closeConfirmModal();
                 this.submitBtn.disabled = true;
                 this.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
                 
@@ -1329,12 +1297,6 @@
                 const loanAmount = this.loanAmount?.value;
                 const loanPurpose = this.loanPurpose?.value;
                 const loanDocs = this.loanDocs?.files[0];
-                
-                if (!this.validateAllFields()) {
-                    this.submitBtn.disabled = false;
-                    this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
-                    return;
-                }
                 
                 const oneTimePrograms = ['Yoga and Meditation', 'Mental Health Support', 'Awareness Programs', 'Health Checkup Camps', 'Gym Membership'];
                 if (oneTimePrograms.includes(program)) {
@@ -1375,27 +1337,24 @@
                     });
                     
                     if (response.ok) {
-                        const result = await response.json();
                         this.showAlert('🎉 Request submitted successfully!');
-                        this.loadEmployeeRequests(empId);
-                        this.requestForm.reset();
-                        document.getElementById('loan-options').style.display = 'none';
-                        document.getElementById('file-name').style.display = 'none';
-                        
-                        const today = new Date();
-                        this.requestDate.value = this.formatDateForInput(today);
-                        this.updateSubmitButton();
+                        window.location.reload();
                     } else {
                         const error = await response.json();
                         this.showAlert(error.error || 'Error submitting request', 'error');
+                        this.submitBtn.disabled = false;
+                        this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
                     }
                 } catch (e) {
                     console.error('Error:', e);
                     this.showAlert('Error connecting to server. Please try again.', 'error');
+                    this.submitBtn.disabled = false;
+                    this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
                 }
-                
-                this.submitBtn.disabled = false;
-                this.submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Request';
+            }
+            
+            get requestForm() {
+                return document.getElementById('request-form');
             }
         }
 
