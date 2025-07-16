@@ -20,6 +20,10 @@
             --in-progress: #f8961e;
             --resolved: #4ad66d;
             --closed: #6c757d;
+            --critical: #dc3545;
+            --high: #9c27b0;
+            --medium: #ff9800;
+            --low: #4caf50;
         }
 
         * {
@@ -286,15 +290,24 @@
             color: var(--closed);
         }
 
-        .priority-high {
-            color: var(--danger);
+        .priority-critical {
+            color: var(--critical);
             font-weight: 600;
         }
 
-        .priority-critical {
-            color: var(--danger);
+        .priority-high {
+            color: var(--high);
             font-weight: 600;
-            animation: pulse 1.5s infinite;
+        }
+
+        .priority-medium {
+            color: var(--medium);
+            font-weight: 600;
+        }
+
+        .priority-low {
+            color: var(--low);
+            font-weight: 600;
         }
 
         .action-btn {
@@ -341,7 +354,6 @@
             font-size: 1rem;
         }
 
-        /* Enhanced Modal Styles */
         .modal {
             position: fixed;
             top: 0;
@@ -368,7 +380,7 @@
             background: white;
             border-radius: 12px;
             width: 90%;
-            max-width: 800px;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -391,8 +403,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 12px 12px 0 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
         }
 
         .modal-header h3 {
@@ -435,23 +445,20 @@
         .ticket-details p {
             margin-bottom: 1rem;
             line-height: 1.6;
-            display: flex;
         }
 
         .ticket-details strong {
             color: var(--dark);
             display: inline-block;
             min-width: 120px;
-            font-weight: 600;
         }
 
         .ticket-description {
             background: #f8f9fa;
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 8px;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             line-height: 1.6;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
         }
 
         .comments-section {
@@ -461,39 +468,30 @@
         }
 
         .comments-section h4 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.2rem;
         }
 
         .comment {
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
-        }
-
-        .comment:hover {
-            transform: translateY(-2px);
+            border-left: 3px solid var(--accent);
         }
 
         .comment-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
-            align-items: center;
+            margin-bottom: 0.5rem;
         }
 
         .comment-author {
             font-weight: 600;
             color: var(--dark);
-            font-size: 1rem;
         }
 
         .comment-date {
@@ -502,55 +500,39 @@
         }
 
         .comment-text {
-            line-height: 1.6;
-            color: var(--dark);
+            line-height: 1.5;
         }
 
         .no-comments {
             color: var(--gray);
             font-style: italic;
             text-align: center;
-            padding: 2rem;
-            background: #f8f9fa;
-            border-radius: 8px;
+            padding: 1rem;
         }
 
         .success-modal .modal-content {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem;
         }
 
         .success-icon {
-            font-size: 5rem;
+            font-size: 4rem;
             color: var(--success);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             animation: bounce 1s;
         }
 
         .success-modal h3 {
             margin-bottom: 1rem;
             color: var(--success);
-            font-size: 1.8rem;
         }
 
         .success-modal p {
             margin-bottom: 2rem;
             color: var(--gray);
             line-height: 1.6;
-            font-size: 1.1rem;
         }
 
-        .ticket-id-badge {
-            background: var(--primary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-        }
-
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -600,7 +582,6 @@
             animation: bounce 1s;
         }
 
-        /* Responsive */
         @media (max-width: 1400px) {
             .container {
                 max-width: 1000px;
@@ -689,14 +670,6 @@
 
             .modal-header h3 {
                 font-size: 1.3rem;
-            }
-
-            .ticket-details p {
-                flex-direction: column;
-            }
-
-            .ticket-details strong {
-                margin-bottom: 0.25rem;
             }
         }
 
@@ -948,13 +921,11 @@
                     </tr>
                 </thead>
                 <tbody id="myTicketsBody">
-                    <!-- Employee's tickets will be loaded here -->
                 </tbody>
             </table>
         </div>
     </div>
     
-    <!-- Success Modal -->
     <div id="successModal" class="modal success-modal">
         <div class="modal-content">
             <div class="modal-body">
@@ -970,11 +941,10 @@
         </div>
     </div>
 
-    <!-- Ticket Detail Modal -->
     <div id="ticketModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-ticket-alt"></i> Ticket Details <span class="ticket-id-badge" id="modalTicketId"></span></h3>
+                <h3><i class="fas fa-ticket-alt"></i> <span id="modalTicketId"></span></h3>
                 <button class="modal-close" onclick="closeTicketModal()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -982,7 +952,7 @@
             
             <div class="modal-body">
                 <div class="ticket-details">
-                    <p><strong>Employee Name:</strong> <span id="modalEmpName"></span></p>
+                    <p><strong>Name:</strong> <span id="modalEmpName"></span></p>
                     <p><strong>Email:</strong> <span id="modalEmpEmail"></span></p>
                     <p><strong>Status:</strong> <span id="modalStatus"></span></p>
                     <p><strong>Priority:</strong> <span id="modalPriority"></span></p>
@@ -997,7 +967,6 @@
                 <div class="comments-section">
                     <h4><i class="fas fa-comments"></i> Comments</h4>
                     <div id="commentsContainer">
-                        <!-- Comments will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -1008,14 +977,12 @@
         let currentEmpId = null;
         let currentTicketId = null;
 
-        // Custom validation for employee name
         function validateEmpName(name) {
             if (name !== name.trim()) return false;
             if (name.includes('  ')) return false;
             return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(name);
         }
 
-        // Custom validation for description
         function validateDescription(desc) {
             if (desc !== desc.trim()) return false;
             if (desc.includes('  ')) return false;
@@ -1025,7 +992,6 @@
             return true;
         }
 
-        // Real-time validation function
         function validateField(field) {
             const feedback = field.nextElementSibling;
             
@@ -1059,7 +1025,15 @@
             return true;
         }
 
-        // Add real-time validation listeners
+        function generateTicketId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = 'ATS';
+            for (let i = 0; i < 5; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach(control => {
@@ -1067,7 +1041,6 @@
                 control.addEventListener(eventType, () => validateField(control));
             });
 
-            // Close modals on outside click
             document.getElementById('successModal').addEventListener('click', function(e) {
                 if (e.target === this) closeModal();
             });
@@ -1077,7 +1050,6 @@
             });
         });
 
-        // Form validation and submission
         document.getElementById('ticketForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1097,12 +1069,12 @@
                 const description = document.getElementById('description').value.trim();
                 
                 const ticketData = {
-                    emp_id: document.getElementById('empId').value.trim(),
-                    emp_name: empName,
-                    emp_email: document.getElementById('empEmail').value.trim(),
+                    empId: document.getElementById('empId').value.trim(),
+                    empName: empName,
+                    empEmail: document.getElementById('empEmail').value.trim(),
                     department: document.getElementById('department').value,
                     priority: document.getElementById('priority').value,
-                    issue_type: document.getElementById('issueType').value,
+                    issueType: document.getElementById('issueType').value,
                     description: description
                 };
                 
@@ -1111,7 +1083,16 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(ticketData)
+                    body: JSON.stringify({
+                        emp_id: ticketData.empId,
+                        emp_name: ticketData.empName,
+                        emp_email: ticketData.empEmail,
+                        department: ticketData.department,
+                        priority: ticketData.priority,
+                        issue_type: ticketData.issueType,
+                        description: ticketData.description,
+                        ticket_id: generateTicketId()
+                    })
                 });
                 
                 if (!response.ok) {
@@ -1121,7 +1102,6 @@
                 
                 const result = await response.json();
                 
-                // Show preview
                 document.getElementById('previewTicketId').textContent = result.ticket_id;
                 document.getElementById('previewEmpId').textContent = result.emp_id;
                 document.getElementById('previewEmpName').textContent = result.emp_name;
@@ -1133,15 +1113,12 @@
                 
                 document.getElementById('ticketPreview').style.display = 'block';
                 
-                // Show success modal
                 document.getElementById('successModal').classList.add('active');
                 
-                // Load the updated ticket list
                 if (currentEmpId === result.emp_id) {
                     await loadMyTickets();
                 }
                 
-                // Reset form
                 this.reset();
                 formControls.forEach(control => {
                     control.classList.remove('is-invalid');
@@ -1153,7 +1130,6 @@
             }
         });
         
-        // When emp_id field changes, load their tickets
         document.getElementById('empId').addEventListener('change', async function() {
             currentEmpId = this.value.trim();
             if (/^[ATS]{3}0(?!000)[0-9]{3}$/.test(currentEmpId) && currentEmpId !== 'ATS0000') {
@@ -1164,10 +1140,8 @@
             }
         });
 
-        // Filter employee tickets
         document.getElementById('filterStatusEmp').addEventListener('change', loadMyTickets);
 
-        // Load employee's tickets
         async function loadMyTickets() {
             if (!currentEmpId) return;
             
@@ -1193,8 +1167,10 @@
                     const row = document.createElement('tr');
                     
                     let priorityClass = '';
-                    if (ticket.priority === 'High') priorityClass = 'priority-high';
                     if (ticket.priority === 'Critical') priorityClass = 'priority-critical';
+                    else if (ticket.priority === 'High') priorityClass = 'priority-high';
+                    else if (ticket.priority === 'Medium') priorityClass = 'priority-medium';
+                    else if (ticket.priority === 'Low') priorityClass = 'priority-low';
                     
                     let statusBadge = '';
                     if (ticket.status === 'Open') statusBadge = 'status-open';
@@ -1223,7 +1199,6 @@
             }
         }
 
-        // View ticket details
         async function viewTicket(ticketId) {
             try {
                 const response = await fetch(`http://44.223.23.145:3426/api/tickets/${ticketId}`);
@@ -1250,7 +1225,6 @@
             }
         }
 
-        // Load comments for a ticket
         async function loadComments(ticketId) {
             try {
                 const response = await fetch(`http://44.223.23.145:3426/api/tickets/${ticketId}/comments`);
@@ -1288,7 +1262,6 @@
             }
         }
 
-        // Close modals
         function closeModal() {
             document.getElementById('successModal').classList.remove('active');
         }
