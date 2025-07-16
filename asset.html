@@ -570,7 +570,7 @@
             <form id="asset-request-form">
                 <div class="form-group">
                     <label for="employeeId" class="form-label">Employee ID</label>
-                    <input type="text" id="employeeId" class="form-control" placeholder="e.g., ATS0123" maxlength="7">
+                    <input type="text" id="employeeId" class="form-control" placeholder="e.g., ATS0xxx" maxlength="7">
                     <span class="error-message" id="employeeIdError">
                         <i class="fas fa-exclamation-circle error-icon"></i>
                         Employee ID must be ATS0 followed by 3 digits (001-999)
@@ -1051,11 +1051,14 @@
         }
 
         function showAssetDetails(asset) {
+            // Format date to display only YYYY-MM-DD
+            const formattedDate = asset.request_date ? new Date(asset.request_date).toISOString().split('T')[0] : 'N/A';
+            
             const modalFields = {
                 'modalEmpId': asset.employee_id || 'N/A',
                 'modalEmpName': asset.employee_name || 'N/A',
                 'modalEmail': asset.email || 'N/A',
-                'modalRequestDate': asset.request_date || 'N/A',
+                'modalRequestDate': formattedDate,
                 'modalAssetType': asset.asset_type || 'N/A',
                 'modalAssetName': asset.asset_name || 'N/A',
                 'modalStatus': asset.status || 'N/A',
@@ -1141,6 +1144,9 @@
             const statusClass = asset.status === 'Approved' ? 'status-approved' :
                               asset.status === 'Pending' ? 'status-pending' : 'status-rejected';
             
+            // Format date to display only YYYY-MM-DD
+            const formattedDate = asset.request_date ? new Date(asset.request_date).toISOString().split('T')[0] : 'N/A';
+            
             card.innerHTML = `
                 <div class="asset-header">
                     <div>
@@ -1157,7 +1163,7 @@
                 <div class="asset-details">
                     <div class="asset-detail-row">
                         <span class="asset-detail-label">Request Date</span>
-                        <span class="asset-detail-value">${asset.request_date || 'N/A'}</span>
+                        <span class="asset-detail-value">${formattedDate}</span>
                     </div>
                     <div class="asset-detail-row">
                         <span class="asset-detail-label">Type</span>
