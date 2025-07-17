@@ -630,14 +630,31 @@
                 const statusFilter = document.getElementById('filterStatus')?.value || '';
                 const priorityFilter = document.getElementById('filterPriority')?.value || '';
 
+                // Normalize priority filter for API (e.g., API might expect lowercase)
+                const normalizedPriority = priorityFilter ? priorityFilter.toLowerCase() : '';
+
                 const params = new URLSearchParams();
                 if (statusFilter) params.append('status', statusFilter);
-                if (priorityFilter) params.append('priority', priorityFilter);
+                if (priorityFilter) params.append('priority', normalizedPriority);
+
+                console.log('Fetching tickets with params:', params.toString());
 
                 const response = await fetch(`http://44.223.23.145:3426/api/tickets?${params.toString()}`);
-                if (!response.ok) throw new Error('Failed to fetch tickets');
+                if (!response.ok) {
+                    console.error('API response status:', response.status, response.statusText);
+                    throw new Error('Failed to fetch tickets');
+                }
 
-                const tickets = await response.json();
+                let tickets = await response.json();
+                console.log('Received tickets:', tickets);
+
+                // Fallback: Client-side filtering if API doesn't filter priority correctly
+                if (priorityFilter) {
+                    tickets = tickets.filter(ticket => 
+                        (ticket.priority || '').toLowerCase() === normalizedPriority
+                    );
+                }
+
                 const ticketsBody = document.getElementById('ticketsBody');
                 if (!ticketsBody) {
                     console.error('Tickets table body not found');
@@ -655,10 +672,11 @@
                     const row = document.createElement('tr');
 
                     let priorityClass = '';
-                    if (ticket.priority === 'Critical') priorityClass = 'priority-critical';
-                    if (ticket.priority === 'High') priorityClass = 'priority-high';
-                    if (ticket.priority === 'Medium') priorityClass = 'priority-medium';
-                    if (ticket.priority === 'Low') priorityClass = 'priority-low';
+                    const ticketPriority = (ticket.priority || '').toLowerCase();
+                    if (ticketPriority === 'critical') priorityClass = 'priority-critical';
+                    if (ticketPriority === 'high') priorityClass = 'priority-high';
+                    if (ticketPriority === 'medium') priorityClass = 'priority-medium';
+                    if (ticketPriority === 'low') priorityClass = 'priority-low';
 
                     let statusBadge = '';
                     if (ticket.status === 'Open') statusBadge = 'status-open';
@@ -684,7 +702,7 @@
                         </td>
                         <td class="truncate" title="${ticket.department || 'N/A'}">${department}</td>
                         <td class="truncate" title="${ticket.issue_type || ticket.issueType || 'N/A'}">${issueType}</td>
-                        <td class="${priorityClass}">${ticket.priority}</td>
+                        <td class="${priorityClass}">${ticket.priority || 'N/A'}</td>
                         <td><span class="status-badge ${statusBadge}">${ticket.status}</span></td>
                         <td>
                             <button class="action-btn btn-view" onclick="viewTicket('${ticketId}')" title="View">
