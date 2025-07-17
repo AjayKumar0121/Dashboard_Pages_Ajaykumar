@@ -37,8 +37,8 @@
 
         .container {
             margin: 0 auto;
-            padding: 20px;
-            max-width: 1200px;
+            padding: 10px;
+            max-width: 1400px;
         }
 
         header {
@@ -171,6 +171,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
+            padding: 20px;
             margin-bottom: 40px;
         }
 
@@ -614,7 +615,7 @@
             <p>Your claim request has been received. You can track its status in the Claim History section.</p>
         </div>
 
-        <section id="request-claim" class="section request-claim active">
+        <section id="request-claim" class="section request-claim active" style="padding: 20px;">
             <h2 class="section-title">Request Claim</h2>
             
             <div class="claim-types">
@@ -675,7 +676,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="empId">Employee ID</label>
-                                <input type="text" id="empId" name="empId" placeholder="ATS0123" required minlength="7" maxlength="7">
+                                <input type="text" id="empId" name="empId" placeholder="ATS0xxx" required minlength="7" maxlength="7">
                                 <div class="error" id="empIdError">Employee ID must be ATS0 followed by 3 digits (not all zeros)</div>
                             </div>
                         </div>
@@ -734,7 +735,7 @@
             </div>
         </section>
 
-        <section id="claim-history" class="section claim-history">
+        <section id="claim-history" class="section claim-history" style="padding: 20px;">
             <h2 class="section-title">Claim History</h2>
             
             <div class="form-container active" id="historyEmpIdFormContainer">
@@ -742,7 +743,7 @@
                     <h3 class="form-title"><i class="fas fa-user"></i> Enter Employee ID</h3>
                     <div class="form-group">
                         <label for="historyEmpId">Employee ID</label>
-                        <input type="text" id="historyEmpId" name="historyEmpId" placeholder="ATS0123" required minlength="7" maxlength="7">
+                        <input type="text" id="historyEmpId" name="historyEmpId" placeholder="ATS0xxx" required minlength="7" maxlength="7">
                         <div class="error" id="historyEmpIdError">Employee ID must be ATS0 followed by 3 digits (not all zeros)</div>
                     </div>
                     <div class="form-actions">
@@ -1495,8 +1496,8 @@
                     <p><strong>Department:</strong> ${claim.department}</p>
                     <p><strong>Date:</strong> ${new Date(claim.claim_date).toLocaleDateString()}</p>
                     <p><strong>Amount:</strong> ₹${claim.amount.toLocaleString()}</p>
-                    <p><strong>Description:</strong> ${claim.description}</p>
                     <p><strong>Status:</strong> ${claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}</p>
+                    <p><strong>Description:</strong> ${claim.description}</p>
                     <p><strong>Documents:</strong></p>
                     ${documents.map(doc => doc.url ? `<p><a href="http://44.223.23.145:3407${doc.url}" target="_blank">${doc.file_name}</a></p>` : `<p>${doc.file_name} (File not available)</p>`).join('')}
                 `;
