@@ -257,17 +257,17 @@
 
         .status-pending {
             background-color: rgba(253, 203, 110, 0.2);
-            color: #b8860b; /* Dark yellow for pending */
+            color: #b8860b;
         }
 
         .status-approved {
-            background-color: var(--success);
-            color: white;
+            background-color: rgba(0, 184, 148, 0.2);
+            color: #00875a;
         }
 
         .status-rejected {
-            background-color: var(--danger);
-            color: white;
+            background-color: rgba(214, 48, 49, 0.2);
+            color: #c0392b;
         }
 
         .view-details-btn {
@@ -348,7 +348,7 @@
 
         .modal-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
+            font-size: 1.25rem;
             color: var(--dark);
             display: flex;
             align-items: center;
@@ -374,6 +374,7 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--primary);
         }
 
         .detail-row {
@@ -471,11 +472,12 @@
         .confirmation-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
+            color: var(--primary);
         }
 
         .confirmation-text {
             margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .alert {
@@ -518,6 +520,22 @@
             color: inherit;
             cursor: pointer;
             margin-left: 0.5rem;
+        }
+
+        .status-icon {
+            margin-right: 0.5rem;
+        }
+
+        .approved-icon {
+            color: var(--success);
+        }
+
+        .rejected-icon {
+            color: var(--danger);
+        }
+
+        .pending-icon {
+            color: var(--warning);
         }
 
         @media (max-width: 768px) {
@@ -714,16 +732,8 @@
                     </div>
                 </div>
                 
-                <div class="modal-buttons">
-                    <button class="btn btn-success" onclick="app.showConfirmationModal('Approve', app.currentRequestId)" id="approve-btn">
-                        <i class="fas fa-check-circle"></i> Approve
-                    </button>
-                    <button class="btn btn-danger" onclick="app.showConfirmationModal('Reject', app.currentRequestId)" id="reject-btn">
-                        <i class="fas fa-times-circle"></i> Reject
-                    </button>
-                    <button class="btn btn-outline" onclick="app.closeModal('details-modal')">
-                        <i class="fas fa-times"></i> Close
-                    </button>
+                <div class="modal-buttons" id="action-buttons">
+                    <!-- Buttons will be dynamically inserted here -->
                 </div>
             </div>
         </div>
@@ -731,7 +741,7 @@
         <!-- Confirmation Modal -->
         <div class="modal confirmation-modal" id="confirmation-modal" role="dialog" aria-labelledby="confirmation-title">
             <div class="modal-content">
-                <i class="fas fa-question-circle confirmation-icon text-primary"></i>
+                <i class="fas fa-question-circle confirmation-icon"></i>
                 <h3 class="confirmation-text" id="confirmation-text"></h3>
                 <div class="modal-buttons">
                     <button class="btn btn-primary" id="confirm-action-btn">
@@ -778,7 +788,7 @@
                     this.renderRequests(this.allRequests);
                 } catch (e) {
                     console.error('Error:', e);
-                    this.showAlert('Error loading requests wurld', 'error');
+                    this.showAlert('Error loading requests', 'error');
                     this.renderRequests([]);
                 }
             }
@@ -844,18 +854,35 @@
                     }
                     this.displayRequestDetails(request);
                     this.currentRequestId = requestId;
-
-                    // Disable Approve/Reject buttons if status is not Pending
-                    const approveBtn = document.getElementById('approve-btn');
-                    const rejectBtn = document.getElementById('reject-btn');
-                    const isPending = request.status === 'Pending';
-                    approveBtn.disabled = !isPending;
-                    rejectBtn.disabled = !isPending;
-                    approveBtn.style.opacity = isPending ? '1' : '0.5';
-                    rejectBtn.style.opacity = isPending ? '1' : '0.5';
+                    this.updateActionButtons(request.status);
                 } catch (e) {
                     console.error('Error:', e);
                     this.showAlert('Error loading request details', 'error');
+                }
+            }
+
+            updateActionButtons(status) {
+                const actionButtons = document.getElementById('action-buttons');
+                actionButtons.innerHTML = '';
+
+                if (status === 'Pending') {
+                    actionButtons.innerHTML = `
+                        <button class="btn btn-success" onclick="app.showConfirmationModal('Approved', app.currentRequestId)">
+                            <i class="fas fa-check-circle"></i> Approve
+                        </button>
+                        <button class="btn btn-danger" onclick="app.showConfirmationModal('Rejected', app.currentRequestId)">
+                            <i class="fas fa-times-circle"></i> Reject
+                        </button>
+                        <button class="btn btn-outline" onclick="app.closeModal('details-modal')">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    `;
+                } else {
+                    actionButtons.innerHTML = `
+                        <button class="btn btn-outline" onclick="app.closeModal('details-modal')">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    `;
                 }
             }
 
@@ -868,7 +895,16 @@
                 document.getElementById('detail-date').textContent = new Date(request.request_date).toLocaleDateString();
                 
                 const statusElement = document.getElementById('detail-status');
-                statusElement.innerHTML = `<span class="status-badge status-${request.status.toLowerCase()}">${request.status}</span>`;
+                let statusIcon = '';
+                if (request.status === 'Approved') {
+                    statusIcon = '<i class="fas fa-check-circle status-icon approved-icon"></i>';
+                } else if (request.status === 'Rejected') {
+                    statusIcon = '<i class="fas fa-times-circle status-icon rejected-icon"></i>';
+                } else {
+                    statusIcon = '<i class="fas fa-clock status-icon pending-icon"></i>';
+                }
+                
+                statusElement.innerHTML = `${statusIcon}<span class="status-badge status-${request.status.toLowerCase()}">${request.status}</span>`;
                 
                 document.getElementById('detail-reason').textContent = request.reason || 'Not specified';
 
@@ -901,8 +937,16 @@
                 this.currentAction = action;
                 this.currentRequestId = requestId;
                 document.getElementById('confirmation-text').textContent = 
-                    `Are you sure you want to ${action.toLowerCase()} this request?`;
+                    `Are you sure you want to ${action === 'Approved' ? 'approve' : 'reject'} this request?`;
                 const confirmBtn = document.getElementById('confirm-action-btn');
+                
+                // Update button color based on action
+                if (action === 'Approved') {
+                    confirmBtn.className = 'btn btn-success';
+                } else {
+                    confirmBtn.className = 'btn btn-danger';
+                }
+                
                 confirmBtn.onclick = () => this.updateRequestStatus(requestId, action);
                 document.getElementById('confirmation-modal').style.display = 'flex';
             }
