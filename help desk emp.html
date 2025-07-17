@@ -20,10 +20,10 @@
             --in-progress: #f8961e;
             --resolved: #4ad66d;
             --closed: #6c757d;
-            --critical: #dc3545;
-            --high: #9c27b0;
-            --medium: #ff9800;
-            --low: #4caf50;
+            --priority-critical: #dc3545;
+            --priority-high: #6f42c1;
+            --priority-medium: #ffc107;
+            --priority-low: #28a745;
         }
 
         * {
@@ -291,22 +291,23 @@
         }
 
         .priority-critical {
-            color: var(--critical);
+            color: var(--priority-critical);
             font-weight: 600;
+            animation: pulse 1.5s infinite;
         }
 
         .priority-high {
-            color: var(--high);
+            color: var(--priority-high);
             font-weight: 600;
         }
 
         .priority-medium {
-            color: var(--medium);
+            color: var(--priority-medium);
             font-weight: 600;
         }
 
         .priority-low {
-            color: var(--low);
+            color: var(--priority-low);
             font-weight: 600;
         }
 
@@ -360,7 +361,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -368,7 +369,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .modal.active {
@@ -378,15 +379,16 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+            max-width: 650px;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
             transform: translateY(20px);
             transition: all 0.3s ease;
             position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .modal.active .modal-content {
@@ -398,20 +400,22 @@
             top: 0;
             background: white;
             z-index: 10;
-            padding: 1.5rem;
-            border-bottom: 1px solid #eee;
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .modal-header h3 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 600;
         }
 
         .modal-close {
@@ -421,8 +425,8 @@
             cursor: pointer;
             color: var(--gray);
             transition: all 0.3s ease;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -432,105 +436,133 @@
         .modal-close:hover {
             color: var(--danger);
             background: rgba(247, 37, 133, 0.1);
+            transform: rotate(90deg);
         }
 
         .modal-body {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         .ticket-details {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .ticket-details:hover {
+            transform: translateY(-2px);
         }
 
         .ticket-details p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .ticket-details strong {
             color: var(--dark);
             display: inline-block;
-            min-width: 120px;
+            min-width: 130px;
+            font-weight: 600;
         }
 
         .ticket-description {
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 0.5rem;
-            line-height: 1.6;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 0.75rem;
+            line-height: 1.7;
+            border-left: 4px solid var(--primary);
+            font-size: 0.95rem;
         }
 
         .comments-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eee;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
         }
 
         .comments-section h4 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .comment {
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s ease;
+        }
+
+        .comment:hover {
+            transform: translateY(-2px);
         }
 
         .comment-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            align-items: center;
         }
 
         .comment-author {
             font-weight: 600;
             color: var(--dark);
+            font-size: 0.95rem;
         }
 
         .comment-date {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--gray);
         }
 
         .comment-text {
-            line-height: 1.5;
+            line-height: 1.6;
+            font-size: 0.9rem;
         }
 
         .no-comments {
             color: var(--gray);
             font-style: italic;
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .success-modal .modal-content {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
+            border-radius: 16px;
         }
 
         .success-icon {
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: var(--success);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             animation: bounce 1s;
         }
 
         .success-modal h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--success);
+            font-size: 1.8rem;
+            font-weight: 600;
         }
 
         .success-modal p {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             color: var(--gray);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
         @keyframes fadeIn {
@@ -921,6 +953,7 @@
                     </tr>
                 </thead>
                 <tbody id="myTicketsBody">
+                    <!-- Employee's tickets will be loaded here -->
                 </tbody>
             </table>
         </div>
@@ -952,12 +985,13 @@
             
             <div class="modal-body">
                 <div class="ticket-details">
-                    <p><strong>Name:</strong> <span id="modalEmpName"></span></p>
+                    <p><strong>Employee Name:</strong> <span id="modalEmpName"></span></p>
                     <p><strong>Email:</strong> <span id="modalEmpEmail"></span></p>
                     <p><strong>Status:</strong> <span id="modalStatus"></span></p>
                     <p><strong>Priority:</strong> <span id="modalPriority"></span></p>
                     <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
                     <p><strong>Issue Type:</strong> <span id="modalIssueType"></span></p>
+                    <p><strong>Created:</strong> <span id="modalCreated"></span></p>
                     <p><strong>Description:</strong></p>
                     <div class="ticket-description">
                         <span id="modalDescription"></span>
@@ -967,6 +1001,7 @@
                 <div class="comments-section">
                     <h4><i class="fas fa-comments"></i> Comments</h4>
                     <div id="commentsContainer">
+                        <!-- Comments will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -976,6 +1011,15 @@
     <script>
         let currentEmpId = null;
         let currentTicketId = null;
+
+        function generateTicketId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = 'ATS';
+            for (let i = 0; i < 5; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
 
         function validateEmpName(name) {
             if (name !== name.trim()) return false;
@@ -1025,15 +1069,6 @@
             return true;
         }
 
-        function generateTicketId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = 'ATS';
-            for (let i = 0; i < 5; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach(control => {
@@ -1067,8 +1102,10 @@
             try {
                 const empName = document.getElementById('empName').value.trim();
                 const description = document.getElementById('description').value.trim();
+                const ticketId = generateTicketId();
                 
                 const ticketData = {
+                    ticketId: ticketId,
                     empId: document.getElementById('empId').value.trim(),
                     empName: empName,
                     empEmail: document.getElementById('empEmail').value.trim(),
@@ -1084,14 +1121,14 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        ticket_id: ticketData.ticketId,
                         emp_id: ticketData.empId,
                         emp_name: ticketData.empName,
                         emp_email: ticketData.empEmail,
                         department: ticketData.department,
                         priority: ticketData.priority,
                         issue_type: ticketData.issueType,
-                        description: ticketData.description,
-                        ticket_id: generateTicketId()
+                        description: ticketData.description
                     })
                 });
                 
@@ -1168,9 +1205,9 @@
                     
                     let priorityClass = '';
                     if (ticket.priority === 'Critical') priorityClass = 'priority-critical';
-                    else if (ticket.priority === 'High') priorityClass = 'priority-high';
-                    else if (ticket.priority === 'Medium') priorityClass = 'priority-medium';
-                    else if (ticket.priority === 'Low') priorityClass = 'priority-low';
+                    if (ticket.priority === 'High') priorityClass = 'priority-high';
+                    if (ticket.priority === 'Medium') priorityClass = 'priority-medium';
+                    if (ticket.priority === 'Low') priorityClass = 'priority-low';
                     
                     let statusBadge = '';
                     if (ticket.status === 'Open') statusBadge = 'status-open';
@@ -1207,6 +1244,9 @@
                 const ticket = await response.json();
                 currentTicketId = ticket.ticket_id;
                 
+                const createdDate = new Date(ticket.created_at);
+                const formattedDate = createdDate.toLocaleDateString() + ' ' + createdDate.toLocaleTimeString();
+                
                 document.getElementById('modalTicketId').textContent = ticket.ticket_id;
                 document.getElementById('modalEmpName').textContent = ticket.emp_name;
                 document.getElementById('modalEmpEmail').textContent = ticket.emp_email;
@@ -1214,6 +1254,7 @@
                 document.getElementById('modalPriority').textContent = ticket.priority;
                 document.getElementById('modalDepartment').textContent = ticket.department;
                 document.getElementById('modalIssueType').textContent = ticket.issue_type;
+                document.getElementById('modalCreated').textContent = formattedDate;
                 document.getElementById('modalDescription').textContent = ticket.description;
                 
                 await loadComments(ticketId);
