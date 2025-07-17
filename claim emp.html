@@ -1498,7 +1498,7 @@
                     <p><strong>Description:</strong> ${claim.description}</p>
                     <p><strong>Status:</strong> ${claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}</p>
                     <p><strong>Documents:</strong></p>
-                    ${documents.map(doc => `<p><a href="http://44.223.23.145:3407/uploads/${doc.file_path}" target="_blank">${doc.file_name}</a></p>`).join('')}
+                    ${documents.map(doc => doc.url ? `<p><a href="http://44.223.23.145:3407${doc.url}" target="_blank">${doc.file_name}</a></p>` : `<p>${doc.file_name} (File not available)</p>`).join('')}
                 `;
 
                 document.getElementById('detailsModal').style.display = 'flex';
