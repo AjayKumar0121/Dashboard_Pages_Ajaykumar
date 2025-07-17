@@ -1060,10 +1060,10 @@
                         <p class="detail-label">Amount: <span style="color: black;">₹${Math.floor(claim.amount).toLocaleString('en-IN')}</span></p>
                     </div>
                     <div class="detail-row">
-                        <p class="detail-label">Description: <span style="color: black;">${claim.description}</span></p>
+                        <p class="detail-label">Status: <span style="color: black;">${claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}</span></p>
                     </div>
                     <div class="detail-row">
-                        <p class="detail-label">Status: <span style="color: black;">${claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}</span></p>
+                        <p class="detail-label">Description: <span style="color: black;">${claim.description}</span></p>
                     </div>
                     <div class="detail-row">
                         <p class="detail-label">Documents:</p>
