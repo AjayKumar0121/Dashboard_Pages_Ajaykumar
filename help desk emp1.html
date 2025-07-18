@@ -450,7 +450,7 @@
         .ticket-details strong {
             color: var(--dark);
             display: inline-block;
-            min-width: 120px;
+            min-width: 150px;
         }
 
         .ticket-description {
@@ -832,7 +832,7 @@
                     <select id="department" class="form-control" required>
                         <option value="">Select Department</option>
                         <option value="IT">IT</option>
-                        <option value="HR">Human Resources</option>
+                        <option value="Human Resources">Human Resources</option>
                         <option value="Finance">Finance</option>
                         <option value="Operations">Operations</option>
                         <option value="Marketing">Marketing</option>
@@ -1021,8 +1021,8 @@
                 }
             } else if (!field.checkValidity()) {
                 field.classList.add('is-invalid');
-                    feedback.style.display = 'block';
-                    return false;
+                feedback.style.display = 'block';
+                return false;
             }
             
             field.classList.remove('is-invalid');
@@ -1083,6 +1083,8 @@
                     description: description
                 };
                 
+                console.log('Submitting ticket data:', ticketData); // Debug log
+                
                 const response = await fetch('http://44.223.23.145:3426/api/tickets', {
                     method: 'POST',
                     headers: {
@@ -1130,7 +1132,7 @@
                     control.nextElementSibling.style.display = 'none';
                 });
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error submitting ticket:', error);
                 alert('Error submitting ticket: ' + error.message);
             }
         });
@@ -1280,5 +1282,6 @@
             currentTicketId = null;
         }
     </script>
+   
 </body>
 </html>
