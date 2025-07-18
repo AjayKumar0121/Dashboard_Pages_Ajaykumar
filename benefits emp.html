@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -235,10 +234,10 @@
             flex-wrap: wrap;
         }
 
-        .status-info .status-badge {
+        .status-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 1rem;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
@@ -246,22 +245,22 @@
         }
 
         .status-pending {
-            background-color: rgba(241, 196, 15, 0.2);
-            color: var(--warning);
+            background-color: rgba(253, 203, 110, 0.2);
+            color: #b8860b;
         }
 
         .status-approved {
-            background-color: rgba(56, 161, 105, 0.1);
-            color: var(--success);
+            background-color: rgba(0, 184, 148, 0.2);
+            color: #00875a;
         }
 
         .status-rejected {
-            background-color: rgba(229, 62, 62, 0.1);
-            color: var(--danger);
+            background-color: rgba(214, 48, 49, 0.2);
+            color: #c0392b;
         }
 
         .status-ongoing {
-            background-color: rgba(76, 104, 215, 0.1);
+            background-color: rgba(76, 104, 215, 0.2);
             color: var(--secondary);
         }
 
@@ -756,8 +755,8 @@
                     
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" class="form-control" placeholder="Employee Name" minlength="3" maxlength="50" required>
-                        <div class="error-message" id="name-error">Please enter a valid name min 3-50 characters (letters and spaces only)</div>
+                        <input type="text" id="name" class="form-control" placeholder="Employee Name" required>
+                        <div class="error-message" id="name-error">Please enter a valid name (letters and spaces only)</div>
                     </div>
                     
                     <div class="form-group">
@@ -863,32 +862,32 @@
             
             <div class="modal-info">
                 <label>Employee Name</label>
-                <div id="detail-name" class="modal-info-content">-</div>
+                <span id="detail-name">-</span>
             </div>
             
             <div class="modal-info">
                 <label>Employee ID</label>
-                <div id="detail-emp-id" class="modal-info-content">-</div>
+                <span id="detail-emp-id">-</span>
             </div>
             
             <div class="modal-info">
                 <label>Benefit Program</label>
-                <div id="detail-program" class="modal-info-content">-</div>
+                <span id="detail-program">-</span>
             </div>
             
             <div class="modal-info">
                 <label>Request Date</label>
-                <div id="detail-date" class="modal-info-content">-</div>
+                <span id="detail-date">-</span>
             </div>
             
             <div class="modal-info">
                 <label>Status</label>
-                <div id="detail-status" class="modal-info-content status-badge">-</div>
+                <span id="detail-status" class="status-badge">-</span>
             </div>
             
             <div class="modal-info">
                 <label>Reason</label>
-                <div id="detail-reason" class="modal-info-content">Not specified</div>
+                <span id="detail-reason">Not specified</span>
             </div>
             
             <div id="loan-details" style="display: none;">
@@ -896,17 +895,17 @@
                 
                 <div class="modal-info">
                     <label>Loan Amount</label>
-                    <div id="detail-loan-amount" class="modal-info-content">-</div>
+                    <span id="detail-loan-amount">-</span>
                 </div>
                 
                 <div class="modal-info">
                     <label>Loan Purpose</label>
-                    <div id="detail-loan-purpose" class="modal-info-content">-</div>
+                    <span id="detail-loan-purpose">-</span>
                 </div>
                 
                 <div class="modal-info">
                     <label>Documents</label>
-                    <div id="detail-loan-docs" class="modal-info-content">No documents uploaded</div>
+                    <span id="detail-loan-docs">No documents uploaded</span>
                 </div>
             </div>
             
@@ -995,12 +994,10 @@
                 });
                 
                 this.name.addEventListener('input', () => {
-    const value = this.name.value.trim();
-    const isValid = /^[A-Za-z\s]{3,50}$/.test(value); // At least 3 characters, only letters/spaces
-    this.toggleError('name-error', !isValid);
-    this.name.setCustomValidity(isValid ? '' : 'Name must be at least 3 letters and contain only alphabets and spaces');
-});
-
+                    const isValid = /^[A-Za-z\s]+$/.test(this.name.value.trim());
+                    this.toggleError('name-error', !isValid);
+                    this.name.setCustomValidity(isValid ? '' : 'Invalid name format');
+                });
                 
                 this.email.addEventListener('input', () => {
                     const isValid = /^[a-zA-Z0-9._-]{3,50}@astrolitetech\.com$/.test(this.email.value.trim());
@@ -1180,7 +1177,7 @@
                 
                 const statusElement = document.getElementById('detail-status');
                 statusElement.textContent = request.status;
-                statusElement.className = `modal-info-content status-badge status-${request.status.toLowerCase()}`;
+                statusElement.className = `status-badge status-${request.status.toLowerCase()}`;
                 
                 document.getElementById('detail-reason').textContent = request.reason || 'Not specified';
                 
