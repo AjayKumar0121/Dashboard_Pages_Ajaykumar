@@ -342,12 +342,52 @@
             background-color: #4f46e5;
             color: white;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-profile-initials {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: #4f46e5;
         }
 
         .modal-header h2 {
             font-size: 1.5rem;
+            margin: 0;
         }
 
         .close-modal {
@@ -451,34 +491,6 @@
             border-top: 1px solid #e5e7eb;
             text-align: right;
         }
-
-        .modal-profile-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 1rem;
-            overflow: hidden;
-            background-color: #4f46e5;
-            position: relative;
-        }
-
-        .modal-profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-profile-initials {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -535,15 +547,17 @@
     <div class="modal" id="employeeModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalEmployeeName"></h2>
+                <div class="modal-header-profile">
+                    <div class="modal-profile-image" id="modalProfileImage">
+                        <div class="modal-profile-initials" id="modalProfileInitials"></div>
+                    </div>
+                    <h2 id="modalEmployeeName"></h2>
+                </div>
                 <button class="close-modal" id="closeModal">×</button>
             </div>
 
             <div class="section-grid">
                 <div class="modal-section">
-                    <div class="modal-profile-image" id="modalProfileImage">
-                        <div class="modal-profile-initials" id="modalProfileInitials"></div>
-                    </div>
                     <h3>Personal Information</h3>
                     <div class="info-item">
                         <strong>Full Name</strong>
@@ -895,12 +909,13 @@
                         <div class="profile-image">
                             <img src="${employee.emp_profile_pic_url}" alt="${employee.emp_name}" 
                                  onerror="this.style.display='none';">
+                            <div class="profile-initials">${getInitials(employee.emp_name)}</div>
                         </div>
                     `;
                 } else {
                     profileImageHtml = `
                         <div class="profile-image">
-                            <img src="default-profile.png" alt="No Image" style="opacity: 0.3;">
+                            <div class="profile-initials">${getInitials(employee.emp_name)}</div>
                         </div>
                     `;
                 }
@@ -965,6 +980,7 @@
                 if (element) element.textContent = text || 'N/A';
             }
 
+            // Update modal header profile image
             const modalProfileImage = document.getElementById('modalProfileImage');
             const modalProfileInitials = document.getElementById('modalProfileInitials');
 
@@ -1276,63 +1292,20 @@
                     ['Grade:', employee.ssc_grade || 'N/A']
                 ]);
 
-                const documents = [
-                    ['Profile Picture', employee.emp_profile_pic_url ? 'Available' : 'Not Available'],
-                    ['SSC Certificate', employee.emp_ssc_doc_url ? 'Available' : 'Not Available'],
-                    ['Intermediate/Diploma', employee.emp_inter_doc_url ? 'Available' : 'Not Available'],
-                    ['Graduation Certificate', employee.emp_grad_doc_url ? 'Available' : 'Not Available'],
-                    ['Resume', employee.resume_url ? 'Available' : 'Not Available'],
-                    ['ID Proof', employee.id_proof_url ? 'Available' : 'Not Available'],
-                    ['Signed Document', employee.signed_document_url ? 'Available' : 'Not Available']
-                ];
+                createFullWidthTable('Emergency Contact', [
+                    ['Name:', employee.primary_contact_name || 'N/A'],
+                    ['Relationship:', employee.primary_contact_relationship || 'N/A'],
+                    ['Phone:', employee.primary_contact_phone || 'N/A'],
+                    ['Email:', employee.primary_contact_email || 'N/A']
+                ]);
 
-                if (employee.emp_experience_status === 'Experienced') {
-                    documents.push(
-                        ['Offer Letter', employee.emp_offer_letter_url ? 'Available' : 'Not Available'],
-                        ['Relieving Letter', employee.emp_relieving_letter_url ? 'Available' : 'Not Available'],
-                        ['Experience Certificate', employee.emp_experience_certificate_url ? 'Available' : 'Not Available'],
-                        ['Salary Slip', employee.emp_salary_slip_url ? 'Available' : 'Not Available']
-                    );
-                }
+                createFullWidthTable('Other Details', [
+                    ['UAN Number:', employee.uan_number || 'N/A'],
+                    ['PF Number:', employee.pf_number || 'N/A'],
+                    ['Terms Accepted:', employee.emp_terms_accepted ? 'Yes' : 'No']
+                ]);
 
-                doc.setFontSize(12);
-                doc.setFillColor(...blueColor);
-                doc.setTextColor(255, 255, 255);
-                doc.rect(14, startY - 5, 182, 8, 'F');
-                doc.text('Documents', 105, startY, { align: 'center' });
-
-                doc.autoTable({
-                    startY: startY + 5,
-                    margin: { left: 14, right: 14 },
-                    tableWidth: 182,
-                    body: documents,
-                    styles: bodyStyle,
-                    headStyles: headerStyle,
-                    columnStyles: {
-                        0: { fontStyle: 'bold', cellWidth: 80 },
-                        1: { halign: 'center', cellWidth: 'auto' }
-                    },
-                    theme: 'grid',
-                    willDrawCell: (data) => {
-                        if (data.section === 'body' && data.column.index === 1) {
-                            if (data.cell.raw === 'Available') {
-                                data.cell.styles.fillColor = [220, 252, 231];
-                                data.cell.styles.textColor = [22, 101, 52];
-                            } else {
-                                data.cell.styles.fillColor = [254, 226, 226];
-                                data.cell.styles.textColor = [153, 27, 27];
-                            }
-                        }
-                    }
-                });
-
-                const footerY = doc.internal.pageSize.height - 15;
-                doc.setFontSize(8);
-                doc.setTextColor(150, 150, 150);
-                doc.text('Generated by Astrolite Tech Solutions', 105, footerY, { align: 'center' });
-                doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, footerY + 5, { align: 'center' });
-
-                doc.save(`Employee_${employee.emp_name.replace(/\s+/g, '_')}_Profile.pdf`);
+                doc.save(`${employee.emp_name.replace(/\s+/g, '_')}_profile.pdf`);
             });
         }
     </script>
