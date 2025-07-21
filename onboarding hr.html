@@ -179,6 +179,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .profile-initials {
@@ -190,6 +191,11 @@
             justify-content: center;
             background-color: #4f46e5;
             color: white;
+            z-index: 1;
+        }
+
+        .profile-image img.loaded {
+            z-index: 2;
         }
 
         .employee-info {
@@ -372,6 +378,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+            z-index: 2;
         }
 
         .modal-profile-initials {
@@ -383,6 +391,7 @@
             justify-content: center;
             background-color: white;
             color: #4f46e5;
+            z-index: 1;
         }
 
         .modal-header h2 {
@@ -903,22 +912,13 @@
                     experienceStatus = `<span class="experience-tag fresher">Fresher</span>`;
                 }
 
-                let profileImageHtml = '';
-                if (employee.emp_profile_pic_url) {
-                    profileImageHtml = `
-                        <div class="profile-image">
-                            <img src="${employee.emp_profile_pic_url}" alt="${employee.emp_name}" 
-                                 onerror="this.style.display='none';">
-                            <div class="profile-initials">${getInitials(employee.emp_name)}</div>
-                        </div>
-                    `;
-                } else {
-                    profileImageHtml = `
-                        <div class="profile-image">
-                            <div class="profile-initials">${getInitials(employee.emp_name)}</div>
-                        </div>
-                    `;
-                }
+                const initials = getInitials(employee.emp_name);
+                let profileImageHtml = `
+                    <div class="profile-image">
+                        <div class="profile-initials">${initials}</div>
+                        ${employee.emp_profile_pic_url ? `<img src="${employee.emp_profile_pic_url}" alt="${employee.emp_name}" class="profile-img">` : ''}
+                    </div>
+                `;
 
                 card.innerHTML = `
                     <div class="card-header">
@@ -958,6 +958,23 @@
                 `;
 
                 employeeGrid.appendChild(card);
+
+                // Add event listener for image load/error
+                if (employee.emp_profile_pic_url) {
+                    const img = card.querySelector('.profile-img');
+                    if (img) {
+                        img.addEventListener('load', () => {
+                            img.classList.add('loaded');
+                            const initialsElement = card.querySelector('.profile-initials');
+                            if (initialsElement) initialsElement.style.display = 'none';
+                        });
+                        img.addEventListener('error', () => {
+                            img.style.display = 'none';
+                            const initialsElement = card.querySelector('.profile-initials');
+                            if (initialsElement) initialsElement.style.display = 'flex';
+                        });
+                    }
+                }
             });
 
             document.querySelectorAll('.view-details').forEach(button => {
@@ -986,23 +1003,27 @@
 
             if (modalProfileImage) {
                 modalProfileImage.innerHTML = '';
-            }
-
-            if (modalProfileInitials) {
-                modalProfileInitials.textContent = getInitials(employee.emp_name);
-                modalProfileInitials.style.display = 'flex';
+                const initials = getInitials(employee.emp_name);
+                modalProfileImage.innerHTML = `
+                    <div class="modal-profile-initials">${initials}</div>
+                    ${employee.emp_profile_pic_url ? `<img src="${employee.emp_profile_pic_url}" alt="${employee.emp_name}" class="profile-img">` : ''}
+                `;
             }
 
             if (employee.emp_profile_pic_url && modalProfileImage) {
-                const img = document.createElement('img');
-                img.src = employee.emp_profile_pic_url;
-                img.alt = employee.emp_name;
-                img.onerror = () => {
-                    img.style.display = 'none';
-                    if (modalProfileInitials) modalProfileInitials.style.display = 'flex';
-                };
-                modalProfileImage.appendChild(img);
-                if (modalProfileInitials) modalProfileInitials.style.display = 'none';
+                const img = modalProfileImage.querySelector('.profile-img');
+                if (img) {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                        const initialsElement = modalProfileImage.querySelector('.modal-profile-initials');
+                        if (initialsElement) initialsElement.style.display = 'none';
+                    });
+                    img.addEventListener('error', () => {
+                        img.style.display = 'none';
+                        const initialsElement = modalProfileImage.querySelector('.modal-profile-initials');
+                        if (initialsElement) initialsElement.style.display = 'flex';
+                    });
+                }
             }
 
             setTextContent('modalEmployeeName', employee.emp_name);
