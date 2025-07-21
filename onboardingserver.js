@@ -8,17 +8,17 @@ const fs = require("fs");
 const mime = require('mime-types');
 
 const app = express();
-const PORT = process.env.PORT || 3408;
+const PORT = process.env.PORT || 3420;
 
 // CORS Setup
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
-    "http://44.223.23.14:8029",
-    "http://44.223.23.14:3408",
+    "http://44.223.23.145:8039",
+    "http://44.223.23.145:3420",
     "http://127.0.0.1:5500",
     "http://localhost:5500",
-    "http://44.223.23.14:8030"
+    "http://44.223.23.145:8040"
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -29,16 +29,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // File upload setup
-const uploadDir = path.join(__dirname, "uploads");
+const uploadDir = path.join(__dirname, "Uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
-app.use('/uploads', express.static(uploadDir));
+app.use('/Uploads', express.static(uploadDir));
 
 // PostgreSQL Pool Configuration
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'postgres-db',
+  host: process.env.DB_HOST || 'db',
   database: process.env.DB_NAME || 'onboarding',
   password: process.env.DB_PASSWORD || 'admin123',
   port: process.env.DB_PORT || 5432,
@@ -70,8 +70,8 @@ const connectToDatabase = async () => {
         emp_marital_status VARCHAR(20),
         emp_dob DATE,
         emp_mobile VARCHAR(20),
-        emp_aadhaar VARCHAR(12),
-        emp_pan VARCHAR(10),
+        emp_aadhaar VARCHAR(50),
+        emp_pan VARCHAR(50),
         emp_address TEXT,
         emp_city VARCHAR(100),
         emp_state VARCHAR(100),
@@ -155,12 +155,12 @@ const connectToDatabase = async () => {
         END;
 
         BEGIN
-          ALTER TABLE ajay_table ADD COLUMN IF NOT EXISTS emp_aadhaar VARCHAR(12);
+          ALTER TABLE ajay_table ADD COLUMN IF NOT EXISTS emp_aadhaar VARCHAR(50);
         EXCEPTION WHEN duplicate_column THEN RAISE NOTICE 'column emp_aadhaar already exists';
         END;
 
         BEGIN
-          ALTER TABLE ajay_table ADD COLUMN IF NOT EXISTS emp_pan VARCHAR(10);
+          ALTER TABLE ajay_table ADD COLUMN IF NOT EXISTS emp_pan VARCHAR(50);
         EXCEPTION WHEN duplicate_column THEN RAISE NOTICE 'column emp_pan already exists';
         END;
 
@@ -386,15 +386,6 @@ const connectToDatabase = async () => {
       END $$;
     `);
 
-    // Add unique constraint for emp_aadhaar
-    await client.query(`
-      DO $$
-      BEGIN
-        ALTER TABLE ajay_table ADD CONSTRAINT ajay_table_emp_aadhaar_key UNIQUE (emp_aadhaar);
-      EXCEPTION WHEN duplicate_object THEN RAISE NOTICE 'constraint ajay_table_emp_aadhaar_key already exists';
-      END $$;
-    `);
-
     console.log("Table setup completed successfully");
   } catch (err) {
     console.error("DB connection error:", err);
@@ -416,26 +407,20 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    const fieldRules = {
-      emp_profile_pic: ['image/jpeg', 'image/png'],
-      emp_salary_slip: ['application/pdf'],
-      emp_offer_letter: ['application/pdf'],
-      emp_relieving_letter: ['application/pdf'],
-      emp_experience_certificate: ['application/pdf'],
-      emp_ssc_doc: ['application/pdf'],
-      emp_inter_doc: ['application/pdf'],
-      emp_grad_doc: ['application/pdf'],
-      resume: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-      id_proof: ['application/pdf', 'image/jpeg', 'image/png'],
-      signed_document: ['application/pdf', 'image/jpeg', 'image/png']
-    };
-    const allowedTypes = fieldRules[file.fieldname] || [];
+    const allowedTypes = [
+      'application/pdf', 'image/jpeg', 'image/png',
+      'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/plain', 'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    ];
     if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error(`Invalid file type for ${file.fieldname}: ${file.mimetype}`));
+      return cb(new Error(`Invalid file type: ${file.mimetype}`));
     }
     cb(null, true);
   },
-  limits: { fileSize: 2 * 1024 * 1024 } // 2MB to match frontend
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 // File Cleanup
@@ -479,45 +464,27 @@ app.post("/save-employee", upload.fields([
 ]), async (req, res) => {
   const client = await pool.connect();
   try {
-    // Server-side validation for required fields
-    const requiredFields = ['emp_name', 'emp_email', 'emp_mobile', 'emp_aadhaar', 'emp_pan', 'emp_job_role', 'emp_department'];
-    for (const field of requiredFields) {
-      if (!req.body[field]) {
-        cleanupFiles(req.files);
-        return res.status(400).json({ error: `Missing required field: ${field}` });
-      }
-    }
-
-    // Validate Aadhaar and PAN
-    const aadhaarRegex = /^[1-9]\d{11}$/;
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
-    req.body.emp_aadhaar = req.body.emp_aadhaar.replace(/\s/g, ''); // Remove spaces from Aadhaar
-    if (!aadhaarRegex.test(req.body.emp_aadhaar)) {
-      cleanupFiles(req.files);
-      return res.status(400).json({ error: "Invalid Aadhaar number. Must be 12 digits starting with 1-9." });
-    }
-    if (!panRegex.test(req.body.emp_pan)) {
-      cleanupFiles(req.files);
-      return res.status(400).json({ error: "Invalid PAN number. Must be 10 alphanumeric characters (e.g., ABCDE1234F)." });
-    }
-
     const result = await client.query(`
       INSERT INTO ajay_table (
         emp_name, emp_email, emp_gender, emp_marital_status, emp_dob, emp_mobile,
         emp_aadhaar, emp_pan, emp_address, emp_city, emp_state, emp_zipcode,
-        emp_bank, emp_account, emp_ifsc, emp_bank_branch, emp_job_role, emp_department,
-        emp_experience_status, emp_company_name, emp_years_of_experience, emp_joining_date,
-        emp_profile_pic, emp_salary_slip, emp_offer_letter, emp_relieving_letter,
-        emp_experience_certificate, emp_ssc_doc, ssc_school, ssc_year, ssc_grade,
-        emp_inter_doc, inter_college, inter_year, inter_grade, inter_branch,
-        emp_grad_doc, grad_college, grad_year, grad_grade, grad_degree, grad_branch,
-        resume, id_proof, signed_document, primary_contact_name, primary_contact_relationship,
-        primary_contact_phone, primary_contact_email, uan_number, pf_number, emp_terms_accepted
+        emp_bank, emp_account, emp_ifsc, emp_bank_branch, emp_job_role,
+        emp_department, emp_experience_status, emp_company_name,
+        emp_years_of_experience, emp_joining_date, emp_profile_pic,
+        emp_salary_slip, emp_offer_letter, emp_relieving_letter,
+        emp_experience_certificate, emp_ssc_doc, ssc_school, ssc_year,
+        ssc_grade, emp_inter_doc, inter_college, inter_year, inter_grade,
+        inter_branch, emp_grad_doc, grad_college, grad_year, grad_grade,
+        grad_degree, grad_branch, resume, id_proof, signed_document,
+        primary_contact_name, primary_contact_relationship, primary_contact_phone,
+        primary_contact_email, uan_number, pf_number, emp_terms_accepted
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
-        $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
-        $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44,
-        $45, $46, $47, $48, $49, $50, $51, $52
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+        $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
+        $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
+        $31, $32, $33, $34, $35, $36, $37, $38, $39, $40,
+        $41, $42, $43, $44, $45, $46, $47, $48, $49, $50,
+        $51, $52
       )
       RETURNING id
     `, [
@@ -575,16 +542,12 @@ app.post("/save-employee", upload.fields([
       req.body.emp_terms_accepted || false
     ]);
 
-    console.log(`Employee created with ID: ${result.rows[0].id}, Email: ${req.body.emp_email}`);
     res.status(201).json({ success: true, employeeId: result.rows[0].id });
   } catch (err) {
     cleanupFiles(req.files);
     console.error("Save employee error:", err);
     if (err.code === '23505' && err.constraint === 'ajay_table_emp_email_key') {
       return res.status(400).json({ error: "Email already exists" });
-    }
-    if (err.code === '23505' && err.constraint === 'ajay_table_emp_aadhaar_key') {
-      return res.status(400).json({ error: "Aadhaar number already exists" });
     }
     res.status(500).json({ error: "Database error" });
   } finally {
@@ -609,7 +572,7 @@ app.get("/employees", async (req, res) => {
 
       documentFields.forEach(field => {
         if (employeeData[field]) {
-          employeeData[`${field}_url`] = `${req.protocol}://${req.get('host')}/uploads/${employeeData[field]}`;
+          employeeData[`${field}_url`] = `${req.protocol}://${req.get('host')}/Uploads/${employeeData[field]}`;
         }
       });
 
@@ -648,7 +611,7 @@ app.get("/employees/:id", async (req, res) => {
 
     documentFields.forEach(field => {
       if (employeeData[field]) {
-        employeeData[`${field}_url`] = `${req.protocol}://${req.get('host')}/uploads/${employeeData[field]}`;
+        employeeData[`${field}_url`] = `${req.protocol}://${req.get('host')}/Uploads/${employeeData[field]}`;
       }
     });
 
@@ -701,7 +664,7 @@ app.post("/get-documents", async (req, res) => {
         const filePath = path.join(uploadDir, employee[field]);
         if (fs.existsSync(filePath)) {
           documents[field] = {
-            url: `${req.protocol}://${req.get('host')}/uploads/${employee[field]}`,
+            url: `${req.protocol}://${req.get('host')}/Uploads/${employee[field]}`,
             name: name,
             filename: employee[field]
           };
@@ -753,8 +716,8 @@ app.get("/pool-status", async (req, res) => {
 });
 
 // Start server
-app.listen(3408, '0.0.0.0', () => {
-  console.log("Server running on port 3408");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 // Graceful shutdown
