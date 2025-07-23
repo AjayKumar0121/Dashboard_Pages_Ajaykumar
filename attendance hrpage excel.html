@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Attendance Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --bright-blue: #00b4d8;
+            --bright-green: #38b000;
+            --bright-orange: #ff7b00;
+            --bright-purple: #7209b7;
+            --status-absent-bg: rgba(247, 37, 133, 0.1);
+            --status-absent: #f72585;
+            --status-half-day-bg: rgba(255, 123, 0, 0.1);
+            --status-half-day: #ff7b00;
+            --status-full-day-bg: rgba(56, 176, 0, 0.1);
+            --status-full-day: #38b000;
+            --status-invalid-bg: rgba(108, 117, 125, 0.1);
+            --status-invalid: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: var(--light);
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            height: 140px;
+            background: linear-gradient(rgb(10, 10, 255),rgb(203, 11, 242));
+            color: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-weight: 300;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            max-width: 700px;
+            opacity: 0.9;
+            z-index: 2;
+        }
+
+        .banner-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: moveCircles 10s infinite linear;
+        }
+
+        @keyframes moveCircles {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-50%); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        .circle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+
+        .circle:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 12s;
+        }
+
+        .circle:nth-child(3) {
+            top: 80%;
+            left: 40%;
+            animation-duration: 15s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .attendance-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .attendance-card {
+            background: #1e1e1e;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .attendance-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--bright-blue), var(--bright-green));
+            transition: all 0.3s ease;
+        }
+
+        .attendance-card:hover::after {
+            width: 8px;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .dark-mode .filter-label {
+            color: var(--light);
+        }
+
+        .filter-input, .filter-select {
+            padding: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .dark-mode .filter-input, .dark-mode .filter-select {
+            background-color: #2d2d2d;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .download-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--bright-blue), var(--bright-purple));
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .attendance-table {
+            background: #1e1e1e;
+        }
+
+        .attendance-table th, .attendance-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .attendance-table th,
+        .dark-mode .attendance-table td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .attendance-table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .attendance-table tr:hover {
+            background-color: rgba(0, 180, 216, 0.05);
+        }
+
+        .dark-mode .attendance-table tr:hover {
+            background-color: rgba(0, 180, 216, 0.1);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-pending {
+            background-color: var(--status-half-day-bg);
+            color: var(--status-half-day);
+        }
+
+        .status-approved {
+            background-color: var(--status-full-day-bg);
+            color: var(--status-full-day);
+        }
+
+        .status-rejected {
+            background-color: var(--status-absent-bg);
+            color: var(--status-absent);
+        }
+
+        .status-in-progress {
+            background-color: rgba(72, 149, 239, 0.1);
+            color: var(--bright-blue);
+        }
+
+        .status-absent {
+            background-color: var(--status-absent-bg);
+            color: var(--status-absent);
+        }
+
+        .status-half-day {
+            background-color: var(--status-half-day-bg);
+            color: var(--status-half-day);
+        }
+
+        .status-full-day {
+            background-color: var(--status-full-day-bg);
+            color: var(--status-full-day);
+        }
+
+        .status-invalid {
+            background-color: var(--status-invalid-bg);
+            color: var(--status-invalid);
+        }
+
+        .no-records {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--bright-blue), var(--bright-purple));
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            align-items: center;
+            z-index: 1100;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, var(--bright-green), var(--bright-blue));
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, var(--danger), #b5179e);
+        }
+
+        .toast i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .attendance-table th, .attendance-table td {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+
+            .attendance-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .attendance-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner-background">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <h1>HR Attendance Dashboard</h1>
+        <p>Manage and review employee attendance records</p>
+    </header>
+
+    <div class="container">
+        <div class="attendance-card">
+            <div class="filter-group">
+                <label for="dateRangeStart" class="filter-label">From Date:</label>
+                <input type="date" id="dateRangeStart" class="filter-input">
+                <label for="dateRangeEnd" class="filter-label">To Date:</label>
+                <input type="date" id="dateRangeEnd" class="filter-input">
+                <label for="statusFilter" class="filter-label">Status:</label>
+                <select id="statusFilter" class="filter-select">
+                    <option value="">All</option>
+                    <option value="absent">Absent</option>
+                    <option value="half-day">Half Day</option>
+                    <option value="full-day">Full Day</option>
+                    <option value="invalid">Invalid</option>
+                </select>
+                <label for="empIdSearch" class="filter-label">Search Employee ID:</label>
+                <input type="text" id="empIdSearch" class="filter-input" placeholder="Enter Employee ID">
+                <button class="download-btn" onclick="downloadExcel()">Download Excel</button>
+            </div>
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Punch In</th>
+                        <th>Punch Out</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceTableBody">
+                    <tr>
+                        <td colspan="4" class="no-records">Loading attendance records...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <i id="toastIcon"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // DOM Elements
+        const dateRangeStart = document.getElementById('dateRangeStart');
+        const dateRangeEnd = document.getElementById('dateRangeEnd');
+        const statusFilter = document.getElementById('statusFilter');
+        const empIdSearch = document.getElementById('empIdSearch');
+        const attendanceTableBody = document.getElementById('attendanceTableBody');
+        const toast = document.getElementById('toast');
+        const toastIcon = document.getElementById('toastIcon');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // Current date for default filter
+        const today = new Date().toISOString().split('T')[0];
+        let startDate = today;
+        let endDate = today;
+        let selectedStatus = '';
+        let searchEmpId = '';
+
+        // Initialize the page
+        function initPage() {
+            dateRangeStart.value = today;
+            dateRangeEnd.value = today;
+            fetchAttendanceRecords();
+            dateRangeStart.addEventListener('change', () => {
+                startDate = dateRangeStart.value;
+                fetchAttendanceRecords();
+            });
+            dateRangeEnd.addEventListener('change', () => {
+                endDate = dateRangeEnd.value;
+                fetchAttendanceRecords();
+            });
+            statusFilter.addEventListener('change', () => {
+                selectedStatus = statusFilter.value;
+                fetchAttendanceRecords();
+            });
+            empIdSearch.addEventListener('input', () => {
+                searchEmpId = empIdSearch.value.trim();
+                fetchAttendanceRecords();
+            });
+        }
+
+        // Fetch all attendance records
+        async function fetchAttendanceRecords() {
+            try {
+                let url = `http://44.223.23.145:3427/api/attendance/all`;
+                const params = new URLSearchParams();
+                if (startDate) params.append('start_date', startDate);
+                if (endDate) params.append('end_date', endDate);
+                if (selectedStatus) params.append('status', selectedStatus);
+                if (searchEmpId) params.append('emp_id', searchEmpId);
+                if (params.toString()) url += `?${params.toString()}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Failed to fetch attendance records');
+                renderAttendanceTable(data);
+            } catch (err) {
+                showToast(`Error: ${err.message}`, 'error');
+                attendanceTableBody.innerHTML = '<tr><td colspan="4" class="no-records">Failed to load records</td></tr>';
+            }
+        }
+
+        // Format date and time
+        function formatDateTime(isoString) {
+            if (!isoString) return 'Not Available';
+            const date = new Date(isoString);
+            return date.toLocaleString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                dateStyle: 'short',
+                timeStyle: 'short'
+            });
+        }
+
+        // Calculate attendance status based on hours
+        function calculateAttendanceStatus(punchIn, punchOut) {
+            if (!punchIn || !punchOut) return 'invalid';
+            const inTime = new Date(punchIn);
+            const outTime = new Date(punchOut);
+            const hours = (outTime - inTime) / (1000 * 60 * 60);
+            
+            if (hours < 4) return 'absent';
+            if (hours >= 4 && hours < 8) return 'half-day';
+            return 'full-day';
+        }
+
+        // Render attendance table
+        function renderAttendanceTable(records) {
+            if (records.length === 0) {
+                attendanceTableBody.innerHTML = '<tr><td colspan="4" class="no-records">No attendance records found for selected filters</td></tr>';
+                return;
+            }
+
+            attendanceTableBody.innerHTML = records.map(record => {
+                const status = record.status === 'invalid' ? 'invalid' : calculateAttendanceStatus(record.punch_in, record.punch_out);
+                
+                return `
+                    <tr>
+                        <td>${record.emp_id}</td>
+                        <td>${formatDateTime(record.punch_in)}</td>
+                        <td>${record.punch_out ? formatDateTime(record.punch_out) : record.status === 'invalid' ? 'Auto-Punched Out (Missing)' : 'Not Punched Out'}</td>
+                        <td><span class="status-badge status-${status.toLowerCase().replace(' ', '-')}">${status.replace('-', ' ')}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Download Excel with colors
+        async function downloadExcel() {
+            try {
+                let url = `http://44.223.23.145:3427/api/attendance/all`;
+                const params = new URLSearchParams();
+                if (startDate) params.append('start_date', startDate);
+                if (endDate) params.append('end_date', endDate);
+                if (searchEmpId) params.append('emp_id', searchEmpId);
+                if (params.toString()) url += `?${params.toString()}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Failed to fetch attendance records');
+
+                // Prepare data for Excel
+                const excelData = data.map(record => ({
+                    'Employee ID': record.emp_id,
+                    'Punch In': formatDateTime(record.punch_in),
+                    'Punch Out': record.punch_out ? formatDateTime(record.punch_out) : record.status === 'invalid' ? 'Auto-Punched Out (Missing)' : 'Not Punched Out',
+                    'Status': record.status === 'invalid' ? 'Invalid' : calculateAttendanceStatus(record.punch_in, record.punch_out).replace('-', ' ')
+                }));
+
+                // Create worksheet and workbook
+                const worksheet = XLSX.utils.json_to_sheet(excelData);
+                const workbook = XLSX.utils.book_new();
+
+                // Define status colors
+                const statusColors = {
+                    'Absent': 'F72585', // --status-absent
+                    'Half Day': 'FF7B00', // --status-half-day
+                    'Full Day': '38B000', // --status-full-day
+                    'Invalid': '6C757D' // --status-invalid
+                };
+
+                // Apply colors to status column
+                const range = XLSX.utils.decode_range(worksheet['!ref']);
+                for (let row = range.s.r + 1; row <= range.e.r; row++) {
+                    const cell = `D${row + 1}`; // Status column (D)
+                    if (worksheet[cell] && worksheet[cell].v in statusColors) {
+                        worksheet[cell].s = {
+                            fill: {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { rgb: statusColors[worksheet[cell].v] }
+                            },
+                            font: { color: { rgb: 'FFFFFF' } }
+                        };
+                    }
+                }
+
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
+
+                // Download the file
+                const filename = `Attendance_${startDate || 'all'}_to_${endDate || 'all'}.xlsx`;
+                XLSX.write(workbook, filename);
+                showToast('Excel file downloaded successfully', 'success');
+            } catch (err) {
+                showToast(`Error: ${err.message}`, 'error');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.classList.remove('success', 'error');
+            toast.classList.add('show', type);
+            toastIcon.className = 'fas ' + (type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the page
+        initPage();
+    </script>
+</body>
+</html>
