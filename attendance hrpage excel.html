@@ -40,7 +40,6 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
             color: var(--dark);
             transition: all 0.3s ease;
@@ -55,7 +54,7 @@
             position: relative;
             text-align: center;
             height: 140px;
-            background: linear-gradient(rgb(10, 10, 255),rgb(203, 11, 242));
+            background: linear-gradient(rgb(10, 10, 255), rgb(203, 11, 242));
             color: #f8f9fa;
             border-radius: 16px;
             overflow: hidden;
@@ -516,7 +515,7 @@
 
         // Render attendance table
         function renderAttendanceTable(records) {
-            if (records.length === 0) {
+            if (!records || records.length === 0) {
                 attendanceTableBody.innerHTML = '<tr><td colspan="4" class="no-records">No attendance records found for selected filters</td></tr>';
                 return;
             }
@@ -526,7 +525,7 @@
                 
                 return `
                     <tr>
-                        <td>${record.emp_id}</td>
+                        <td>${record.emp_id || 'N/A'}</td>
                         <td>${formatDateTime(record.punch_in)}</td>
                         <td>${record.punch_out ? formatDateTime(record.punch_out) : record.status === 'invalid' ? 'Auto-Punched Out (Missing)' : 'Not Punched Out'}</td>
                         <td><span class="status-badge status-${status.toLowerCase().replace(' ', '-')}">${status.replace('-', ' ')}</span></td>
@@ -551,7 +550,7 @@
 
                 // Prepare data for Excel
                 const excelData = data.map(record => ({
-                    'Employee ID': record.emp_id,
+                    'Employee ID': record.emp_id || 'N/A',
                     'Punch In': formatDateTime(record.punch_in),
                     'Punch Out': record.punch_out ? formatDateTime(record.punch_out) : record.status === 'invalid' ? 'Auto-Punched Out (Missing)' : 'Not Punched Out',
                     'Status': record.status === 'invalid' ? 'Invalid' : calculateAttendanceStatus(record.punch_in, record.punch_out).replace('-', ' ')
@@ -563,17 +562,17 @@
 
                 // Define status colors
                 const statusColors = {
-                    'Absent': 'F72585', // --status-absent
-                    'Half Day': 'FF7B00', // --status-half-day
-                    'Full Day': '38B000', // --status-full-day
-                    'Invalid': '6C757D' // --status-invalid
+                    'Absent': 'F72585',
+                    'Half Day': 'FF7B00',
+                    'Full Day': '38B000',
+                    'Invalid': '6C757D'
                 };
 
                 // Apply colors to status column
                 const range = XLSX.utils.decode_range(worksheet['!ref']);
                 for (let row = range.s.r + 1; row <= range.e.r; row++) {
                     const cell = `D${row + 1}`; // Status column (D)
-                    if (worksheet[cell] && worksheet[cell].v in statusColors) {
+                    if (worksheet[cell] && worksheet[cell].v && statusColors[worksheet[cell].v]) {
                         worksheet[cell].s = {
                             fill: {
                                 type: 'pattern',
@@ -584,6 +583,14 @@
                         };
                     }
                 }
+
+                // Set column widths for better readability
+                worksheet['!cols'] = [
+                    { wch: 15 }, // Employee ID
+                    { wch: 20 }, // Punch In
+                    { wch: 20 }, // Punch Out
+                    { wch: 15 }  // Status
+                ];
 
                 XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
 
